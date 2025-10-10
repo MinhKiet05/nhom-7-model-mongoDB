@@ -1,0 +1,13 @@
+:root {
+  --sidebar-bg: #FFFFFF;
+  --sidebar-width: 260px;
+  --text-primary: #1F2937; /* Màu chữ chính */
+  --text-secondary: #6B7280; /* Màu chữ phụ, tiêu đề section */
+  --active-bg: #F3F4F6; /* Màu nền của mục đang được chọn */
+  --active-indicator: #4F46E5; /* Màu gạch dọc bên trái */
+  --hover-bg: #F9FAFB;
+  --border-color: #E5E7EB;
+}
+*{
+    margin: 0;
+}

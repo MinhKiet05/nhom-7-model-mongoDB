@@ -1,0 +1,167 @@
+/* src/components/layout/Sidebar.css */
+
+/* Biến màu cho dễ quản lý */
+:root {
+  --sidebar-width: 280px;
+  --sidebar-bg: #ffffff;
+  --border-color: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --hover-bg: #f3f4f6;
+  --active-bg: #dbeafe;
+  --active-indicator: #3b82f6;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh; /* Cao hết màn hình */
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column; /* Sắp xếp các mục theo chiều dọc */
+  position: fixed; /* Giữ sidebar cố định */
+  top: 0;
+  left: 0;
+  padding: 20px 16px;
+  box-sizing: border-box; /* Quan trọng để padding không làm tăng width */
+  z-index: 1000;
+}
+
+.sidebar-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin: 0;
+  font-style: italic;
+}
+
+.sidebar-nav {
+  flex-grow: 1; /* Đẩy phần footer xuống dưới cùng */
+}
+
+.nav-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 12px;
+  margin-bottom: 8px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Kiểu chung cho các link và menu toggle */
+.sidebar-nav a, .menu-toggle {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover, .menu-toggle:hover {
+  background-color: var(--hover-bg);
+}
+
+.sidebar-nav a svg, .menu-toggle svg {
+  margin-right: 12px;
+  font-size: 20px;
+  flex-shrink: 0; /* Giữ kích thước icon ổn định */
+}
+
+/* --- Kiểu cho mục đang ACTIVE --- */
+.sidebar-nav a.active {
+  background-color: var(--active-bg);
+  color: var(--active-indicator);
+  font-weight: 600;
+  /* Gạch dọc bên trái giống trong mẫu */
+  box-shadow: -3px 0 0 0 var(--active-indicator) inset;
+}
+
+/* --- Kiểu cho menu có con --- */
+.menu-toggle {
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.chevron {
+  transition: transform 0.3s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  list-style: none;
+  padding-left: 20px; /* Thụt vào so với menu cha */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.submenu.open {
+  max-height: 200px; /* Chiều cao đủ để chứa các mục con */
+}
+
+.submenu a {
+  padding-left: 32px; /* Thụt vào thêm nữa */
+  font-size: 14px;
+}
+
+/* --- Footer --- */
+.sidebar-footer {
+  margin-top: 24px;
+}
+
+.upgrade-box {
+  background-color: #F3F4F6;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.upgrade-box h4 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.upgrade-box p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.upgrade-box button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--text-primary);
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+}
