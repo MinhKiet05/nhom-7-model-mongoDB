@@ -1,0 +1,182 @@
+/* Dashboard.css */
+.dashboard {
+  background-color: #ffffff;
+  height: 631.2px;
+  display: flex;
+  flex-direction: column; /* Đổi thành column để dots ở dưới */
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Khoảng cách giữa carousel và dots */
+}
+
+/* Wrapper chứa cả carousel và nút */
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Khoảng cách giữa nút và carousel */
+  max-width: 1000px;
+  width: 100%;
+  justify-content: center;
+}
+
+.carousel-container {
+  max-width: 800px; /* Giảm lại để có chỗ cho nút */
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ẩn overflow để carousel đẹp */
+  position: relative;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 500px; /* Tăng chiều cao */
+  overflow: hidden;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.carousel-content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-slides {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  flex: 0 0 100%; /* Mỗi slide chiếm 100% width của container */
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Nút điều hướng - đặt hoàn toàn bên ngoài */
+.carousel-btn {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  width: 60px; /* Kích thước nút */
+  height: 60px;
+  font-size: 28px; /* Kích thước icon */
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  user-select: none;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0; /* Không cho nút bị co lại */
+}
+
+.carousel-btn:hover {
+  background-color: #ffffff;
+  border-color: #007bff;
+  color: #007bff;
+  transform: scale(1.1);
+}
+
+/* Các chấm điều hướng - bây giờ ở bên ngoài */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px; /* Khoảng cách giữa các dots */
+  padding: 0; /* Bỏ padding vì đã ở bên ngoài */
+  background-color: transparent; /* Trong suốt */
+}
+
+.dot {
+  width: 14px; /* Tăng kích thước dots */
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background-color: #d0d0d0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm shadow */
+}
+
+.dot:hover {
+  background-color: #007bff;
+  transform: scale(1.2);
+}
+
+.dot.active {
+  background-color: #007bff;
+  transform: scale(1.4); /* Active lớn hơn */
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3); /* Shadow màu xanh */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+    gap: 15px; /* Giảm khoảng cách trên tablet */
+  }
+  
+  .carousel-wrapper {
+    gap: 15px; /* Giảm khoảng cách */
+    max-width: 95%;
+  }
+  
+  .carousel-container {
+    max-width: 100%;
+  }
+  
+  .carousel {
+    height: 400px; /* Chiều cao medium trên tablet */
+  }
+  
+  .carousel-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+  }
+  
+  .dot {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    gap: 10px; /* Giảm khoảng cách hơn */
+  }
+  
+  .carousel-wrapper {
+    gap: 10px; /* Giảm khoảng cách hơn */
+    flex-direction: column; /* Đặt nút phía trên/dưới trên mobile */
+  }
+  
+  .carousel {
+    height: 300px; /* Chiều cao nhỏ hơn trên mobile */
+  }
+  
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+}
