@@ -1,7 +1,7 @@
 /* Dashboard.css */
 .dashboard {
   background-color: #ffffff;
-  height: 631.2px;
+  height: 100vh;
   display: flex;
   flex-direction: column; /* Đổi thành column để dots ở dưới */
   justify-content: center;
