@@ -64,44 +64,44 @@ const Products = () => {
         <table>
           <thead>
             <tr>
-              <th>Mã SP</th>
-              <th>Barcode</th>
-              <th>Tên sản phẩm</th>
-              <th>Thương hiệu</th>
-              <th>Danh mục</th>
-              <th>Chi tiết</th>
-              <th>Giá bán</th>
-              <th>Giá vốn</th>
-              <th>Tồn kho</th>
-              <th>Vị trí</th>
-              <th>Đơn vị</th>
-              <th>Nhà cung cấp</th>
-              <th>NSX</th>
-              <th>HSD</th>
-              <th>Trạng thái</th>
+              <th className="product-col-id">Mã SP</th>
+              <th className="product-col-barcode">Barcode</th>
+              <th className="product-col-name">Tên sản phẩm</th>
+              <th className="product-col-brand">Thương hiệu</th>
+              <th className="product-col-category">Danh mục</th>
+              <th className="product-col-detail">Chi tiết</th>
+              <th className="product-col-price">Giá bán</th>
+              <th className="product-col-cost">Giá vốn</th>
+              <th className="product-col-stock">Tồn kho</th>
+              <th className="product-col-location">Vị trí</th>
+              <th className="product-col-unit">Đơn vị</th>
+              <th className="product-col-supplier">Nhà cung cấp</th>
+              <th className="product-col-manufacture">NSX</th>
+              <th className="product-col-expiry">HSD</th>
+              <th className="product-col-status">Trạng thái</th>
             </tr>
           </thead>
           <tbody>
             {filteredProducts.length > 0 ? (
               filteredProducts.map(product => (
                 <tr key={product.ProductID}>
-                  <td><strong>{product.ProductID}</strong></td>
-                  <td><code>{product.Barcode}</code></td>
-                  <td>
+                  <td className="product-col-id"><strong>{product.ProductID}</strong></td>
+                  <td className="product-col-barcode"><code>{product.Barcode}</code></td>
+                  <td className="product-col-name">
                     <div>
                       <div className="product-name">{product.Name}</div>
                       <div className="product-desc">{product.Description}</div>
                     </div>
                   </td>
-                  <td>{product.Brand}</td>
-                  <td>
+                  <td className="product-col-brand">{product.Brand}</td>
+                  <td className="product-col-category">
                     <div className="category-tags">
                       {product.Category.map((cat, index) => (
                         <span key={index} className="category-tag">{cat}</span>
                       ))}
                     </div>
                   </td>
-                  <td>
+                  <td className="product-col-detail">
                     <div className="product-details">
                       {product.Detail.map((detail, index) => (
                         <div key={index} className="detail-item">
@@ -111,9 +111,9 @@ const Products = () => {
                       ))}
                     </div>
                   </td>
-                  <td className="price">{product.Price.toLocaleString('vi-VN')}₫</td>
-                  <td className="cost">{product.Cost.toLocaleString('vi-VN')}₫</td>
-                  <td>
+                  <td className="product-col-price price">{product.Price.toLocaleString('vi-VN')}₫</td>
+                  <td className="product-col-cost cost">{product.Cost.toLocaleString('vi-VN')}₫</td>
+                  <td className="product-col-stock">
                     <span className={`stock ${product.Stock <= product.ReorderLevel ? 'low' : 'normal'}`}>
                       {product.Stock} {product.Unit}
                     </span>
@@ -121,24 +121,24 @@ const Products = () => {
                       (Tái đặt: {product.ReorderLevel})
                     </div>
                   </td>
-                  <td className="location">{product.Location}</td>
-                  <td>{product.Unit}</td>
-                  <td>
+                  <td className="product-col-location location">{product.Location}</td>
+                  <td className="product-col-unit">{product.Unit}</td>
+                  <td className="product-col-supplier">
                     <div className="supplier-info">
                       <div className="supplier-name">{product.Supplier.name}</div>
                       <div className="supplier-id">ID: {product.Supplier.id}</div>
                     </div>
                   </td>
-                  <td className="manufacture-date">
+                  <td className="product-col-manufacture manufacture-date">
                     {new Date(product.manufactureDate).toLocaleDateString('vi-VN')}
                   </td>
-                  <td className="expiry-date">
+                  <td className="product-col-expiry expiry-date">
                     <span className={`expiry ${new Date(product.expiryDate) < new Date() ? 'expired' : 
                       new Date(product.expiryDate) < new Date(Date.now() + 30*24*60*60*1000) ? 'warning' : 'normal'}`}>
                       {new Date(product.expiryDate).toLocaleDateString('vi-VN')}
                     </span>
                   </td>
-                  <td>
+                  <td className="product-col-status">
                     <span className={`status ${product.Info.Status.toLowerCase()}`}>
                       {product.Info.Status}
                     </span>

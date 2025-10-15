@@ -26,7 +26,7 @@ const Sidebar = () => {
           <li>
             <NavLink to="/users">
               <LuUsers />
-              <span>Users (Nhân viên & Người dùng)</span>
+              <span>Users (Nhân viên)</span>
             </NavLink>
           </li>
           <li>

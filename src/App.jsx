@@ -3,12 +3,12 @@ import { Routes, Route } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
 import Dashboard from './pages/dashboardPage/Dashboard'
 import Products from './pages/productPage/Products'
+import Customers from './pages/customersPage/Customers'
 import './App.css'
 
 // Import các page components khác (tạm thời tạo các component đơn giản)
 const Users = () => <div className="page-content"><h1>Users</h1><p>Quản lý nhân viên & người dùng</p></div>
 const WorkShifts = () => <div className="page-content"><h1>Work Shifts</h1><p>Quản lý ca làm việc</p></div>
-const Customers = () => <div className="page-content"><h1>Customers</h1><p>Quản lý khách hàng</p></div>
 const Promotions = () => <div className="page-content"><h1>Promotions</h1><p>Quản lý khuyến mãi</p></div>
 const Inventory = () => <div className="page-content"><h1>Inventory</h1><p>Quản lý tồn kho</p></div>
 const Reports = () => <div className="page-content"><h1>Reports</h1><p>Báo cáo - Thống kê</p></div>

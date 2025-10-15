@@ -1,4 +1,4 @@
-[
+export const customers = [
   {
     "CustomerID": "C1001",
     "FullName": "Trần Mai Anh",
@@ -88,23 +88,6 @@
     "UpdatedAt": "2025-09-28T11:00:00Z"
   },
   {
-    "CustomerID": "C1005",
-    "FullName": "Khách Vãng Lai",
-    "Gender": "Khác",
-    "BirthDate": null,
-    "Phone": null,
-    "Email": null,
-    "Address": null,
-    "MembershipType": "Regular",
-    "Points": 0,
-    "JoinDate": "2025-10-01",
-    "TotalSpent": 0,
-    "Status": "Active",
-    "CreatedBy": "U1001",
-    "CreatedAt": "2025-10-01T00:00:00Z",
-    "UpdatedAt": "2025-10-01T00:00:00Z"
-  },
-  {
     "CustomerID": "C1006",
     "FullName": "Đinh Thị Hòa",
     "Gender": "Nữ",
@@ -171,3 +154,4 @@
     "UpdatedAt": "2025-10-09T07:00:00Z"
   }
 ]
+export default customers;
