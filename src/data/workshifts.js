@@ -1,4 +1,4 @@
-[
+export const workshifts = [
   {
     "ShiftID": "SH-MORN-HCM",
     "Name": "Ca sáng",
@@ -93,3 +93,4 @@
     "UpdatedAt": "2025-10-01T01:20:00Z"
   }
 ]
+export default workshifts;
