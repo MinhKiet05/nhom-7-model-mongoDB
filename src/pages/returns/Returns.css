@@ -1,0 +1,370 @@
+/* Returns.css - Styling cho trang Returns */
+
+/* Import Be Vietnam Pro font */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+/* Search container styles */
+.search-container {
+  margin-bottom: 8px;
+}
+
+.search-input-main {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.search-input-main:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.search-input-main::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Returns table styles */
+.returns-table {
+  width: 100%;
+  height: 74vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Custom scrollbar styling */
+.returns-table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.returns-table::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.returns-table::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.returns-table::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+table {
+  min-width: 1900px;
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
+
+/* Thiết lập chiều rộng cụ thể cho từng cột - Returns */
+.return-col-id { /* Mã trả hàng */
+  width: 160px;
+  min-width: 160px;
+}
+
+.return-col-date { /* Ngày giờ */
+  width: 110px;
+  min-width: 110px;
+}
+
+.return-col-sale { /* Mã HĐ gốc */
+  width: 150px;
+  min-width: 150px;
+  text-align: center;
+}
+
+.return-col-customer { /* Khách hàng */
+  width: 160px;
+  min-width: 160px;
+}
+
+.return-col-user { /* Nhân viên */
+  width: 150px;
+  min-width: 150px;
+}
+
+.return-col-items { /* Sản phẩm trả */
+  width: 300px;
+  min-width: 300px;
+}
+
+.return-col-total { /* Tổng hoàn */
+  width: 110px;
+  min-width: 110px;
+  text-align: right;
+}
+
+.return-col-type { /* Loại */
+  width: 100px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.return-col-status { /* Trạng thái */
+  width: 100px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.return-col-notes { /* Ghi chú */
+  width: 150px;
+  min-width: 150px;
+}
+
+th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+td {
+  color: black;
+}
+
+/* Hover effect cho rows */
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Đánh dấu các dòng chẵn */
+tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+tbody tr:nth-child(even):hover {
+  background-color: #f1f5f9;
+}
+
+/* Return-specific styles */
+.date-time {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-family: monospace;
+}
+
+.date {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+.time {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.sale-ref {
+  font-family: monospace;
+  font-weight: 600;
+  background-color: #fef3c7;
+  color: #92400e;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.person-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.person-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+.person-id {
+  font-family: monospace;
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.person-phone {
+  font-family: monospace;
+  color: #3b82f6;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item-row {
+  padding: 0.35rem;
+  background-color: #fef2f2;
+  border-radius: 0.25rem;
+  border-left: 3px solid #dc2626;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.item-detail {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.item-qty {
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.item-reason {
+  background-color: #fef3c7;
+  color: #92400e;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.item-refund {
+  color: #dc2626;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.total-refund {
+  font-family: monospace;
+  font-weight: 700;
+  color: #dc2626;
+  font-size: 1.05rem;
+}
+
+.return-type {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  min-width: 60px;
+  text-align: center;
+}
+
+.return-type.refund {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.return-type.exchange {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+}
+
+.status.processed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status.rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.notes {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* No results styling */
+.no-results {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+}
+
+.no-results-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.no-results-text {
+  font-size: 1.1rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.no-results-suggestion {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+}

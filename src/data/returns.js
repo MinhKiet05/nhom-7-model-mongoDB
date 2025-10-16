@@ -1,10 +1,8 @@
-[
+export const returns = [
   {
     "ReturnID": "RT-20251011-0001",
     "Date": "2025-10-11T12:30:00Z",
     "SaleID": "SL-20251010-0007",
-    "CustomerID": "C1003",
-    "UserID": "U1001",
     "Items": [
       {
         "ProductID": "P1005",
@@ -19,14 +17,22 @@
     "Status": "Processed",
     "Notes": "Kiểm hàng ok",
     "CreatedAt": "2025-10-11T12:30:00Z",
-    "UpdatedAt": "2025-10-11T12:31:00Z"
+    "UpdatedAt": "2025-10-11T12:31:00Z",
+    "Customer": {
+      "CustomerID": "C1003",
+      "FullName": "Phạm Hồng Sơn",
+      "Phone": "0905550003"
+    },
+    "User": {
+      "UserID": "U1001",
+      "FullName": "Nguyễn Thị Lan",
+      "Phone": "0901000111"
+    }
   },
   {
     "ReturnID": "RT-20251011-0002",
     "Date": "2025-10-11T13:05:00Z",
     "SaleID": "SL-20251011-0001",
-    "CustomerID": "C1001",
-    "UserID": "U1001",
     "Items": [
       {
         "ProductID": "P1001",
@@ -41,14 +47,22 @@
     "Status": "Processed",
     "Notes": "Đổi lấy P1002 + bù tiền tại quầy",
     "CreatedAt": "2025-10-11T13:05:00Z",
-    "UpdatedAt": "2025-10-11T13:06:00Z"
+    "UpdatedAt": "2025-10-11T13:06:00Z",
+    "Customer": {
+      "CustomerID": "C1001",
+      "FullName": "Trần Mai Anh",
+      "Phone": "0905550001"
+    },
+    "User": {
+      "UserID": "U1001",
+      "FullName": "Nguyễn Thị Lan",
+      "Phone": "0901000111"
+    }
   },
   {
     "ReturnID": "RT-20251011-0003",
     "Date": "2025-10-11T16:00:00Z",
     "SaleID": "SL-20251011-0005",
-    "CustomerID": "C1002",
-    "UserID": "U1001",
     "Items": [
       {
         "ProductID": "P1010",
@@ -63,14 +77,22 @@
     "Status": "Processed",
     "Notes": "B2G1 điều chỉnh",
     "CreatedAt": "2025-10-11T16:00:00Z",
-    "UpdatedAt": "2025-10-11T16:02:00Z"
+    "UpdatedAt": "2025-10-11T16:02:00Z",
+    "Customer": {
+      "CustomerID": "C1002",
+      "FullName": "Lê Văn Bình",
+      "Phone": "0905550002"
+    },
+    "User": {
+      "UserID": "U1001",
+      "FullName": "Nguyễn Thị Lan",
+      "Phone": "0901000111"
+    }
   },
   {
     "ReturnID": "RT-20251010-0001",
     "Date": "2025-10-10T19:10:00Z",
     "SaleID": "SL-20251010-0008",
-    "CustomerID": "C1007",
-    "UserID": "U1004",
     "Items": [
       {
         "ProductID": "P1006",
@@ -85,6 +107,17 @@
     "Status": "Processed",
     "Notes": "Hoàn 1 sp sau KM",
     "CreatedAt": "2025-10-10T19:10:00Z",
-    "UpdatedAt": "2025-10-10T19:12:00Z"
+    "UpdatedAt": "2025-10-10T19:12:00Z",
+    "Customer": {
+      "CustomerID": "C1007",
+      "FullName": "Bùi Quốc An",
+      "Phone": "0905550007"
+    },
+    "User": {
+      "UserID": "U1004",
+      "FullName": "Đỗ Minh Tâm",
+      "Phone": "0914000444"
+    }
   }
-]
+];
+export default returns;
