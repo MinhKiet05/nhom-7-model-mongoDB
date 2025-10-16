@@ -1,4 +1,4 @@
-[
+export const purchaseOrders = [
   {
     "POID": "PO-20251008-0001",
     "SupplierID": "S1002",
@@ -160,3 +160,4 @@
     "UpdatedAt": "2025-10-11T07:50:00Z"
   }
 ]
+export default purchaseOrders;

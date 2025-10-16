@@ -1,4 +1,4 @@
-[
+export const promotions =  [
   {
     "PromotionID": "PRM1001",
     "PromotionName": "Giảm 10% Trà đóng chai",
@@ -125,3 +125,4 @@
     "UpdatedAt": "2025-10-01"
   }
 ]
+export default promotions;

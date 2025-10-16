@@ -1,4 +1,4 @@
-[
+export const users = [
   {
     "UserID": "U1001",
     "Username": "cashier.hcm",
@@ -216,3 +216,4 @@
     "UpdatedAt": "2025-09-10T05:00:00Z"
   }
 ]
+export default users;

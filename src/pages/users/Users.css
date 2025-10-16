@@ -1,4 +1,4 @@
-/* Workshits.css - Styling cho trang Work Shifts */
+/* Users.css - Styling cho trang Users */
 
 /* Import Be Vietnam Pro font */
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
@@ -35,8 +35,8 @@
   font-weight: 400;
 }
 
-/* Workshifts table styles */
-.workshifts-table {
+/* Users table styles */
+.users-table {
   width: 100%;
   height: 74vh;
   overflow: auto;
@@ -49,27 +49,27 @@
 }
 
 /* Custom scrollbar styling */
-.workshifts-table::-webkit-scrollbar {
+.users-table::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-.workshifts-table::-webkit-scrollbar-track {
+.users-table::-webkit-scrollbar-track {
   background: #f1f5f9;
   border-radius: 4px;
 }
 
-.workshifts-table::-webkit-scrollbar-thumb {
+.users-table::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
 }
 
-.workshifts-table::-webkit-scrollbar-thumb:hover {
+.users-table::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 
 table {
-  min-width: 960px;
+  min-width: 2000px;
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -87,52 +87,76 @@ th, td {
   font-size: 1rem;
 }
 
-/* Thiết lập chiều rộng cụ thể cho từng cột - Workshifts */
-.shift-col-id { /* Mã ca */
-  width: 130px;
-  min-width: 130px;
+/* Thiết lập chiều rộng cụ thể cho từng cột - Users */
+.user-col-id { /* Mã NV */
+  width: 90px;
+  min-width: 90px;
 }
 
-.shift-col-name { /* Tên ca */
-  width: 100px;
-  min-width: 100px;
-}
-
-.shift-col-branch { /* Chi nhánh */
-  width: 50px;
-  min-width: 50px;
-  text-align: center;
-}
-
-.shift-col-time { /* Thời gian */
-  width: 100px;
-  min-width: 100px;
-}
-
-.shift-col-break { /* Nghỉ giải lao */
-  width: 110px;
-  min-width: 110px;
-  text-align: center;
-}
-
-.shift-col-max { /* Số NV tối đa */
+.user-col-username { /* Username */
   width: 120px;
   min-width: 120px;
+}
+
+.user-col-name { /* Họ và tên */
+  width: 160px;
+  min-width: 160px;
+}
+
+.user-col-gender { /* Giới tính */
+  width: 65px;
+  min-width: 65px;
   text-align: center;
 }
 
-.shift-col-roles { /* Vai trò yêu cầu */
-  width: 170px;
-  min-width: 170px;
-}
-
-
-.shift-col-creator { /* Người tạo */
+.user-col-birth { /* Ngày sinh */
   width: 100px;
   min-width: 100px;
   text-align: center;
 }
 
+.user-col-phone { /* Số điện thoại */
+  width: 120px;
+  min-width: 120px;
+}
+
+.user-col-email { /* Email */
+  width: 180px;
+  min-width: 180px;
+}
+
+.user-col-address { /* Địa chỉ */
+  width: 180px;
+  min-width: 180px;
+}
+
+.user-col-position { /* Chức vụ */
+  width: 140px;
+  min-width: 140px;
+}
+
+.user-col-roles { /* Vai trò */
+  width: 120px;
+  min-width: 120px;
+}
+
+.user-col-salary { /* Lương */
+  width: 110px;
+  min-width: 110px;
+  text-align: right;
+}
+
+.user-col-branch { /* Chi nhánh */
+  width: 100px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.user-col-hire { /* Ngày vào */
+  width: 100px;
+  min-width: 100px;
+  text-align: center;
+}
 
 th {
   background-color: #f9fafb;
@@ -162,57 +186,87 @@ tbody tr:nth-child(even):hover {
   background-color: #f1f5f9;
 }
 
-/* Shift-specific styles */
-.shift-name {
+/* User-specific styles */
+.username {
+  font-family: monospace;
   font-weight: 600;
-  color: black;
-  font-size: 1.1rem;
-}
-
-.branch-badge {
-  background-color: #dbeafe;
-  color: #1e40af;
+  background-color: #f3f4f6;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  font-family: monospace;
-}
-
-.time-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  font-family: monospace;
+  border-radius: 0.25rem;
+  color: #374151;
   font-size: 0.85rem;
 }
 
-.time-start {
-  color: #059669;
-  font-weight: 500;
-}
-
-.time-end {
-  color: #dc2626;
-  font-weight: 500;
-}
-
-.break-time {
-  background-color: #fef3c7;
-  color: #92400e;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
+.user-name {
   font-weight: 600;
+  color: #1f2937;
+  font-size: 1rem;
 }
 
-.max-employees {
+.gender {
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+}
+
+.gender.nam {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.gender.nữ {
+  background-color: #fce7f3;
+  color: #9f1239;
+}
+
+.birth-date, .hire-date {
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.phone {
+  font-family: monospace;
+  font-weight: 500;
+  color: #3b82f6;
+  font-size: 0.9rem;
+}
+
+.email {
+  color: #6b7280;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.address-info {
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.address-street {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.15rem;
+}
+
+.address-detail {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.position {
+  font-weight: 600;
   background-color: #e0e7ff;
   color: #3730a3;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  display: inline-block;
 }
 
 .roles-tags {
@@ -224,45 +278,28 @@ tbody tr:nth-child(even):hover {
 .role-tag {
   background-color: #dbeafe;
   color: #1e40af;
-  padding: 0.125rem 0.4rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.status {
-  padding: 0.25rem 0.5rem;
+  padding: 0.2rem 0.4rem;
   border-radius: 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
-  display: inline-block;
-  min-width: 60px;
-  text-align: center;
+  white-space: nowrap;
 }
 
-.status.active {
-  background-color: #dcfce7;
-  color: #166534;
-}
-
-.status.inactive {
-  background-color: #fee2e2;
-  color: #991b1b;
-}
-
-.creator {
+.salary {
   font-family: monospace;
-  font-weight: 500;
-  color: #6b7280;
+  font-weight: 700;
+  color: #059669;
+  font-size: 0.95rem;
 }
 
-.created-date, .updated-date {
-  font-family: monospace;
+.branch-badge {
+  background-color: #fef3c7;
+  color: #92400e;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
   font-size: 0.8rem;
-  font-weight: 500;
-  color: #6b7280;
+  font-weight: 600;
+  font-family: monospace;
 }
 
 /* No results styling */

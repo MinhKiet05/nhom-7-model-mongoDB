@@ -7,11 +7,11 @@ import Customers from './pages/customersPage/Customers'
 import Workshifts from './pages/workshits/Workshits'
 import Sales from './pages/sales/Sales'
 import Returns from './pages/returns/Returns'
+import Users from './pages/users/Users'
+import Promotions from './pages/promotion/Promotions'
 import './App.css'
 
 // Import các page components khác (tạm thời tạo các component đơn giản)
-const Users = () => <div className="page-content"><h1>Users</h1><p>Quản lý nhân viên & người dùng</p></div>
-const Promotions = () => <div className="page-content"><h1>Promotions</h1><p>Quản lý khuyến mãi</p></div>
 const Inventory = () => <div className="page-content"><h1>Inventory</h1><p>Quản lý tồn kho</p></div>
 const Reports = () => <div className="page-content"><h1>Reports</h1><p>Báo cáo - Thống kê</p></div>
 const Suppliers = () => <div className="page-content"><h1>Suppliers</h1><p>Quản lý nhà cung cấp</p></div>

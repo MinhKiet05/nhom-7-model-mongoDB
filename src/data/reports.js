@@ -1,4 +1,4 @@
-[
+export const reports = [
   {
     "ReportID": "RPT-2025W41-SALES",
     "Type": "Sales",
@@ -224,3 +224,4 @@
     "Notes": ""
   }
 ]
+export default reports;

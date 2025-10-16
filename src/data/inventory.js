@@ -1,4 +1,4 @@
-[
+export const inventory = [
   {
     "InventoryID": "INV-BR-HCM-P1001",
     "BranchID": "BR-HCM",
@@ -399,3 +399,4 @@
     "UpdatedAt": "2025-10-07T10:00:00Z"
   }
 ]
+export default inventory;

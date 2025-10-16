@@ -1,4 +1,4 @@
-[
+export const suppliers = [
   {
     "SupplierID": "S1001",
     "Name": "Công ty Nước Giải Khát Xanh",
@@ -100,3 +100,4 @@
     "UpdatedAt": "2025-09-12"
   }
 ]
+export default suppliers;
