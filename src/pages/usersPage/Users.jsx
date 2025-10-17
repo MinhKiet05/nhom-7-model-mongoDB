@@ -37,7 +37,9 @@ const Users = () => {
   };
 
   return (
+    
     <div className="page-content">
+      <h1>Quản lý Nhân viên</h1>
       <div className="search-container">
         <input
           type="text"

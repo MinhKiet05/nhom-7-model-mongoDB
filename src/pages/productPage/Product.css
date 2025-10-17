@@ -56,7 +56,7 @@
 /* Products table styles */
 .products-table {
   width: 100%;
-  height: 74vh; /* Tính toán để vừa với viewport, trừ đi header và filter */
+  height: 70vh; /* Tính toán để vừa với viewport, trừ đi header và filter */
   overflow: auto; /* Cuộn cả ngang và dọc */
   -webkit-overflow-scrolling: touch;
   border: 1px solid #e5e7eb;

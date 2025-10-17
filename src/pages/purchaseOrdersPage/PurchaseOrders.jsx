@@ -33,7 +33,7 @@ function PurchaseOrders() {
 
   return (
     <div className="page-content">
-      <h1>Phiếu nhập hàng</h1>
+      <h1>Quản lý Phiếu nhập hàng</h1>
       
       <div className="search-container">
         <input

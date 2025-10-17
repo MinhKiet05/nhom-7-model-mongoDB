@@ -36,6 +36,7 @@ const Sales = () => {
 
   return (
     <div className="page-content">
+      <h1>Quản lý Hóa đơn</h1>
       <div className="search-container">
         <input
           type="text"

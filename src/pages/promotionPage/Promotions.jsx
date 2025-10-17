@@ -32,6 +32,7 @@ const Promotions = () => {
 
   return (
     <div className="page-content">
+      <h1>Quản lý Khuyến mãi</h1>
       <div className="search-container">
         <input
           type="text"

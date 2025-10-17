@@ -31,6 +31,7 @@ const Workshifts = () => {
 
   return (
     <div className="page-content">
+      <h1>Quản lý ca làm việc</h1>
       <div className="search-container">
         <input
           type="text"

@@ -48,6 +48,7 @@ const Customers = () => {
   try {
     return (
       <div className="page-content">
+        <h1>Quản lý Khách hàng</h1>
         <div className="search-container">
           <input
             type="text"

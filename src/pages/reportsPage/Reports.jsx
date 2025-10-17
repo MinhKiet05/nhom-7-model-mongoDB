@@ -36,7 +36,7 @@ function Reports() {
 
   return (
     <div className="page-content">
-      <h1>Báo cáo - Thống kê</h1>
+      <h1>Quản lý Báo cáo - Thống kê</h1>
       
       <div className="search-container">
         <input

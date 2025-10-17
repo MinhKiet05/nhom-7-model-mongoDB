@@ -38,6 +38,7 @@ const Returns = () => {
 
   return (
     <div className="page-content">
+      <h1>Quản lý Phiếu trả hàng</h1>
       <div className="search-container">
         <input
           type="text"

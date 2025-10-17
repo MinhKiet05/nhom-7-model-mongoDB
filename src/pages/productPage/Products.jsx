@@ -37,6 +37,7 @@ const Products = () => {
 
   return (
     <div className="page-content">
+      <h1>Quản lý Sản phẩm</h1>
       <div className="search-container">
         <input
           type="text"
