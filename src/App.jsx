@@ -4,16 +4,16 @@ import Sidebar from './components/sidebar/sidebar'
 import Dashboard from './pages/dashboardPage/Dashboard'
 import Products from './pages/productPage/Products'
 import Customers from './pages/customersPage/Customers'
-import Workshifts from './pages/workshits/Workshits'
-import Sales from './pages/sales/Sales'
-import Returns from './pages/returns/Returns'
-import Users from './pages/users/Users'
-import Promotions from './pages/promotion/Promotions'
+import Workshifts from './pages/workshitsPage/Workshits'
+import Sales from './pages/salesPage/Sales'
+import Returns from './pages/returnsPage/Returns'
+import Users from './pages/usersPage/Users'
+import Promotions from './pages/promotionPage/Promotions'
+import Inventory from './pages/inventoryPage/Inventory'
+import Reports from './pages/reportsPage/Reports'
 import './App.css'
 
 // Import các page components khác (tạm thời tạo các component đơn giản)
-const Inventory = () => <div className="page-content"><h1>Inventory</h1><p>Quản lý tồn kho</p></div>
-const Reports = () => <div className="page-content"><h1>Reports</h1><p>Báo cáo - Thống kê</p></div>
 const Suppliers = () => <div className="page-content"><h1>Suppliers</h1><p>Quản lý nhà cung cấp</p></div>
 const PurchaseOrders = () => <div className="page-content"><h1>Purchase Orders</h1><p>Phiếu nhập hàng</p></div>
 

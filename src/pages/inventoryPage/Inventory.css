@@ -1,0 +1,435 @@
+/* Inventory.css - Styling cho trang Inventory */
+
+/* Import Be Vietnam Pro font */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+/* Search container styles */
+.search-container {
+  margin-bottom: 8px;
+}
+
+.search-input-main {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.search-input-main:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.search-input-main::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Inventory table styles */
+.inventory-table {
+  width: 100%;
+  height: 74vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Custom scrollbar styling */
+.inventory-table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.inventory-table::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.inventory-table::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.inventory-table::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+table {
+  min-width: 2000px;
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
+
+/* Thiết lập chiều rộng cụ thể cho từng cột - Inventory */
+.inv-col-id { /* Mã tồn kho */
+  width: 100px;
+  min-width: 100px;
+}
+
+.inv-col-branch { /* Chi nhánh */
+  width: 80px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.inv-col-warehouse { /* Kho */
+  width: 80px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.inv-col-product { /* Sản phẩm */
+  width: 120px;
+  min-width: 120px;
+}
+
+.inv-col-unit { /* Đơn vị */
+  width: 50px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.inv-col-onhand { /* Tồn kho */
+  width: 50px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.inv-col-reserved { /* Đã đặt */
+  width: 50px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.inv-col-available { /* Khả dụng */
+  width: 50px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.inv-col-unitcost { /* Giá vốn */
+  width: 80px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.inv-col-totalvalue { /* Tổng giá trị */
+  width: 100px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.inv-col-reorder { /* Điểm đặt lại */
+  width: 60px;
+  min-width: 60px;
+  text-align: center;
+}
+
+.inv-col-history { /* Lịch sử */
+  width: 250px;
+  min-width: 250px;
+}
+
+th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+td {
+  color: black;
+}
+
+/* Hover effect cho rows */
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Đánh dấu các dòng chẵn */
+tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+tbody tr:nth-child(even):hover {
+  background-color: #f1f5f9;
+}
+
+/* Inventory-specific styles */
+.inventory-id {
+  font-family: monospace;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.85rem;
+}
+
+.branch-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-family: monospace;
+  display: inline-block;
+}
+
+.warehouse-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #fef3c7;
+  color: #92400e;
+  font-family: monospace;
+  display: inline-block;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.product-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.product-id {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.unit-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #f3f4f6;
+  color: #374151;
+  display: inline-block;
+}
+
+.quantity-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: monospace;
+  display: inline-block;
+  min-width: 50px;
+  text-align: center;
+}
+
+.quantity-badge.low-stock {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.quantity-badge.normal-stock {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.quantity-badge.high-stock {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.reserved-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #e0e7ff;
+  color: #3730a3;
+  font-family: monospace;
+  display: inline-block;
+}
+
+.available-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: monospace;
+  display: inline-block;
+  min-width: 50px;
+  text-align: center;
+}
+
+.available-badge.low-stock {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.available-badge.normal-stock {
+  background-color: #fde68a;
+  color: #92400e;
+}
+
+.available-badge.high-stock {
+  background-color: #bbf7d0;
+  color: #166534;
+}
+
+.unit-cost {
+  font-family: monospace;
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.total-value {
+  font-family: monospace;
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+.reorder-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #fce7f3;
+  color: #9f1239;
+  font-family: monospace;
+  display: inline-block;
+}
+
+.movement-history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.movement-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.3rem 0.4rem;
+  background-color: #f9fafb;
+  border-radius: 0.4rem;
+  border-left: 3px solid transparent;
+}
+
+.movement-item .movement-type.inbound {
+  border-left-color: #059669;
+}
+
+.movement-item .movement-type.outbound {
+  border-left-color: #dc2626;
+}
+
+.movement-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.3rem;
+  display: inline-block;
+  width: fit-content;
+}
+
+.movement-type.inbound {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.movement-type.outbound {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.movement-qty {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #374151;
+}
+
+.movement-date {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+.movement-ref {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.no-movement {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* No results styling */
+.no-results {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+}
+
+.no-results-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.no-results-text {
+  font-size: 1.1rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.no-results-suggestion {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+}
