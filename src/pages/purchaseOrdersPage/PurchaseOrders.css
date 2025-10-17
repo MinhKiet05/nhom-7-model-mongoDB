@@ -1,0 +1,430 @@
+/* PurchaseOrders.css - Styling cho trang PurchaseOrders */
+
+/* Import Be Vietnam Pro font */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+/* Search container styles */
+.search-container {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-input-main {
+  flex: 1;
+  min-width: 400px;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.search-input-main:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.search-input-main::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.status-filter-select {
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  min-width: 200px;
+}
+
+.status-filter-select:hover {
+  border-color: #cbd5e1;
+}
+
+.status-filter-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* PurchaseOrders table styles */
+.purchase-orders-table {
+  width: 100%;
+  height: 74vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Custom scrollbar styling */
+.purchase-orders-table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.purchase-orders-table::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.purchase-orders-table::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.purchase-orders-table::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+table {
+  min-width: 2200px;
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
+
+/* Thiết lập chiều rộng cụ thể cho từng cột - PurchaseOrders */
+.po-col-id { /* Mã phiếu */
+  width: 140px;
+  min-width: 140px;
+}
+
+.po-col-supplier { /* Nhà cung cấp */
+  width: 110px;
+  min-width: 110px;
+  text-align: center;
+}
+
+.po-col-branch { /* Chi nhánh */
+  width: 100px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.po-col-orderdate { /* Ngày đặt */
+  width: 110px;
+  min-width: 110px;
+}
+
+.po-col-expecteddate { /* Ngày dự kiến */
+  width: 110px;
+  min-width: 110px;
+}
+
+.po-col-status { /* Trạng thái */
+  width: 120px;
+  min-width: 120px;
+  text-align: center;
+}
+
+.po-col-items { /* Sản phẩm */
+  width: 350px;
+  min-width: 350px;
+}
+
+.po-col-subtotal { /* Tiền hàng */
+  width: 120px;
+  min-width: 120px;
+  text-align: right;
+}
+
+.po-col-vat { /* VAT */
+  width: 100px;
+  min-width: 100px;
+  text-align: right;
+}
+
+.po-col-total { /* Tổng tiền */
+  width: 130px;
+  min-width: 130px;
+  text-align: right;
+}
+
+.po-col-notes { /* Ghi chú */
+  width: 180px;
+  min-width: 180px;
+}
+
+th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+td {
+  color: black;
+}
+
+/* Hover effect cho rows */
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Đánh dấu các dòng chẵn */
+tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+tbody tr:nth-child(even):hover {
+  background-color: #f1f5f9;
+}
+
+/* PurchaseOrders-specific styles */
+.po-id {
+  font-family: monospace;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.85rem;
+}
+
+.supplier-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #fef3c7;
+  color: #92400e;
+  font-family: monospace;
+  display: inline-block;
+}
+
+.branch-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-family: monospace;
+  display: inline-block;
+}
+
+.order-date {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.expected-date {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #059669;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 100px;
+  text-align: center;
+}
+
+.status-badge.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.approved {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.received {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-badge.cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.4rem;
+  border-left: 3px solid #3b82f6;
+}
+
+.item-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.item-id {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.item-details strong {
+  color: #374151;
+  font-weight: 600;
+}
+
+.item-qty {
+  color: #6b7280;
+}
+
+.item-cost {
+  color: #6b7280;
+}
+
+.item-discount {
+  color: #dc2626;
+}
+
+.item-total {
+  font-size: 0.8rem;
+  color: #374151;
+  font-weight: 500;
+  padding-top: 0.2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.item-total strong {
+  color: #059669;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.no-items {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.subtotal-amount {
+  font-family: monospace;
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.vat-amount {
+  font-family: monospace;
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.total-amount {
+  font-family: monospace;
+  font-weight: 700;
+  color: #059669;
+  font-size: 1rem;
+}
+
+.notes-text {
+  font-size: 0.85rem;
+  color: #374151;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.na-value {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 0.85rem;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+/* No results styling */
+.no-results {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+}
+
+.no-results-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.no-results-text {
+  font-size: 1.1rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.no-results-suggestion {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+}

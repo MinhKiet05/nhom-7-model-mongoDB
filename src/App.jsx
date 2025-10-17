@@ -11,11 +11,9 @@ import Users from './pages/usersPage/Users'
 import Promotions from './pages/promotionPage/Promotions'
 import Inventory from './pages/inventoryPage/Inventory'
 import Reports from './pages/reportsPage/Reports'
+import PurchaseOrders from './pages/purchaseOrdersPage/PurchaseOrders'
+import Suppliers from './pages/suppliersPage/Suppliers'
 import './App.css'
-
-// Import các page components khác (tạm thời tạo các component đơn giản)
-const Suppliers = () => <div className="page-content"><h1>Suppliers</h1><p>Quản lý nhà cung cấp</p></div>
-const PurchaseOrders = () => <div className="page-content"><h1>Purchase Orders</h1><p>Phiếu nhập hàng</p></div>
 
 function App() {
   return (
