@@ -82,8 +82,8 @@ const Workshifts = () => {
                   </td>
                   <td className="shift-col-time">
                     <div className="time-info">
-                      <div className="time-start">🕐 {shift.Time.Start}</div>
-                      <div className="time-end">🕐 {shift.Time.End}</div>
+                      <div className="time-start">{shift.Time.Start}</div>
+                      <div className="time-end">{shift.Time.End}</div>
                     </div>
                   </td>
                   <td className="shift-col-break">

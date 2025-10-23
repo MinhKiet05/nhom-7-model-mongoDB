@@ -54,7 +54,7 @@ function Suppliers() {
                 <th className="sup-col-address">Địa chỉ</th>
                 <th className="sup-col-phone">Điện thoại</th>
                 <th className="sup-col-email">Email</th>
-                <th className="sup-col-payment">Thanh toán</th>
+                <th className="sup-col-payment">Điều khoản thanh toán</th>
                 <th className="sup-col-credit">Hạn mức</th>
                 <th className="sup-col-status">Trạng thái</th>
               </tr>

@@ -69,7 +69,6 @@
 }
 
 table {
-  min-width: 960px;
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -89,47 +88,48 @@ th, td {
 
 /* Thiết lập chiều rộng cụ thể cho từng cột - Workshifts */
 .shift-col-id { /* Mã ca */
-  width: 130px;
-  min-width: 130px;
+  width: 40px;
+  min-width: 40px;
 }
 
 .shift-col-name { /* Tên ca */
-  width: 100px;
-  min-width: 100px;
+  width: 40px;
+  min-width: 40px;
 }
 
 .shift-col-branch { /* Chi nhánh */
+  width: 30px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.shift-col-time { /* Thời gian */
+  width: 40px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.shift-col-break { /* Nghỉ giải lao */
+  width: 40px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.shift-col-max { /* Số NV tối đa */
   width: 50px;
   min-width: 50px;
   text-align: center;
 }
 
-.shift-col-time { /* Thời gian */
-  width: 100px;
-  min-width: 100px;
-}
-
-.shift-col-break { /* Nghỉ giải lao */
-  width: 110px;
-  min-width: 110px;
-  text-align: center;
-}
-
-.shift-col-max { /* Số NV tối đa */
-  width: 120px;
-  min-width: 120px;
-  text-align: center;
-}
-
 .shift-col-roles { /* Vai trò yêu cầu */
-  width: 170px;
-  min-width: 170px;
+  width: 80px;
+  min-width: 80px;
 }
 
 
 .shift-col-creator { /* Người tạo */
-  width: 100px;
-  min-width: 100px;
+  width: 60px;
+  min-width: 60px;
   text-align: center;
 }
 
