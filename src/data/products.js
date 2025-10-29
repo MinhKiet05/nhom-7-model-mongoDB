@@ -372,7 +372,7 @@ export const products = [
     "Info": {
       "CreateBy": "U1002",
       "CreateDate": "2025-10-01",
-      "Status": "Discontinued"
+      "Status": "DELETED"
     }
   },
   {
@@ -406,7 +406,7 @@ export const products = [
     "Info": {
       "CreateBy": "U1001",
       "CreateDate": "2025-09-01",
-      "Status": "Inactive"
+      "Status": "DELETED"
     }
   }
 ]

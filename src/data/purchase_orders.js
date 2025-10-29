@@ -141,7 +141,7 @@ export const purchaseOrders = [
     "BranchID": "BR-HCM",
     "OrderDate": "2025-10-11T07:50:00Z",
     "ExpectedDate": "2025-10-15",
-    "Status": "Draft",
+    "Status": "Pending",
     "Items": [
       {
         "ProductID": "P1007",

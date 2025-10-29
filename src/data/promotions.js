@@ -69,7 +69,7 @@ export const promotions =  [
     "DiscountValue": 15,
     "MinPurchaseAmount": 0,
     "StartDate": "2025-10-06",
-    "EndDate": "2025-10-12",
+    "EndDate": "2026-10-12",
     "ApplicableProducts": [
       "P1006"
     ],
@@ -90,7 +90,7 @@ export const promotions =  [
     "DiscountValue": 1,
     "MinPurchaseAmount": 0,
     "StartDate": "2025-10-10",
-    "EndDate": "2025-11-10",
+    "EndDate": "2025-12-12",
     "ApplicableProducts": [
       "P1010"
     ],
@@ -150,8 +150,8 @@ export const promotions =  [
     "DiscountType": "FreeItem",
     "DiscountValue": 1,
     "MinPurchaseAmount": 100000,
-    "StartDate": "2025-10-15",
-    "EndDate": "2025-11-15",
+    "StartDate": "2025-05-15",
+    "EndDate": "2025-09-15",
     "ApplicableProducts": ["P1001", "P1003"],
     "ApplicableCategories": ["Đồ uống"],
     "CustomerType": "VIP",

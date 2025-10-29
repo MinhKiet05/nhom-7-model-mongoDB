@@ -85,7 +85,7 @@ const Products = () => {
           <tbody>
             {filteredProducts.length > 0 ? (
               filteredProducts.map(product => (
-                <tr key={product.ProductID} className={product.Info?.Status !== 'Active' ? 'inactive-row' : ''}>
+                <tr key={product.ProductID} className={product.Info?.Status === 'DELETED' ? 'inactive-row' : ''}>
                   <td className="product-col-id"><strong>{product.ProductID}</strong></td>
                   <td className="product-col-barcode"><code>{product.Barcode}</code></td>
                   <td className="product-col-name">
@@ -140,8 +140,11 @@ const Products = () => {
                     </span>
                   </td>
                   <td className="product-col-status">
-                    <span className={`status ${product.Info.Status.toLowerCase()}`}>
-                      {product.Info.Status}
+                    <span className={`status-badge ${product.Info.Status.toLowerCase()}`}>
+                      {product.Info.Status === 'DELETED' ? 'Đã xóa' : 
+                       product.Info.Status === 'Active' ? 'Hoạt động' : 
+                       product.Info.Status === 'Inactive' ? 'Không hoạt động' :
+                       product.Info.Status || 'Hoạt động'}
                     </span>
                   </td>
                 </tr>
