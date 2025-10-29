@@ -82,7 +82,7 @@ export const customers = [
     "Points": 60,
     "JoinDate": "2025-02-20",
     "TotalSpent": 900000,
-    "Status": "Active",
+    "Status": "Deleted",
     "CreatedBy": "U1004",
     "CreatedAt": "2025-02-20T03:00:00Z",
     "UpdatedAt": "2025-09-28T11:00:00Z"
@@ -152,6 +152,50 @@ export const customers = [
     "CreatedBy": "U1006",
     "CreatedAt": "2023-10-01T07:00:00Z",
     "UpdatedAt": "2025-10-09T07:00:00Z"
+  },
+  {
+    "CustomerID": "C1008",
+    "FullName": "Nguyễn Văn Cường",
+    "Gender": "Nam",
+    "BirthDate": "1985-12-15",
+    "Phone": "0905550008",
+    "Email": "cuong.nguyen@example.com",
+    "Address": {
+      "Street": "88 Trần Phú",
+      "District": "Quận 5",
+      "City": "TP.HCM",
+      "Country": "VN"
+    },
+    "MembershipType": "Regular",
+    "Points": 0,
+    "JoinDate": "2024-01-15",
+    "TotalSpent": 500000,
+    "Status": "Deleted",
+    "CreatedBy": "U1002",
+    "CreatedAt": "2024-01-15T08:00:00Z",
+    "UpdatedAt": "2025-09-01T08:00:00Z"
+  },
+  {
+    "CustomerID": "C1009",
+    "FullName": "Trần Thị Hương",
+    "Gender": "Nữ",
+    "BirthDate": "1992-07-22",
+    "Phone": "0905550009",
+    "Email": "huong.tran@example.com",
+    "Address": {
+      "Street": "45 Lê Lợi",
+      "District": "Quận 1",
+      "City": "TP.HCM",
+      "Country": "VN"
+    },
+    "MembershipType": "Premium",
+    "Points": 850,
+    "JoinDate": "2023-05-20",
+    "TotalSpent": 8500000,
+    "Status": "Suspended",
+    "CreatedBy": "U1001",
+    "CreatedAt": "2023-05-20T09:00:00Z",
+    "UpdatedAt": "2025-08-15T09:00:00Z"
   }
 ]
 export default customers;

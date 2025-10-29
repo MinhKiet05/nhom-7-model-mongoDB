@@ -85,7 +85,7 @@ const Products = () => {
           <tbody>
             {filteredProducts.length > 0 ? (
               filteredProducts.map(product => (
-                <tr key={product.ProductID}>
+                <tr key={product.ProductID} className={product.Info?.Status !== 'Active' ? 'inactive-row' : ''}>
                   <td className="product-col-id"><strong>{product.ProductID}</strong></td>
                   <td className="product-col-barcode"><code>{product.Barcode}</code></td>
                   <td className="product-col-name">

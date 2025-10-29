@@ -6,7 +6,7 @@ const Returns = () => {
   const [filteredReturns, setFilteredReturns] = useState(returns);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Hàm tìm kiếm phiếu trả hàng
+  // Hàm tìm kiếm phiếu trả hàng - hiển thị tất cả document
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -17,6 +17,7 @@ const Returns = () => {
       const filtered = returns.filter(returnItem => 
         returnItem.ReturnID.toLowerCase().includes(value) ||
         returnItem.SaleID.toLowerCase().includes(value) ||
+        returnItem.Status.toLowerCase().includes(value) ||
         returnItem.Customer.CustomerID.toLowerCase().includes(value) ||
         returnItem.Customer.FullName.toLowerCase().includes(value) ||
         returnItem.Customer.Phone.toLowerCase().includes(value) ||
@@ -81,7 +82,7 @@ const Returns = () => {
           <tbody>
             {filteredReturns.length > 0 ? (
               filteredReturns.map(returnItem => (
-                <tr key={returnItem.ReturnID}>
+                <tr key={returnItem.ReturnID} className={returnItem.Status !== 'Processed' ? 'inactive-row' : ''}>
                   <td className="return-col-id">
                     <strong>{returnItem.ReturnID}</strong>
                   </td>

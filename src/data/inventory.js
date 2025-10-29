@@ -397,6 +397,64 @@ export const inventory = [
     "Status": "Active",
     "CreatedAt": "2025-10-07",
     "UpdatedAt": "2025-10-07T10:00:00Z"
+  },
+  {
+    "InventoryID": "INV-BR-HCM-P1020",
+    "BranchID": "BR-HCM", 
+    "WarehouseID": "HCM-MAIN",
+    "Product": {
+      "ProductID": "P1020",
+      "ProductName": "Sản phẩm đã ngừng",
+      "Unit": "chiếc"
+    },
+    "Quantity": {
+      "OnHand": 0,
+      "Reserved": 0,
+      "Available": 0
+    },
+    "Cost": {
+      "UnitCost": 15000,
+      "TotalValue": 0,
+      "LastUpdated": "2025-09-15"
+    },
+    "MovementHistory": [
+      {
+        "MovementID": "ADJ-20250915-0001",
+        "Type": "Điều chỉnh",
+        "QuantityChange": -50,
+        "Date": "2025-09-15",
+        "Reference": "Ngừng kinh doanh"
+      }
+    ],
+    "ReorderPoint": 0,
+    "Status": "Inactive", 
+    "CreatedAt": "2025-07-01",
+    "UpdatedAt": "2025-09-15T08:00:00Z"
+  },
+  {
+    "InventoryID": "INV-BR-HN-P1021",
+    "BranchID": "BR-HN",
+    "WarehouseID": "HN-MAIN",
+    "Product": {
+      "ProductID": "P1021", 
+      "ProductName": "Mặt hàng tạm ngừng",
+      "Unit": "hộp"
+    },
+    "Quantity": {
+      "OnHand": 15,
+      "Reserved": 5,
+      "Available": 10
+    },
+    "Cost": {
+      "UnitCost": 25000,
+      "TotalValue": 375000,
+      "LastUpdated": "2025-08-20"
+    },
+    "MovementHistory": [],
+    "ReorderPoint": 50,
+    "Status": "Suspended",
+    "CreatedAt": "2025-06-15", 
+    "UpdatedAt": "2025-08-20T12:00:00Z"
   }
 ]
 export default inventory;

@@ -98,6 +98,46 @@ export const suppliers = [
     "Status": "Active",
     "CreatedAt": "2023-11-21",
     "UpdatedAt": "2025-09-12"
+  },
+  {
+    "SupplierID": "S1006",
+    "Name": "Công ty Thực Phẩm Đông Lạnh",
+    "TaxCode": "0316666777",
+    "Address": {
+      "Street": "123 Lê Văn Lương",
+      "District": "Nhà Bè",
+      "City": "TP.HCM",
+      "Country": "VN"
+    },
+    "Phone": "02838887777",
+    "Email": "frozen@food.vn",
+    "PaymentTerms": {
+      "Type": "NET15",
+      "CreditLimit": 75000000
+    },
+    "Status": "Inactive",
+    "CreatedAt": "2023-03-15",
+    "UpdatedAt": "2025-07-20"
+  },
+  {
+    "SupplierID": "S1007",
+    "Name": "Nhà Phân Phối Bánh Kẹo ABC",
+    "TaxCode": "0317777888",
+    "Address": {
+      "Street": "456 Nguyễn Thái Sơn",
+      "District": "Gò Vấp",
+      "City": "TP.HCM",
+      "Country": "VN"
+    },
+    "Phone": "02839999000",
+    "Email": "abc@candy.vn",
+    "PaymentTerms": {
+      "Type": "COD",
+      "CreditLimit": 0
+    },
+    "Status": "Inactive",
+    "CreatedAt": "2024-01-10",
+    "UpdatedAt": "2025-06-30"
   }
 ]
 export default suppliers;

@@ -5,11 +5,8 @@ import { inventory } from '../../data/inventory';
 function Inventory() {
   const [searchValue, setSearchValue] = useState('');
 
-  // Lọc chỉ hiển thị inventory Active
-  const activeInventory = inventory.filter(inv => inv.Status === "Active");
-
-  // Lọc theo tìm kiếm
-  const filteredInventory = activeInventory.filter(inv => {
+  // Lọc theo tìm kiếm - hiển thị tất cả inventory
+  const filteredInventory = inventory.filter(inv => {
     const searchLower = searchValue.toLowerCase();
     return (
       inv.InventoryID?.toLowerCase().includes(searchLower) ||
@@ -74,7 +71,7 @@ function Inventory() {
                   : 'normal-stock';
 
                 return (
-                  <tr key={inv.InventoryID}>
+                  <tr key={inv.InventoryID} className={inv.Status !== 'Active' ? 'inactive-row' : ''}>
                     <td className="inv-col-id">
                       <span className="inventory-id">{inv.InventoryID}</span>
                     </td>

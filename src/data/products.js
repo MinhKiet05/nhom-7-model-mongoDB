@@ -340,6 +340,74 @@ export const products = [
       "CreateDate": "2025-09-15",
       "Status": "Active"
     }
+  },
+  {
+    "ProductID": "P1011",
+    "Barcode": "8930001000111",
+    "Name": "Bánh mì sandwich",
+    "Brand": "FreshBread",
+    "Category": [
+      "Thực phẩm",
+      "Bánh mì"
+    ],
+    "Description": "Bánh mì tươi hàng ngày",
+    "Detail": [
+      {
+        "k": "trọng lượng",
+        "v": "200g"
+      }
+    ],
+    "manufactureDate": "2025-10-25",
+    "expiryDate": "2025-10-27",
+    "Price": 25000,
+    "Cost": 18000,
+    "Stock": 0,
+    "ReorderLevel": 50,
+    "Location": "HCM-B2-05",
+    "Unit": "chiếc",
+    "Supplier": {
+      "id": "S1005",
+      "name": "Gia Dụng Sạch Co."
+    },
+    "Info": {
+      "CreateBy": "U1002",
+      "CreateDate": "2025-10-01",
+      "Status": "Discontinued"
+    }
+  },
+  {
+    "ProductID": "P1012",
+    "Barcode": "8930001000122",
+    "Name": "Nước ngọt cola 330ml",
+    "Brand": "CoolDrink",
+    "Category": [
+      "Đồ uống",
+      "Nước ngọt"
+    ],
+    "Description": "Nước cola có gas",
+    "Detail": [
+      {
+        "k": "thể tích",
+        "v": "330ml"
+      }
+    ],
+    "manufactureDate": "2025-09-01",
+    "expiryDate": "2026-03-01",
+    "Price": 8000,
+    "Cost": 5500,
+    "Stock": 25,
+    "ReorderLevel": 100,
+    "Location": "HCM-A2-03",
+    "Unit": "lon",
+    "Supplier": {
+      "id": "S1001",
+      "name": "Công ty Nước Giải Khát Xanh"
+    },
+    "Info": {
+      "CreateBy": "U1001",
+      "CreateDate": "2025-09-01",
+      "Status": "Inactive"
+    }
   }
 ]
 export default products;

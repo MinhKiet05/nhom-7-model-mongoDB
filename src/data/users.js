@@ -214,6 +214,58 @@ export const users = [
     "CreateBy": "U9000",
     "CreatedAt": "2022-03-03T05:00:00Z",
     "UpdatedAt": "2025-09-10T05:00:00Z"
+  },
+  {
+    "UserID": "U1008",
+    "Username": "duc.hoang",
+    "FullName": "Hoàng Văn Đức",
+    "Email": "duc.hoang@company.com",
+    "Phone": "0918000888",
+    "Gender": "Nam",
+    "BirthDate": "1988-11-20",
+    "Address": {
+      "Street": "77 Phan Xích Long",
+      "District": "Phú Nhuận",
+      "City": "TP.HCM",
+      "Country": "VN"
+    },
+    "Role": [
+      "Sales"
+    ],
+    "Position": "Sales Executive",
+    "HireDate": "2023-02-15",
+    "Salary": 12000000,
+    "BranchID": "BR-HCM",
+    "Status": "Resigned",
+    "CreateBy": "U1001",
+    "CreatedAt": "2023-02-15T08:00:00Z",
+    "UpdatedAt": "2025-08-30T08:00:00Z"
+  },
+  {
+    "UserID": "U1009",
+    "Username": "linh.pham",
+    "FullName": "Phạm Thị Linh",
+    "Email": "linh.pham@company.com",
+    "Phone": "0919000999",
+    "Gender": "Nữ",
+    "BirthDate": "1995-04-10",
+    "Address": {
+      "Street": "33 Nguyễn Văn Cừ",
+      "District": "Ninh Kiều",
+      "City": "Cần Thơ",
+      "Country": "VN"
+    },
+    "Role": [
+      "Cashier"
+    ],
+    "Position": "Part-time Cashier",
+    "HireDate": "2024-06-01",
+    "Salary": 8000000,
+    "BranchID": "BR-CT",
+    "Status": "Inactive",
+    "CreateBy": "U1005",
+    "CreatedAt": "2024-06-01T07:00:00Z",
+    "UpdatedAt": "2025-09-15T07:00:00Z"
   }
 ]
 export default users;

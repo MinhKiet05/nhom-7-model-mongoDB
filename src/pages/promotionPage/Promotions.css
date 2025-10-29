@@ -69,7 +69,7 @@
 }
 
 table {
-  min-width: 2000px;
+  min-width: 2120px;
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -147,6 +147,12 @@ th, td {
   min-width: 120px;
 }
 
+.promo-col-status { /* Trạng thái */
+  width: 120px;
+  min-width: 120px;
+  text-align: center;
+}
+
 .promo-col-creator { /* Người tạo */
   width: 100px;
   min-width: 100px;
@@ -179,6 +185,26 @@ tbody tr:nth-child(even) {
 
 tbody tr:nth-child(even):hover {
   background-color: #f1f5f9;
+}
+
+/* Inactive rows - mờ hơn và không hover được */
+tbody tr.inactive-row {
+  opacity: 0.5;
+  background-color: #f3f4f6 !important;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+tbody tr.inactive-row:hover {
+  background-color: #f3f4f6 !important;
+}
+
+tbody tr.inactive-row:nth-child(even) {
+  background-color: #e5e7eb !important;
+}
+
+tbody tr.inactive-row:nth-child(even):hover {
+  background-color: #e5e7eb !important;
 }
 
 /* Promotion-specific styles */
@@ -373,6 +399,28 @@ tbody tr:nth-child(even):hover {
   font-size: 1.1rem;
   color: #374151;
   font-weight: 500;
+}
+
+/* Status badge styles */
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.status-badge.active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.inactive {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .no-results-suggestion {

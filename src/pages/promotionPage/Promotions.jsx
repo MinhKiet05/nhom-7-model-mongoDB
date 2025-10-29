@@ -3,9 +3,8 @@ import { promotions } from '../../data/promotions'
 import './Promotions.css'
 
 const Promotions = () => {
-  // Chỉ lấy các promotions có IsActive = true
-  const activePromotions = promotions.filter(promo => promo.IsActive === true);
-  const [filteredPromotions, setFilteredPromotions] = useState(activePromotions);
+  // Hiển thị tất cả promotions (kể cả không active)
+  const [filteredPromotions, setFilteredPromotions] = useState(promotions);
   const [searchTerm, setSearchTerm] = useState('');
 
   // Hàm tìm kiếm khuyến mãi
@@ -14,9 +13,9 @@ const Promotions = () => {
     setSearchTerm(value);
     
     if (value === '') {
-      setFilteredPromotions(activePromotions);
+      setFilteredPromotions(promotions);
     } else {
-      const filtered = activePromotions.filter(promo => 
+      const filtered = promotions.filter(promo => 
         promo.PromotionID.toLowerCase().includes(value) ||
         promo.PromotionName.toLowerCase().includes(value) ||
         promo.Description.toLowerCase().includes(value) ||
@@ -51,7 +50,7 @@ const Promotions = () => {
               <span style={{color: '#3b82f6'}}> (từ khóa: "{searchTerm}")</span>
             </>
           ) : (
-            <>Tổng cộng: <strong>{activePromotions.length}</strong> khuyến mãi <span style={{color: '#10b981', fontWeight: '600'}}>(Active)</span></>
+            <>Tổng cộng: <strong>{promotions.length}</strong> khuyến mãi</>
           )}
         </p>
       </div>
@@ -71,13 +70,14 @@ const Promotions = () => {
               <th className="promo-col-categories">Danh mục</th>
               <th className="promo-col-customer">Khách hàng</th>
               <th className="promo-col-usage">Giới hạn SD</th>
+              <th className="promo-col-status">Trạng thái</th>
               <th className="promo-col-creator">Người tạo</th>
             </tr>
           </thead>
           <tbody>
             {filteredPromotions.length > 0 ? (
               filteredPromotions.map(promo => (
-                <tr key={promo.PromotionID}>
+                <tr key={promo.PromotionID} className={!promo.IsActive ? 'inactive-row' : ''}>
                   <td className="promo-col-id">
                     <strong>{promo.PromotionID}</strong>
                   </td>
@@ -158,6 +158,11 @@ const Promotions = () => {
                       </div>
                     </div>
                   </td>
+                  <td className="promo-col-status status">
+                    <span className={`status-badge ${promo.IsActive ? 'active' : 'inactive'}`}>
+                      {promo.IsActive ? 'Hoạt động' : 'Không hoạt động'}
+                    </span>
+                  </td>
                   <td className="promo-col-creator">
                     <span className="creator">{promo.CreatedBy}</span>
                   </td>
@@ -165,7 +170,7 @@ const Promotions = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="12" className="no-results">
+                <td colSpan="13" className="no-results">
                   <div className="no-results-content">
                     <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">

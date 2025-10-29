@@ -6,9 +6,8 @@ const Customers = () => {
   // Debug: Kiểm tra data có load được không
   console.log('Customers data:', customers);
   
-  // Lọc chỉ những khách hàng có Status: "Active"
-  const activeCustomers = customers ? customers.filter(customer => customer.Status === "Active") : [];
-  const [filteredCustomers, setFilteredCustomers] = useState(activeCustomers);
+  // Hiển thị tất cả khách hàng (kể cả không active)
+  const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const [searchTerm, setSearchTerm] = useState('');
 
   // Kiểm tra nếu không có data
@@ -27,9 +26,9 @@ const Customers = () => {
     setSearchTerm(value);
     
     if (value === '') {
-      setFilteredCustomers(activeCustomers);
+      setFilteredCustomers(customers);
     } else {
-      const filtered = activeCustomers.filter(customer => 
+      const filtered = customers.filter(customer => 
         // Tìm kiếm trong tất cả các trường với kiểm tra null/undefined
         customer.CustomerID?.toLowerCase().includes(value) ||
         customer.FullName?.toLowerCase().includes(value) ||
@@ -67,7 +66,7 @@ const Customers = () => {
                 <span style={{color: '#3b82f6'}}> (từ khóa: "{searchTerm}")</span>
               </>
             ) : (
-              <>Tổng cộng: <strong>{activeCustomers.length}</strong> khách hàng hoạt động</>
+              <>Tổng cộng: <strong>{customers.length}</strong> khách hàng</>
             )}
           </p>
         </div>
@@ -87,13 +86,14 @@ const Customers = () => {
               <th className="customer-col-points">Điểm</th>
               <th className="customer-col-join-date">Ngày tham gia</th>
               <th className="customer-col-total-spent">Tổng chi tiêu</th>
+              <th className="customer-col-status">Trạng thái</th>
               <th className="customer-col-created-by">Người tạo</th>
             </tr>
           </thead>
           <tbody>
             {filteredCustomers.length > 0 ? (
               filteredCustomers.map(customer => (
-                <tr key={customer.CustomerID}>
+                <tr key={customer.CustomerID} className={customer.Status === 'Deleted' ? 'inactive-row' : ''}>
                   <td className="customer-col-id"><strong>{customer.CustomerID || 'N/A'}</strong></td>
                   <td className="customer-col-name">
                     <div className="customer-name">{customer.FullName || 'N/A'}</div>
@@ -134,12 +134,21 @@ const Customers = () => {
                   <td className="customer-col-total-spent total-spent">
                     {(customer.TotalSpent || 0).toLocaleString('vi-VN')}₫
                   </td>
+                  <td className="customer-col-status status">
+                    <span className={`status-badge ${customer.Status?.toLowerCase() || 'active'}`}>
+                      {customer.Status === 'Deleted' ? 'Đã xóa' : 
+                       customer.Status === 'Active' ? 'Hoạt động' : 
+                       customer.Status === 'Inactive' ? 'Không hoạt động' :
+                       customer.Status === 'Suspended' ? 'Tạm khóa' : 
+                       customer.Status || 'Hoạt động'}
+                    </span>
+                  </td>
                   <td className="customer-col-created-by created-by">{customer.CreatedBy || 'N/A'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="12" className="no-results">
+                <td colSpan="13" className="no-results">
                   <div className="no-results-content">
                     <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">

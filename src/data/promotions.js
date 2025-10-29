@@ -123,6 +123,44 @@ export const promotions =  [
     "CreatedBy": "U1003",
     "CreatedAt": "2025-10-01",
     "UpdatedAt": "2025-10-01"
+  },
+  {
+    "PromotionID": "PRM1006",
+    "PromotionName": "Khuyến mãi hết hạn",
+    "Description": "Giảm 20% cho tất cả sản phẩm - đã hết hạn",
+    "DiscountType": "Percentage", 
+    "DiscountValue": 20,
+    "MinPurchaseAmount": 50000,
+    "StartDate": "2025-08-01",
+    "EndDate": "2025-08-31",
+    "ApplicableProducts": [],
+    "ApplicableCategories": [],
+    "CustomerType": "All",
+    "MaxUsagePerCustomer": 1,
+    "TotalUsageLimit": 1000,
+    "IsActive": false,
+    "CreatedBy": "U1001",
+    "CreatedAt": "2025-08-01",
+    "UpdatedAt": "2025-09-01"
+  },
+  {
+    "PromotionID": "PRM1007", 
+    "PromotionName": "Flash Sale tạm ngừng",
+    "Description": "Mua 2 tặng 1 - tạm ngừng do hết hàng",
+    "DiscountType": "FreeItem",
+    "DiscountValue": 1,
+    "MinPurchaseAmount": 100000,
+    "StartDate": "2025-10-15",
+    "EndDate": "2025-11-15",
+    "ApplicableProducts": ["P1001", "P1003"],
+    "ApplicableCategories": ["Đồ uống"],
+    "CustomerType": "VIP",
+    "MaxUsagePerCustomer": 3,
+    "TotalUsageLimit": 500,
+    "IsActive": false,
+    "CreatedBy": "U1002",
+    "CreatedAt": "2025-10-10",
+    "UpdatedAt": "2025-10-20"
   }
 ]
 export default promotions;

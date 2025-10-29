@@ -153,8 +153,8 @@ th, td {
 }
 
 .inv-col-history { /* Lịch sử */
-  width: 250px;
-  min-width: 250px;
+  width: 200px;
+  min-width: 200px;
 }
 
 th {
@@ -183,6 +183,26 @@ tbody tr:nth-child(even) {
 
 tbody tr:nth-child(even):hover {
   background-color: #f1f5f9;
+}
+
+/* Inactive rows - mờ hơn và không hover được */
+tbody tr.inactive-row {
+  opacity: 0.5;
+  background-color: #f3f4f6 !important;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+tbody tr.inactive-row:hover {
+  background-color: #f3f4f6 !important;
+}
+
+tbody tr.inactive-row:nth-child(even) {
+  background-color: #e5e7eb !important;
+}
+
+tbody tr.inactive-row:nth-child(even):hover {
+  background-color: #e5e7eb !important;
 }
 
 /* Inventory-specific styles */

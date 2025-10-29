@@ -118,6 +118,36 @@ export const returns = [
       "FullName": "Đỗ Minh Tâm",
       "Phone": "0914000444"
     }
-  }
+  },
+  {
+    "ReturnID": "RT-20251009-0001",
+    "Date": "2025-10-09T14:20:00Z",
+    "SaleID": "SL-20251009-0003",
+    "Items": [
+      {
+        "ProductID": "P1007",
+        "ProductName": "Nước cam ép 330ml",
+        "Quantity": 2,
+        "Reason": "Hết hạn",
+        "RefundAmount": 24000
+      }
+    ],
+    "TotalRefund": 24000,
+    "ReturnType": "Refund",
+    "Status": "Cancelled",
+    "Notes": "Khách hủy yêu cầu trả",
+    "CreatedAt": "2025-10-09T14:20:00Z",
+    "UpdatedAt": "2025-10-09T15:30:00Z",
+    "Customer": {
+      "CustomerID": "C1005",
+      "FullName": "Hoàng Thị Mai",
+      "Phone": "0905550005"
+    },
+    "User": {
+      "UserID": "U1002",
+      "FullName": "Trần Văn Hùng",
+      "Phone": "0902000222"
+    }
+  },  
 ];
 export default returns;

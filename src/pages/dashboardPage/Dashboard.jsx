@@ -56,7 +56,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
         <button className="carousel-btn next-btn" onClick={nextSlide}>
           &#8250;
         </button>

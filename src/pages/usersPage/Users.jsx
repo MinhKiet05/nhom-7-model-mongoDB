@@ -3,9 +3,8 @@ import { users } from '../../data/users'
 import './Users.css'
 
 const Users = () => {
-  // Chỉ lấy các users có Status = "Active"
-  const activeUsers = users.filter(user => user.Status === "Active");
-  const [filteredUsers, setFilteredUsers] = useState(activeUsers);
+  // Hiển thị tất cả users (kể cả không active)
+  const [filteredUsers, setFilteredUsers] = useState(users);
   const [searchTerm, setSearchTerm] = useState('');
 
   // Hàm tìm kiếm nhân viên
@@ -14,9 +13,9 @@ const Users = () => {
     setSearchTerm(value);
     
     if (value === '') {
-      setFilteredUsers(activeUsers);
+      setFilteredUsers(users);
     } else {
-      const filtered = activeUsers.filter(user => 
+      const filtered = users.filter(user => 
         user.UserID.toLowerCase().includes(value) ||
         user.Username.toLowerCase().includes(value) ||
         user.FullName.toLowerCase().includes(value) ||
@@ -58,7 +57,7 @@ const Users = () => {
               <span style={{color: '#3b82f6'}}> (từ khóa: "{searchTerm}")</span>
             </>
           ) : (
-            <>Tổng cộng: <strong>{activeUsers.length}</strong> nhân viên <span style={{color: '#10b981', fontWeight: '600'}}>(Active)</span></>
+            <>Tổng cộng: <strong>{users.length}</strong> nhân viên</>
           )}
         </p>
       </div>
@@ -80,12 +79,13 @@ const Users = () => {
               <th className="user-col-salary">Lương</th>
               <th className="user-col-branch">Chi nhánh</th>
               <th className="user-col-hire">Ngày vào</th>
+              <th className="user-col-status">Trạng thái</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.length > 0 ? (
               filteredUsers.map(user => (
-                <tr key={user.UserID}>
+                <tr key={user.UserID} className={user.Status !== 'Active' ? 'inactive-row' : ''}>
                   <td className="user-col-id">
                     <strong>{user.UserID}</strong>
                   </td>
@@ -138,11 +138,19 @@ const Users = () => {
                   <td className="user-col-hire hire-date">
                     {new Date(user.HireDate).toLocaleDateString('vi-VN')}
                   </td>
+                  <td className="user-col-status status">
+                    <span className={`status-badge ${user.Status?.toLowerCase() || 'active'}`}>
+                      {user.Status === 'Active' ? 'Hoạt động' : 
+                       user.Status === 'Inactive' ? 'Không hoạt động' : 
+                       user.Status === 'Resigned' ? 'Đã nghỉ việc' :
+                       user.Status || 'Hoạt động'}
+                    </span>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="13" className="no-results">
+                <td colSpan="14" className="no-results">
                   <div className="no-results-content">
                     <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">

@@ -62,7 +62,7 @@ function Suppliers() {
             <tbody>
               {filteredSuppliers.map((supplier) => {
                 return (
-                  <tr key={supplier.SupplierID}>
+                  <tr key={supplier.SupplierID} className={supplier.Status !== 'Active' ? 'inactive-row' : ''}>
                     <td className="sup-col-id">
                       <span className="supplier-id">{supplier.SupplierID}</span>
                     </td>
@@ -105,7 +105,7 @@ function Suppliers() {
                     <td className="sup-col-status">
                       <span className={`status-badge ${supplier.Status?.toLowerCase()}`}>
                         {supplier.Status === 'Active' ? 'Hoạt động' : 
-                         supplier.Status === 'Inactive' ? 'Tạm ngừng' :
+                         supplier.Status === 'Inactive' ? 'Đã xóa' :
                          supplier.Status}
                       </span>
                     </td>
