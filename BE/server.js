@@ -21,6 +21,7 @@ app.use(morgan('combined'));
 app.use(cors({
   origin: [
     'http://localhost:5173',
+    'http://localhost:4173',
     process.env.FRONTEND_URL,
     // Add your Vercel URL here after deployment
     // 'https://your-app.vercel.app'
