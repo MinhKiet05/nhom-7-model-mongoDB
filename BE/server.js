@@ -23,8 +23,10 @@ app.use(cors({
     'http://localhost:5173',
     'http://localhost:4173',
     process.env.FRONTEND_URL,
-    // Add your Vercel URL here after deployment
-    // 'https://your-app.vercel.app'
+    // Vercel deployment domains
+    'https://nhom-7-model-mongodb.vercel.app',
+    'https://nhom-7-model-mongodb-git-main-minhkiet05s-projects.vercel.app',
+    /\.vercel\.app$/
   ].filter(Boolean),
   credentials: true
 }));
