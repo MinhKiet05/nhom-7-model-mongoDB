@@ -21,8 +21,22 @@ const Products = () => {
       const products = await ProductService.getAllProducts();
       
       if (Array.isArray(products)) {
-        setProducts(products);
-        setFilteredProducts(products);
+        // Ensure all products have proper structure
+        const normalizedProducts = products.map(product => ({
+          ...product,
+          ProductID: product.ProductID || '',
+          Name: product.Name || product.ProductName || '',
+          Brand: product.Brand || '',
+          Category: product.Category || '',
+          Description: product.Description || '',
+          Supplier: product.Supplier || '',
+          TaxID: Array.isArray(product.TaxID) ? product.TaxID : [],
+          Unit: Array.isArray(product.Unit) ? product.Unit : [],
+          Detail: Array.isArray(product.Detail) ? product.Detail : []
+        }));
+        
+        setProducts(normalizedProducts);
+        setFilteredProducts(normalizedProducts);
       } else {
         setError('Failed to load products - invalid response');
       }
@@ -49,10 +63,9 @@ const Products = () => {
         (product.Brand && product.Brand.toLowerCase().includes(value)) ||
         (product.Category && product.Category.toLowerCase().includes(value)) ||
         (product.Location && product.Location.toLowerCase().includes(value)) ||
-        (product.Unit && Array.isArray(product.Unit) && product.Unit.some(unit => 
+        (Array.isArray(product.Unit) && product.Unit.some(unit => 
           unit && typeof unit === 'object' && unit.name && unit.name.toLowerCase().includes(value)
         )) ||
-        (product.Unit && typeof product.Unit === 'string' && product.Unit.toLowerCase().includes(value)) ||
         (product.SupplierID && product.SupplierID.toLowerCase().includes(value))
       );
       setFilteredProducts(filtered);
@@ -152,7 +165,7 @@ const Products = () => {
                         {product.Description}
                       </div>
                       <div style={{fontSize: '10px', color: '#999', marginTop: '4px'}}>
-                        Đơn vị: {product.Unit?.[0]?.name || 'N/A'}
+                        Đơn vị: {Array.isArray(product.Unit) && product.Unit.length > 0 ? product.Unit[0].name : 'N/A'}
                       </div>
                     </div>
                   </td>
@@ -254,7 +267,11 @@ const Products = () => {
                       <div style={{fontSize: '13px', fontWeight: '600', marginBottom: '4px'}}>
                         {product.Supplier}
                       </div>
-                      
+                      {Array.isArray(product.Unit) && product.Unit.length > 0 && product.Unit[0].price && (
+                        <div style={{fontSize: '12px', color: '#059669', fontWeight: '500'}}>
+                          Giá: {Number(product.Unit[0].price).toLocaleString('vi-VN')}₫
+                        </div>
+                      )}
                     </div>
                   </td>
                 </tr>

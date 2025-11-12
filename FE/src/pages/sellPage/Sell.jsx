@@ -44,7 +44,7 @@ const Sell = () => {
           Brand: product.Brand ? String(product.Brand) : '',
           Description: product.Description ? String(product.Description) : '',
           Category: product.Category ? String(product.Category) : '',
-          Unit: product.Unit ? String(product.Unit) : '',
+          Unit: Array.isArray(product.Unit) ? product.Unit : [],
           Barcode: product.Barcode ? String(product.Barcode) : '',
           TaxID: Array.isArray(product.TaxID) ? product.TaxID : [product.TaxID].filter(Boolean)
         }));
@@ -153,33 +153,53 @@ const Sell = () => {
     const productPrices = prices.filter(price => price.ProductID === productId);
     if (productPrices.length === 0) return null;
     
-    // Find current valid price
+    // Find current valid price (prefer IsCurrent flag, then date range)
     const now = new Date();
-    for (const priceRecord of productPrices) {
-      if (Array.isArray(priceRecord.PriceList)) {
-        for (const priceItem of priceRecord.PriceList) {
-          const startDate = new Date(priceItem.Start);
-          const endDate = new Date(priceItem.End);
-          if (startDate <= now && now <= endDate) {
-            return {
-              price: priceItem.Price,
-              otherTax: priceItem.OtherTax,
-              note: priceItem.Note,
-              unitId: priceRecord.UnitID
-            };
-          }
-        }
+    
+    // First, look for prices marked as current
+    const currentPrices = productPrices.filter(price => price.IsCurrent);
+    if (currentPrices.length > 0) {
+      const validCurrentPrice = currentPrices.find(price => {
+        if (!price.Start || !price.End) return true; // No date restriction
+        const startDate = new Date(price.Start);
+        const endDate = new Date(price.End);
+        return startDate <= now && now <= endDate;
+      });
+      
+      if (validCurrentPrice) {
+        return {
+          price: validCurrentPrice.Price,
+          otherTax: Array.isArray(validCurrentPrice.OtherTax) ? validCurrentPrice.OtherTax.join(', ') : validCurrentPrice.OtherTax,
+          note: validCurrentPrice.Note,
+          unitId: validCurrentPrice.UnitID
+        };
       }
     }
     
-    // If no current price found, return the most recent one
-    const latestPrice = productPrices[0];
-    if (latestPrice && Array.isArray(latestPrice.PriceList) && latestPrice.PriceList.length > 0) {
-      const firstPrice = latestPrice.PriceList[0];
+    // If no current price, find any valid price by date range
+    const validPrice = productPrices.find(price => {
+      if (!price.Start || !price.End) return false;
+      const startDate = new Date(price.Start);
+      const endDate = new Date(price.End);
+      return startDate <= now && now <= endDate;
+    });
+    
+    if (validPrice) {
       return {
-        price: firstPrice.Price,
-        otherTax: firstPrice.OtherTax,
-        note: firstPrice.Note,
+        price: validPrice.Price,
+        otherTax: Array.isArray(validPrice.OtherTax) ? validPrice.OtherTax.join(', ') : validPrice.OtherTax,
+        note: validPrice.Note,
+        unitId: validPrice.UnitID
+      };
+    }
+    
+    // Fallback to most recent price
+    const latestPrice = productPrices[0];
+    if (latestPrice) {
+      return {
+        price: latestPrice.Price,
+        otherTax: Array.isArray(latestPrice.OtherTax) ? latestPrice.OtherTax.join(', ') : latestPrice.OtherTax,
+        note: latestPrice.Note,
         unitId: latestPrice.UnitID
       };
     }

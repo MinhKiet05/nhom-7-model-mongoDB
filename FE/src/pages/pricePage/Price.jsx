@@ -19,32 +19,58 @@ const Price = () => {
       setLoading(true);
       setError(null);
       const data = await PriceService.getAllPrices();
-      
-      if (Array.isArray(data)) {
-        // Sanitize the data to ensure all fields are strings/numbers
-        const sanitizedData = data.map(price => ({
-          ...price,
-          PriceID: price.PriceID ? String(price.PriceID) : '',
-          ProductID: price.ProductID ? String(price.ProductID) : '',
-          UnitID: price.UnitID ? String(price.UnitID) : '',
-          PriceList: Array.isArray(price.PriceList) ? price.PriceList.map(priceItem => ({
-            ...priceItem,
-            Price: priceItem.Price ? Number(priceItem.Price) : 0,
-            OtherTax: priceItem.OtherTax ? String(priceItem.OtherTax) : null,
-            Note: priceItem.Note ? String(priceItem.Note) : ''
-          })) : [],
-          Info: price.Info ? {
-            ...price.Info,
-            CreateBy: price.Info.CreateBy ? String(price.Info.CreateBy) : '',
-            Status: price.Info.Status ? String(price.Info.Status) : ''
-          } : {}
-        }));
-        
-        setPrices(sanitizedData);
-        setFilteredPrices(sanitizedData);
-      } else {
+
+      if (!Array.isArray(data)) {
         setError('Failed to load prices - invalid response');
+        return;
       }
+
+      // Normalize incoming price documents to a flat list of price entries.
+      // Support two shapes:
+      // 1) New flat document per price entry: { PriceID, ProductID, UnitID, Price, IsCurrent, Start, End, OtherTax, Note, Info }
+      // 2) Legacy grouped document: { PriceID, ProductID, UnitID, PriceList: [{ Price, Start, End, OtherTax, Note, IsCurrent }] }
+      const normalized = [];
+
+      data.forEach(doc => {
+        const looksLikeFlat = doc.hasOwnProperty('Price') || doc.hasOwnProperty('IsCurrent') || (!Array.isArray(doc.PriceList) && doc.Start);
+
+        if (looksLikeFlat) {
+          // Treat doc as a single price entry
+          normalized.push({
+            _id: doc._id,
+            PriceID: doc.PriceID ? String(doc.PriceID) : '',
+            ProductID: doc.ProductID ? String(doc.ProductID) : '',
+            UnitID: doc.UnitID ? String(doc.UnitID) : '',
+            Price: doc.Price != null ? Number(doc.Price) : 0,
+            IsCurrent: !!doc.IsCurrent,
+            Start: doc.Start || null,
+            End: doc.End || null,
+            OtherTax: Array.isArray(doc.OtherTax) ? doc.OtherTax : (doc.OtherTax ? [String(doc.OtherTax)] : []),
+            Note: doc.Note || '',
+            Info: doc.Info || {}
+          });
+        } else if (Array.isArray(doc.PriceList)) {
+          // Expand legacy PriceList entries into flat rows
+          doc.PriceList.forEach(pl => {
+            normalized.push({
+              _id: doc._id,
+              PriceID: doc.PriceID ? String(doc.PriceID) : '',
+              ProductID: doc.ProductID ? String(doc.ProductID) : '',
+              UnitID: doc.UnitID ? String(doc.UnitID) : '',
+              Price: pl.Price != null ? Number(pl.Price) : 0,
+              IsCurrent: !!pl.IsCurrent,
+              Start: pl.Start || null,
+              End: pl.End || null,
+              OtherTax: Array.isArray(pl.OtherTax) ? pl.OtherTax : (pl.OtherTax ? [String(pl.OtherTax)] : []),
+              Note: pl.Note || doc.Note || '',
+              Info: doc.Info || {}
+            });
+          });
+        }
+      });
+
+      setPrices(normalized);
+      setFilteredPrices(normalized);
     } catch (err) {
       setError('Error connecting to server: ' + err.message);
     } finally {
@@ -92,24 +118,14 @@ const Price = () => {
     return Number(amount).toLocaleString('vi-VN') + '₫';
   };
 
-  // Get current price from PriceList
-  const getCurrentPrice = (priceList) => {
-    if (!Array.isArray(priceList) || priceList.length === 0) return null;
-    
-    const now = new Date();
-    const currentPrice = priceList.find(item => {
-      const start = new Date(item.Start);
-      const end = new Date(item.End);
-      return start <= now && now <= end;
-    });
-    
-    return currentPrice || priceList[0]; // Return first if no current price found
-  };
-
-  // Check if price is expired
-  const isPriceExpired = (priceItem) => {
-    if (!priceItem || !priceItem.End) return false;
-    return new Date(priceItem.End) < new Date();
+  // Check if price entry is expired
+  const isPriceExpired = (entry) => {
+    if (!entry || !entry.End) return false;
+    try {
+      return new Date(entry.End) < new Date();
+    } catch (e) {
+      return false;
+    }
   };
 
   // Show loading state
@@ -180,18 +196,17 @@ const Price = () => {
           </thead>
           <tbody>
             {filteredPrices.length > 0 ? (
-              filteredPrices.map(price => {
-                const currentPrice = getCurrentPrice(price.PriceList);
-                const isExpired = currentPrice ? isPriceExpired(currentPrice) : false;
+              filteredPrices.map(entry => {
+                const isExpired = isPriceExpired(entry);
                 
                 return (
-                  <tr key={String(price._id || price.PriceID || Math.random())} className={price.Info?.Status !== 'Active' ? 'inactive-row' : ''}>
+                  <tr key={String(entry._id || entry.PriceID || Math.random())} className={entry.Info?.Status !== 'Active' ? 'inactive-row' : ''}>
                     {/* Mã giá */}
                     <td className="price-col-id">
                       <div className="price-id-info">
-                        <strong style={{fontSize: '14px', color: '#1f2937'}}>{price.PriceID || 'N/A'}</strong>
+                        <strong style={{fontSize: '14px', color: '#1f2937'}}>{entry.PriceID || 'N/A'}</strong>
                         <div style={{fontSize: '10px', color: '#6b7280', marginTop: '2px'}}>
-                          ID: {price._id ? String(price._id).slice(-8) : 'N/A'}
+                          ID: {entry._id ? String(entry._id).slice(-8) : 'N/A'}
                         </div>
                       </div>
                     </td>
@@ -200,10 +215,10 @@ const Price = () => {
                     <td className="price-col-product">
                       <div className="product-info">
                         <div style={{fontWeight: 'bold', fontSize: '14px', marginBottom: '4px', color: '#1f2937'}}>
-                          {price.ProductID || 'N/A'}
+                          {entry.ProductID || 'N/A'}
                         </div>
                         <div style={{fontSize: '12px', color: '#6b7280'}}>
-                          Đơn vị: <span style={{fontWeight: '500'}}>{price.UnitID || 'N/A'}</span>
+                          Đơn vị: <span style={{fontWeight: '500'}}>{entry.UnitID || 'N/A'}</span>
                         </div>
                       </div>
                     </td>
@@ -217,14 +232,14 @@ const Price = () => {
                           color: isExpired ? '#dc2626' : '#059669',
                           marginBottom: '4px'
                         }}>
-                          {currentPrice ? formatCurrency(currentPrice.Price) : 'N/A'}
+                          {entry.Price != null ? formatCurrency(entry.Price) : 'N/A'}
                         </div>
                         <div style={{
                           fontSize: '10px',
                           color: isExpired ? '#dc2626' : '#6b7280',
                           fontWeight: '500'
                         }}>
-                          {isExpired ? 'Hết hiệu lực' : 'Đang áp dụng'}
+                          {isExpired ? 'Hết hiệu lực' : (entry.IsCurrent ? 'Đang áp dụng' : 'Không phải giá hiện tại')}
                         </div>
                       </div>
                     </td>
@@ -232,12 +247,12 @@ const Price = () => {
                     {/* Thời gian áp dụng */}
                     <td className="price-col-period">
                       <div className="period-info">
-                        {currentPrice ? (
+                        {entry.Start || entry.End ? (
                           <>
                             <div style={{fontSize: '12px', marginBottom: '4px'}}>
                               <div style={{color: '#6b7280', fontSize: '10px'}}>Từ ngày:</div>
                               <div style={{fontWeight: '500', color: '#059669'}}>
-                                {formatDate(currentPrice.Start)}
+                                {formatDate(entry.Start)}
                               </div>
                             </div>
                             <div style={{fontSize: '12px'}}>
@@ -246,7 +261,7 @@ const Price = () => {
                                 fontWeight: '500',
                                 color: isExpired ? '#dc2626' : '#059669'
                               }}>
-                                {formatDate(currentPrice.End)}
+                                {formatDate(entry.End)}
                               </div>
                             </div>
                           </>
@@ -261,7 +276,7 @@ const Price = () => {
                     {/* Thuế khác */}
                     <td className="price-col-tax">
                       <div className="tax-info">
-                        {currentPrice?.OtherTax ? (
+                        {entry.OtherTax && entry.OtherTax.length > 0 ? (
                           <span style={{
                             padding: '4px 8px',
                             borderRadius: '6px',
@@ -270,7 +285,7 @@ const Price = () => {
                             backgroundColor: '#fff7ed',
                             color: '#c2410c'
                           }}>
-                            {currentPrice.OtherTax}
+                            {entry.OtherTax.join(', ')}
                           </span>
                         ) : (
                           <span style={{
@@ -293,17 +308,17 @@ const Price = () => {
                         <div style={{fontSize: '12px', marginBottom: '6px'}}>
                           <div style={{color: '#6b7280', fontSize: '10px'}}>Tạo bởi:</div>
                           <div style={{fontWeight: '500', color: '#1f2937'}}>
-                            {price.Info?.CreateBy || 'N/A'}
+                            {entry.Info?.CreateBy || 'N/A'}
                           </div>
                         </div>
                         <div style={{fontSize: '12px', marginBottom: '6px'}}>
                           <div style={{color: '#6b7280', fontSize: '10px'}}>Ngày tạo:</div>
                           <div style={{fontWeight: '500', color: '#1f2937'}}>
-                            {formatDate(price.Info?.CreateDate)}
+                            {formatDate(entry.Info?.CreateDate)}
                           </div>
                         </div>
                         <div style={{fontSize: '11px', color: '#6b7280', fontStyle: 'italic'}}>
-                          {currentPrice?.Note || 'Không có ghi chú'}
+                          {entry.Note || 'Không có ghi chú'}
                         </div>
                         <div style={{marginTop: '4px'}}>
                           <span style={{
@@ -311,10 +326,10 @@ const Price = () => {
                             borderRadius: '4px',
                             fontSize: '10px',
                             fontWeight: '600',
-                            backgroundColor: price.Info?.Status === 'Active' ? '#dcfce7' : '#fef2f2',
-                            color: price.Info?.Status === 'Active' ? '#166534' : '#dc2626'
+                            backgroundColor: entry.Info?.Status === 'Active' ? '#dcfce7' : '#fef2f2',
+                            color: entry.Info?.Status === 'Active' ? '#166534' : '#dc2626'
                           }}>
-                            {price.Info?.Status === 'Active' ? 'Hoạt động' : 'Không hoạt động'}
+                            {entry.Info?.Status === 'Active' ? 'Hoạt động' : 'Không hoạt động'}
                           </span>
                         </div>
                       </div>

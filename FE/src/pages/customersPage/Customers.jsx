@@ -73,10 +73,14 @@ const Customers = () => {
         customer.Gender?.toLowerCase().includes(value) ||
         customer.Phone?.toLowerCase().includes(value) ||
         customer.Email?.toLowerCase().includes(value) ||
-        customer.Address?.Street?.toLowerCase().includes(value) ||
-        customer.Address?.District?.toLowerCase().includes(value) ||
-        customer.Address?.City?.toLowerCase().includes(value) ||
-        customer.MembershipType?.toLowerCase().includes(value)
+        customer.MembershipType?.toLowerCase().includes(value) ||
+        // Tìm kiếm trong Address array
+        (Array.isArray(customer.Address) && customer.Address.some(addr => 
+          addr.Street?.toLowerCase().includes(value) ||
+          addr.District?.toLowerCase().includes(value) ||
+          addr.City?.toLowerCase().includes(value) ||
+          addr.Country?.toLowerCase().includes(value)
+        ))
       );
       setFilteredCustomers(filtered);
     }
@@ -174,14 +178,26 @@ const Customers = () => {
                   
                   {/* Địa chỉ */}
                   <td className="customer-col-address">
-                    {customer.Address ? (
+                    {Array.isArray(customer.Address) && customer.Address.length > 0 ? (
                       <div className="address-info" style={{fontSize: '12px'}}>
-                        <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
-                          {customer.Address.Street || 'N/A'}
-                        </div>
-                        <div style={{color: '#666'}}>
-                          {customer.Address.District || 'N/A'}, {customer.Address.City || 'N/A'}
-                        </div>
+                        {customer.Address.map((addr, index) => (
+                          <div key={index} style={{marginBottom: index < customer.Address.length - 1 ? '6px' : '0'}}>
+                            <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
+                              {addr.Street || 'N/A'}
+                            </div>
+                            <div style={{color: '#666'}}>
+                              {addr.District || 'N/A'}, {addr.City || 'N/A'}
+                            </div>
+                            {addr.Country && addr.Country !== 'Việt Nam' && (
+                              <div style={{color: '#888', fontSize: '11px'}}>
+                                {addr.Country}
+                              </div>
+                            )}
+                            {customer.Address.length > 1 && index < customer.Address.length - 1 && (
+                              <div style={{borderBottom: '1px solid #e5e7eb', margin: '4px 0'}}></div>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     ) : (
                       <span style={{color: '#9ca3af', fontStyle: 'italic', fontSize: '12px'}}>
@@ -192,25 +208,21 @@ const Customers = () => {
                   
                   {/* Hạng thành viên */}
                   <td className="customer-col-membership">
-                    <span className={`membership ${(customer.MembershipType || 'bronze').toLowerCase()}`} style={{
+                    <span className={`membership ${(customer.MembershipType || 'regular').toLowerCase()}`} style={{
                       padding: '6px 12px',
                       borderRadius: '16px',
                       fontSize: '12px',
                       fontWeight: 'bold',
                       backgroundColor: 
-                        customer.MembershipType === 'Platinum' ? '#f3e5f5' :
-                        customer.MembershipType === 'Gold' ? '#fff8e1' :
-                        customer.MembershipType === 'Silver' ? '#f5f5f5' : '#efebe9',
+                        customer.MembershipType === 'Premium' ? '#f3e5f5' :
+                        customer.MembershipType === 'VIP' ? '#fff8e1' :
+                        customer.MembershipType === 'Regular' ? '#f5f5f5' : '#efebe9',
                       color:
-                        customer.MembershipType === 'Platinum' ? '#7b1fa2' :
-                        customer.MembershipType === 'Gold' ? '#f57f17' :
-                        customer.MembershipType === 'Silver' ? '#616161' : '#5d4037'
+                        customer.MembershipType === 'Premium' ? '#7b1fa2' :
+                        customer.MembershipType === 'VIP' ? '#f57f17' :
+                        customer.MembershipType === 'Regular' ? '#616161' : '#5d4037'
                     }}>
-                      {customer.MembershipType === 'Platinum' ? 'Platinum' :
-                       customer.MembershipType === 'Gold' ? 'Gold' :
-                       customer.MembershipType === 'Silver' ? 'Silver' :
-                       customer.MembershipType === 'Bronze' ? 'Bronze' :
-                       'Regular'}
+                      {customer.MembershipType || 'Regular'}
                     </span>
                   </td>
                   

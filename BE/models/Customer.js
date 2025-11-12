@@ -7,13 +7,13 @@ const customerSchema = new mongoose.Schema({
   BirthDate: { type: Date },
   Phone: { type: String },
   Email: { type: String },
-  Address: {
-    Street: String,
-    District: String,
-    City: String,
-    Country: String
-  },
-  MembershipType: { type: String, enum: ['Bronze', 'Silver', 'Gold', 'Platinum'] },
+  Address: [{
+    Street: { type: String },
+    District: { type: String },
+    City: { type: String },
+    Country: { type: String }
+  }],
+  MembershipType: { type: String, enum: ['Regular', 'VIP', 'Premium'] },
   Points: { type: Number, default: 0 },
   JoinDate: { type: Date, default: Date.now },
   TotalSpent: { type: Number, default: 0 },

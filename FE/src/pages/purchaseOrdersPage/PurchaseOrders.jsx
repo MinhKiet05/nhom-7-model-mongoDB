@@ -42,13 +42,10 @@ function PurchaseOrders() {
     return (
       po.POID?.toLowerCase().includes(searchLower) ||
       po.SupplierID?.toLowerCase().includes(searchLower) ||
-      po.BranchID?.toLowerCase().includes(searchLower) ||
       po.OrderDate?.toLowerCase().includes(searchLower) ||
-      po.ExpectedDate?.toLowerCase().includes(searchLower) ||
       po.Status?.toLowerCase().includes(searchLower) ||
-      po.Notes?.toLowerCase().includes(searchLower) ||
-      po.Subtotal?.toString().includes(searchLower) ||
-      po.GrandTotal?.toString().includes(searchLower) ||
+      po.VAT?.toString().includes(searchLower) ||
+      po.TotalPayment?.toString().includes(searchLower) ||
       po.Items?.some(item =>
         item.ProductID?.toLowerCase().includes(searchLower) ||
         item.ProductName?.toLowerCase().includes(searchLower)
@@ -93,7 +90,7 @@ function PurchaseOrders() {
                 <th className="po-col-items">Danh sách sản phẩm</th>
                 <th className="po-col-subtotal">Tiền hàng</th>
                 <th className="po-col-vat">VAT</th>
-                <th className="po-col-total">Tổng tiền</th>
+                <th className="po-col-total">Tổng thanh toán</th>
                 <th className="po-col-created">Ngày tạo</th>
                 <th className="po-col-updated">Cập nhật cuối</th>
               </tr>
@@ -170,7 +167,7 @@ function PurchaseOrders() {
                                 {item.ProductName}
                               </div>
                               <div style={{fontSize: '11px', color: '#666', marginBottom: '4px'}}>
-                                Mã SP: {item.ProductID} • Dòng: {item.LineNo}
+                                Mã SP: {item.ProductID}
                               </div>
                               <div style={{fontSize: '12px', marginBottom: '2px'}}>
                                 Số lượng: <strong>{item.OrderedQty.toLocaleString('vi-VN')}</strong>
@@ -178,8 +175,13 @@ function PurchaseOrders() {
                               <div style={{fontSize: '12px', marginBottom: '2px'}}>
                                 Đơn giá: <strong>{item.UnitCost.toLocaleString('vi-VN')} ₫</strong>
                               </div>
+                              {item.LineDiscount > 0 && (
+                                <div style={{fontSize: '12px', marginBottom: '2px', color: '#dc2626'}}>
+                                  Giảm giá: -{item.LineDiscount.toLocaleString('vi-VN')} ₫
+                                </div>
+                              )}
                               <div style={{fontSize: '12px', fontWeight: 'bold', color: '#059669'}}>
-                                Thành tiền: {(item.OrderedQty * item.UnitCost).toLocaleString('vi-VN')} ₫
+                                Thành tiền: {item.LineTotal.toLocaleString('vi-VN')} ₫
                               </div>
                             </div>
                           ))}
@@ -194,21 +196,24 @@ function PurchaseOrders() {
                     {/* Tiền hàng */}
                     <td className="po-col-subtotal">
                       <span style={{fontFamily: 'monospace', fontWeight: '600', fontSize: '13px'}}>
-                        {po.Totals?.Subtotal ? po.Totals.Subtotal.toLocaleString('vi-VN') + ' ₫' : '-'}
+                        {po.Items && po.Items.length > 0 
+                          ? po.Items.reduce((sum, item) => sum + (item.LineTotal || 0), 0).toLocaleString('vi-VN') + ' ₫'
+                          : '-'
+                        }
                       </span>
                     </td>
 
                     {/* VAT */}
                     <td className="po-col-vat">
                       <span style={{fontFamily: 'monospace', fontWeight: '600', fontSize: '13px', color: '#dc2626'}}>
-                        {po.Totals?.VAT ? po.Totals.VAT.toLocaleString('vi-VN') + ' ₫' : '-'}
+                        {po.VAT ? po.VAT.toLocaleString('vi-VN') + ' ₫' : '-'}
                       </span>
                     </td>
 
                     {/* Tổng tiền */}
                     <td className="po-col-total">
                       <span style={{fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', color: '#059669'}}>
-                        {po.Totals?.GrandTotal ? po.Totals.GrandTotal.toLocaleString('vi-VN') + ' ₫' : '-'}
+                        {po.TotalPayment ? po.TotalPayment.toLocaleString('vi-VN') + ' ₫' : '-'}
                       </span>
                     </td>
 

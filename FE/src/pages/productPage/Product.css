@@ -66,7 +66,7 @@
 }
 
 .products-table table {
-  min-width: 1200px;
+  min-width: 1300px;
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -81,12 +81,13 @@ th, td {
   font-size: 1rem;
 }
 
-/* Column widths for 6-column layout */
+/* Column widths for 7-column layout */
 .product-col-id { width: 120px; min-width: 120px; }
-.product-col-info { width: 280px; min-width: 280px; }
-.product-col-category { width: 140px; min-width: 140px; }
-.product-col-details { width: 200px; min-width: 200px; }
-.product-col-dates { width: 150px; min-width: 150px; }
+.product-col-info { width: 260px; min-width: 260px; }
+.product-col-category { width: 130px; min-width: 130px; }
+.product-col-tax { width: 100px; min-width: 100px; }
+.product-col-details { width: 180px; min-width: 180px; }
+.product-col-dates { width: 140px; min-width: 140px; }
 .product-col-supplier { width: 160px; min-width: 160px; }
 
 th {

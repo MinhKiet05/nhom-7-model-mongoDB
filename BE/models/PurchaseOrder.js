@@ -6,26 +6,23 @@ const purchaseOrderSchema = new mongoose.Schema({
   Status: { type: String, enum: ['Draft', 'Approved', 'Received', 'Cancelled'], default: 'Draft' },
   OrderDate: { type: Date, required: true },
   Items: [{
-    LineNo: Number,
-    ProductID: String,
-    ProductName: String,
-    OrderedQty: Number,
-    UnitCost: Number
+    ProductID: { type: String, required: true },
+    ProductName: { type: String, required: true },
+    OrderedQty: { type: Number, required: true },
+    UnitCost: { type: Number, required: true },
+    LineDiscount: { type: Number, default: 0 },
+    LineTotal: { type: Number, required: true }
   }],
-  Totals: {
-    Subtotal: Number,
-    VAT: Number,
-    GrandTotal: Number
-  },
   StatusHistory: [{
-    at: Date,
-    by: String,
-    from: String,
-    to: String,
-    note: String
+    at: { type: Date, required: true },
+    from: { type: String, default: null },
+    to: { type: String, required: true }
   }],
   CreatedAt: { type: Date, default: Date.now },
-  LastUpdatedAt: { type: Date, default: Date.now }
+  LastUpdatedAt: { type: Date, default: Date.now },
+  VAT: { type: Number, default: 0 },
+  TotalDiscount: { type: Number, default: 0 },
+  TotalPayment: { type: Number, required: true }
 }, {
   collection: 'PurchaseOrders'
 });

@@ -19,7 +19,7 @@ const getPurchaseOrders = async (req, res) => {
 
 const getPurchaseOrder = async (req, res) => {
   try {
-    const order = await PurchaseOrder.findOne({ PurchaseOrderID: req.params.id });
+    const order = await PurchaseOrder.findOne({ POID: req.params.id });
     
     if (!order) {
       return res.status(404).json({
