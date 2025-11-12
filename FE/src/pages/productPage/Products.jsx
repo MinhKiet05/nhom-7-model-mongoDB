@@ -131,6 +131,7 @@ const Products = () => {
             <tr>
               <th className="product-col-id">Mã sản phẩm</th>
               <th className="product-col-info">Thông tin sản phẩm</th>
+              <th className="product-col-price">Giá bán</th>
               <th className="product-col-category">Danh mục</th>
               <th className="product-col-tax">Thuế</th>
               <th className="product-col-details">Thông số kỹ thuật</th>
@@ -167,6 +168,42 @@ const Products = () => {
                       <div style={{fontSize: '10px', color: '#999', marginTop: '4px'}}>
                         Đơn vị: {Array.isArray(product.Unit) && product.Unit.length > 0 ? product.Unit[0].name : 'N/A'}
                       </div>
+                    </div>
+                  </td>
+
+                  {/* Giá bán */}
+                  <td className="product-col-price">
+                    <div className="price-info">
+                      {Array.isArray(product.Unit) && product.Unit.length > 0 && product.Unit[0].price ? (
+                        <div style={{
+                          fontSize: '16px',
+                          fontWeight: 'bold',
+                          color: '#059669',
+                          fontFamily: 'monospace',
+                          textAlign: 'center',
+                          marginBottom: '4px'
+                        }}>
+                          {Number(product.Unit[0].price).toLocaleString('vi-VN')}₫
+                        </div>
+                      ) : (
+                        <div style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          fontStyle: 'italic',
+                          textAlign: 'center'
+                        }}>
+                          Liên hệ
+                        </div>
+                      )}
+                      {Array.isArray(product.Unit) && product.Unit.length > 0 && (
+                        <div style={{
+                          fontSize: '11px',
+                          color: '#6b7280',
+                          textAlign: 'center'
+                        }}>
+                          Đơn vị: {product.Unit[0].name || 'N/A'}
+                        </div>
+                      )}
                     </div>
                   </td>
 
@@ -267,18 +304,14 @@ const Products = () => {
                       <div style={{fontSize: '13px', fontWeight: '600', marginBottom: '4px'}}>
                         {product.Supplier}
                       </div>
-                      {Array.isArray(product.Unit) && product.Unit.length > 0 && product.Unit[0].price && (
-                        <div style={{fontSize: '12px', color: '#059669', fontWeight: '500'}}>
-                          Giá: {Number(product.Unit[0].price).toLocaleString('vi-VN')}₫
-                        </div>
-                      )}
+                      
                     </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="no-results">
+                <td colSpan="8" className="no-results">
                   <div className="no-results-content">
                     <div className="no-results-text">
                       {searchTerm ? 

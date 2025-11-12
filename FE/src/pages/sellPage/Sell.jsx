@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductService from '../../services/productService.js';
 import TaxService from '../../services/taxService.js';
-import PriceService from '../../services/priceService.js';
 import './Sell.css';
 
 const Sell = () => {
@@ -12,7 +11,6 @@ const Sell = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [taxes, setTaxes] = useState([]);
-  const [prices, setPrices] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
 
   useEffect(() => {
@@ -29,10 +27,9 @@ const Sell = () => {
       setError(null);
       
       // Load all data simultaneously
-      const [productsData, taxesData, pricesData] = await Promise.all([
+      const [productsData, taxesData] = await Promise.all([
         ProductService.getAllProducts(),
-        TaxService.getAllTaxes(),
-        PriceService.getAllPrices()
+        TaxService.getAllTaxes()
       ]);
       
       // Process products data
@@ -57,11 +54,6 @@ const Sell = () => {
       // Process taxes data
       if (Array.isArray(taxesData)) {
         setTaxes(taxesData);
-      }
-      
-      // Process prices data
-      if (Array.isArray(pricesData)) {
-        setPrices(pricesData);
       }
       
     } catch (err) {
@@ -109,14 +101,15 @@ const Sell = () => {
         );
       } else if (change > 0) {
         const product = products.find(p => p.ProductID === productId);
-        const priceInfo = getCurrentPrice(productId);
-        const currentPrice = priceInfo ? priceInfo.price : (product.Price || 0);
+        // Get price directly from product.Unit[0].price
+        const currentPrice = Array.isArray(product.Unit) && product.Unit.length > 0 && product.Unit[0].price 
+          ? product.Unit[0].price 
+          : (product.Price || 0);
         
         return [...prev, { 
           ...product, 
           quantity: 1,
-          currentPrice: currentPrice,
-          priceInfo: priceInfo
+          currentPrice: currentPrice
         }];
       }
       
@@ -146,66 +139,7 @@ const Sell = () => {
     return taxes.find(tax => tax.taxCode === taxCode);
   };
 
-  // Get current price for a product
-  const getCurrentPrice = (productId) => {
-    if (!productId || !Array.isArray(prices)) return null;
-    
-    const productPrices = prices.filter(price => price.ProductID === productId);
-    if (productPrices.length === 0) return null;
-    
-    // Find current valid price (prefer IsCurrent flag, then date range)
-    const now = new Date();
-    
-    // First, look for prices marked as current
-    const currentPrices = productPrices.filter(price => price.IsCurrent);
-    if (currentPrices.length > 0) {
-      const validCurrentPrice = currentPrices.find(price => {
-        if (!price.Start || !price.End) return true; // No date restriction
-        const startDate = new Date(price.Start);
-        const endDate = new Date(price.End);
-        return startDate <= now && now <= endDate;
-      });
-      
-      if (validCurrentPrice) {
-        return {
-          price: validCurrentPrice.Price,
-          otherTax: Array.isArray(validCurrentPrice.OtherTax) ? validCurrentPrice.OtherTax.join(', ') : validCurrentPrice.OtherTax,
-          note: validCurrentPrice.Note,
-          unitId: validCurrentPrice.UnitID
-        };
-      }
-    }
-    
-    // If no current price, find any valid price by date range
-    const validPrice = productPrices.find(price => {
-      if (!price.Start || !price.End) return false;
-      const startDate = new Date(price.Start);
-      const endDate = new Date(price.End);
-      return startDate <= now && now <= endDate;
-    });
-    
-    if (validPrice) {
-      return {
-        price: validPrice.Price,
-        otherTax: Array.isArray(validPrice.OtherTax) ? validPrice.OtherTax.join(', ') : validPrice.OtherTax,
-        note: validPrice.Note,
-        unitId: validPrice.UnitID
-      };
-    }
-    
-    // Fallback to most recent price
-    const latestPrice = productPrices[0];
-    if (latestPrice) {
-      return {
-        price: latestPrice.Price,
-        otherTax: Array.isArray(latestPrice.OtherTax) ? latestPrice.OtherTax.join(', ') : latestPrice.OtherTax,
-        note: latestPrice.Note,
-        unitId: latestPrice.UnitID
-      };
-    }
-    
-    return null;
-  };
+
 
   // Get tax display name and percentage
   const getTaxDisplay = (taxCode) => {
@@ -220,7 +154,6 @@ const Sell = () => {
       return { taxAmount: 0, taxDetails: [] };
     }
 
-    const priceInfo = getCurrentPrice(product.ProductID);
     let totalTaxAmount = 0;
     const taxDetails = [];
 
@@ -237,22 +170,6 @@ const Sell = () => {
         });
       }
     });
-
-    // Add other tax from price if exists
-    if (priceInfo && priceInfo.otherTax) {
-      const match = priceInfo.otherTax.match(/(\d+)%/);
-      if (match) {
-        const otherTaxPercent = parseFloat(match[1]);
-        const otherTaxAmount = (price * quantity * otherTaxPercent) / 100;
-        totalTaxAmount += otherTaxAmount;
-        taxDetails.push({
-          taxCode: 'OTHER',
-          taxName: priceInfo.otherTax,
-          percent: otherTaxPercent,
-          amount: otherTaxAmount
-        });
-      }
-    }
 
     return { taxAmount: totalTaxAmount, taxDetails };
   };
@@ -398,24 +315,14 @@ const Sell = () => {
                     {/* Giá bán */}
                     <td className="sell-col-price">
                       {(() => {
-                        const priceInfo = getCurrentPrice(product.ProductID);
-                        const displayPrice = priceInfo ? priceInfo.price : (product.Price || 0);
+                        // Get price directly from product.Unit[0].price
+                        const displayPrice = Array.isArray(product.Unit) && product.Unit.length > 0 && product.Unit[0].price 
+                          ? product.Unit[0].price 
+                          : (product.Price || 0);
                         
-                        // Get unit name from product.Unit array or priceInfo.unitId
-                        let displayUnit = 'đơn vị';
-                        if (Array.isArray(product.Unit) && product.Unit.length > 0) {
-                          displayUnit = product.Unit[0].name;
-                        } else if (priceInfo && priceInfo.unitId) {
-                          // Check if unitId matches any Unit in product.Unit array
-                          if (Array.isArray(product.Unit)) {
-                            const matchedUnit = product.Unit.find(unit => unit.id === priceInfo.unitId);
-                            displayUnit = matchedUnit ? matchedUnit.name : priceInfo.unitId;
-                          } else {
-                            displayUnit = priceInfo.unitId;
-                          }
-                        } else if (product.Unit) {
-                          displayUnit = product.Unit;
-                        }
+                        const displayUnit = Array.isArray(product.Unit) && product.Unit.length > 0 
+                          ? product.Unit[0].name 
+                          : 'đơn vị';
                         
                         return (
                           <>
@@ -429,8 +336,13 @@ const Sell = () => {
                             }}>
                               {displayPrice ? `${Number(displayPrice).toLocaleString('vi-VN')}₫` : 'Liên hệ'}
                             </div>
-                            
-                            
+                            <div style={{
+                              fontSize: '11px',
+                              color: '#6b7280',
+                              textAlign: 'center'
+                            }}>
+                              {displayUnit}
+                            </div>
                           </>
                         );
                       })()}
@@ -502,8 +414,10 @@ const Sell = () => {
                         </button>
                       </div>
                       {getSelectedQuantity(product.ProductID) > 0 && (() => {
-                        const priceInfo = getCurrentPrice(product.ProductID);
-                        const currentPrice = priceInfo ? priceInfo.price : (product.Price || 0);
+                        // Get price directly from product.Unit[0].price
+                        const currentPrice = Array.isArray(product.Unit) && product.Unit.length > 0 && product.Unit[0].price 
+                          ? product.Unit[0].price 
+                          : (product.Price || 0);
                         const quantity = getSelectedQuantity(product.ProductID);
                         const totalPrice = Number(currentPrice) * quantity;
                         

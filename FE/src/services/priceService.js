@@ -9,7 +9,7 @@ class PriceService extends ApiService {
   async getAllPrices() {
     try {
       const response = await this.get('');
-      return response.data || [];
+      return response || [];
     } catch (error) {
       console.error('Error fetching prices:', error);
       return [];

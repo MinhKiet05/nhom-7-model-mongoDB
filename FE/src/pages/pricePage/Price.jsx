@@ -69,9 +69,12 @@ const Price = () => {
         }
       });
 
+      console.log('✅ Normalized prices:', normalized);
+      console.log(`📈 Total entries: ${normalized.length}`);
       setPrices(normalized);
       setFilteredPrices(normalized);
     } catch (err) {
+      console.error('❌ Error loading prices:', err);
       setError('Error connecting to server: ' + err.message);
     } finally {
       setLoading(false);

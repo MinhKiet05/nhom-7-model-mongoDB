@@ -66,7 +66,7 @@
 }
 
 .products-table table {
-  min-width: 1300px;
+  min-width: 1430px;
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -81,14 +81,15 @@ th, td {
   font-size: 1rem;
 }
 
-/* Column widths for 7-column layout */
+/* Column widths for 8-column layout */
 .product-col-id { width: 120px; min-width: 120px; }
-.product-col-info { width: 260px; min-width: 260px; }
-.product-col-category { width: 130px; min-width: 130px; }
+.product-col-info { width: 240px; min-width: 240px; }
+.product-col-price { width: 130px; min-width: 130px; }
+.product-col-category { width: 120px; min-width: 120px; }
 .product-col-tax { width: 100px; min-width: 100px; }
-.product-col-details { width: 180px; min-width: 180px; }
+.product-col-details { width: 160px; min-width: 160px; }
 .product-col-dates { width: 140px; min-width: 140px; }
-.product-col-supplier { width: 160px; min-width: 160px; }
+.product-col-supplier { width: 150px; min-width: 150px; }
 
 th {
   background-color: #f9fafb;
@@ -138,6 +139,18 @@ tbody tr:nth-child(even):hover {
   display: flex;
   flex-direction: column;
   gap: 3px;
+}
+
+/* Price info components */
+.price-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
 }
 
 /* No results styling */

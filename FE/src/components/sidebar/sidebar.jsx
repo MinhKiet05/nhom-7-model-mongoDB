@@ -5,9 +5,9 @@ import { NavLink } from 'react-router-dom';
 import './sidebar.css'; // File CSS để tạo kiểu
 
 // Import icons từ react-icons
-import { 
-  LuUsers, LuClock, LuShoppingCart, LuTag, LuPackage, 
-  LuArchive, LuTrendingUp, LuDollarSign, LuUndo, 
+import {
+  LuUsers, LuClock, LuShoppingCart, LuTag, LuPackage,
+  LuArchive, LuTrendingUp, LuDollarSign, LuUndo,
   LuTruck, LuClipboardList
 } from "react-icons/lu";
 
@@ -24,15 +24,9 @@ const Sidebar = () => {
         <p className="nav-section-title">QUẢN LÝ</p>
         <ul>
           <li>
-            <NavLink to="/users">
-              <LuUsers />
-              <span>Users (Nhân viên)</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/work-shifts">
-              <LuClock />
-              <span>Work Shifts (Ca làm việc)</span>
+            <NavLink to="/sell">
+              <LuClipboardList />
+              <span>Sell (Bán hàng)</span>
             </NavLink>
           </li>
           <li>
@@ -42,9 +36,15 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/promotions">
-              <LuTag />
-              <span>Promotions (Khuyến mãi)</span>
+            <NavLink to="/inventory">
+              <LuArchive />
+              <span>Inventory (Tồn kho)</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/price">
+              <LuClipboardList />
+              <span>Price (Giá cả)</span>
             </NavLink>
           </li>
           <li>
@@ -54,33 +54,9 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/inventory">
-              <LuArchive />
-              <span>Inventory (Tồn kho)</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/reports">
-              <LuTrendingUp />
-              <span>Reports (Báo cáo - Thống kê)</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/sales">
-              <LuDollarSign />
-              <span>Sales (Hóa đơn bán hàng)</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/returns">
-              <LuUndo />
-              <span>Returns (Đổi/Trả)</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/suppliers">
-              <LuTruck />
-              <span>Suppliers (Nhà cung cấp)</span>
+            <NavLink to="/promotions">
+              <LuTag />
+              <span>Promotions (Khuyến mãi)</span>
             </NavLink>
           </li>
           <li>
@@ -90,9 +66,33 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/sell">
-              <LuClipboardList />
-              <span>Sell (Bán hàng)</span>
+            <NavLink to="/reports">
+              <LuTrendingUp />
+              <span>Reports (Báo cáo - Thống kê)</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/returns">
+              <LuUndo />
+              <span>Returns (Đổi/Trả)</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/sales">
+              <LuDollarSign />
+              <span>Sales (Hóa đơn bán hàng)</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/suppliers">
+              <LuTruck />
+              <span>Suppliers (Nhà cung cấp)</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/users">
+              <LuUsers />
+              <span>Users (Nhân viên)</span>
             </NavLink>
           </li>
           <li>
@@ -102,9 +102,9 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/price">
-              <LuClipboardList />
-              <span>Price (Giá cả)</span>
+            <NavLink to="/work-shifts">
+              <LuClock />
+              <span>Work Shifts (Ca làm việc)</span>
             </NavLink>
           </li>
         </ul>
