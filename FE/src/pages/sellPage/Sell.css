@@ -74,7 +74,7 @@
 
 /* Table structure */
 .products-table table {
-  min-width: 900px;
+  min-width: 1120px;
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -91,11 +91,13 @@
   font-size: 13px;
 }
 
-/* Column widths - 4 columns optimized */
-.sell-col-id { width: 140px; min-width: 140px; }
-.sell-col-info { width: 400px; min-width: 400px; }
-.sell-col-category { width: 140px; min-width: 140px; }
-.sell-col-quantity { width: 200px; min-width: 200px; text-align: center; }
+/* Column widths - 6 columns optimized */
+.sell-col-id { width: 120px; min-width: 120px; }
+.sell-col-info { width: 300px; min-width: 300px; }
+.sell-col-price { width: 120px; min-width: 120px; text-align: center; }
+.sell-col-category { width: 120px; min-width: 120px; }
+.sell-col-tax { width: 140px; min-width: 140px; }
+.sell-col-quantity { width: 180px; min-width: 180px; text-align: center; }
 
 /* Table header */
 .products-table th {
@@ -200,16 +202,27 @@
   border-radius: 4px;
 }
 
+/* Price column styling */
+.sell-col-price {
+  background: rgba(5, 150, 105, 0.02);
+  border-left: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+}
+
+.products-table tbody tr:hover .sell-col-price {
+  background: rgba(5, 150, 105, 0.05);
+}
+
 /* Checkout section */
 .checkout-section {
   position: fixed;
-  bottom: 20px;
+  top: 20px;
   right: 20px;
   z-index: 1000;
 }
 
 .checkout-btn {
-  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  background: #2980b9;
   color: white;
   border: none;
   border-radius: 12px;
@@ -290,11 +303,13 @@
 /* Responsive design */
 @media (max-width: 1200px) {
   .products-table table {
-    min-width: 800px;
+    min-width: 1000px;
   }
   
-  .sell-col-info { width: 350px; }
-  .sell-col-quantity { width: 180px; }
+  .sell-col-info { width: 260px; }
+  .sell-col-price { width: 100px; }
+  .sell-col-tax { width: 120px; }
+  .sell-col-quantity { width: 160px; }
 }
 
 @media (max-width: 768px) {
@@ -317,5 +332,230 @@
   .sell-content {
     height: calc(100vh - 280px);
     padding-bottom: 80px;
+  }
+}
+
+/* Checkout Modal */
+.checkout-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.checkout-modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #3498db;
+  color: white;
+}
+
+.checkout-modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  color: black;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.checkout-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.selected-products h3,
+.tax-breakdown h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.checkout-product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.checkout-product-item:last-child {
+  border-bottom: none;
+}
+
+.product-name {
+  font-weight: 500;
+  color: #374151;
+  flex: 1;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.product-details span:first-child {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.product-subtotal {
+  font-weight: 600;
+  color: #059669;
+  font-family: monospace;
+}
+
+.tax-breakdown {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.tax-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.tax-item span:first-child {
+  color: #374151;
+}
+
+.tax-item span:last-child {
+  font-weight: 600;
+  color: #c2410c;
+  font-family: monospace;
+}
+
+.checkout-summary {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.summary-row.total {
+  padding-top: 12px;
+  margin-top: 8px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.summary-row span:last-child {
+  font-family: monospace;
+}
+
+.summary-row.total span:last-child {
+  color: #059669;
+}
+
+.checkout-modal-footer {
+  display: flex;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.cancel-btn,
+.confirm-checkout-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background-color: #2980b9;
+}
+
+.cancel-btn {
+  background: white;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.cancel-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.confirm-checkout-btn {
+  border: none;
+  color: white;
+}
+
+.confirm-checkout-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Responsive modal */
+@media (max-width: 768px) {
+  .checkout-modal {
+    margin: 10px;
+    max-width: calc(100vw - 20px);
+  }
+  
+  .checkout-modal-header,
+  .checkout-modal-body,
+  .checkout-modal-footer {
+    padding: 16px;
   }
 }

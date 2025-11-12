@@ -13,6 +13,7 @@ const Sell = () => {
   const [error, setError] = useState(null);
   const [taxes, setTaxes] = useState([]);
   const [prices, setPrices] = useState([]);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   useEffect(() => {
     loadAllData();
@@ -193,6 +194,92 @@ const Sell = () => {
     return `${taxInfo.name} (${taxInfo.percent}%)`;
   };
 
+  // Calculate tax for a product
+  const calculateProductTax = (product, quantity, price) => {
+    if (!Array.isArray(product.TaxID) || product.TaxID.length === 0) {
+      return { taxAmount: 0, taxDetails: [] };
+    }
+
+    const priceInfo = getCurrentPrice(product.ProductID);
+    let totalTaxAmount = 0;
+    const taxDetails = [];
+
+    product.TaxID.forEach(taxCode => {
+      const taxInfo = getTaxInfo(taxCode);
+      if (taxInfo && taxInfo.status === 'active') {
+        const taxAmount = (price * quantity * taxInfo.percent) / 100;
+        totalTaxAmount += taxAmount;
+        taxDetails.push({
+          taxCode: taxCode,
+          taxName: taxInfo.name,
+          percent: taxInfo.percent,
+          amount: taxAmount
+        });
+      }
+    });
+
+    // Add other tax from price if exists
+    if (priceInfo && priceInfo.otherTax) {
+      const match = priceInfo.otherTax.match(/(\d+)%/);
+      if (match) {
+        const otherTaxPercent = parseFloat(match[1]);
+        const otherTaxAmount = (price * quantity * otherTaxPercent) / 100;
+        totalTaxAmount += otherTaxAmount;
+        taxDetails.push({
+          taxCode: 'OTHER',
+          taxName: priceInfo.otherTax,
+          percent: otherTaxPercent,
+          amount: otherTaxAmount
+        });
+      }
+    }
+
+    return { taxAmount: totalTaxAmount, taxDetails };
+  };
+
+  // Calculate total tax for all selected products
+  const getTotalTaxBreakdown = () => {
+    let totalSubtotal = 0;
+    let totalTaxAmount = 0;
+    const taxSummary = {};
+
+    selectedProducts.forEach(item => {
+      const price = item.currentPrice || item.Price || 0;
+      const subtotal = Number(price) * Number(item.quantity || 0);
+      totalSubtotal += subtotal;
+
+      const { taxAmount, taxDetails } = calculateProductTax(item, item.quantity, price);
+      totalTaxAmount += taxAmount;
+
+      // Aggregate tax by type
+      taxDetails.forEach(tax => {
+        const key = `${tax.taxCode}_${tax.percent}`;
+        if (!taxSummary[key]) {
+          taxSummary[key] = {
+            taxName: tax.taxName,
+            percent: tax.percent,
+            amount: 0
+          };
+        }
+        taxSummary[key].amount += tax.amount;
+      });
+    });
+
+    return {
+      subtotal: totalSubtotal,
+      totalTax: totalTaxAmount,
+      total: totalSubtotal + totalTaxAmount,
+      taxBreakdown: Object.values(taxSummary)
+    };
+  };
+
+  // Handle checkout
+  const handleCheckout = () => {
+    if (selectedProducts.length > 0) {
+      setShowCheckout(true);
+    }
+  };
+
   if (loading) {
     return (
       <div className="page-content">
@@ -252,7 +339,9 @@ const Sell = () => {
               <tr>
                 <th className="sell-col-id">Mã sản phẩm</th>
                 <th className="sell-col-info">Thông tin sản phẩm</th>
+                <th className="sell-col-price">Giá bán</th>
                 <th className="sell-col-category">Danh mục</th>
+                <th className="sell-col-tax">Thuế</th>
                 <th className="sell-col-quantity">Số lượng</th>
               </tr>
             </thead>
@@ -282,33 +371,46 @@ const Sell = () => {
                         {product.Description || 'N/A'}
                       </div>
                       <div style={{fontSize: '11px', color: '#666'}}>
-                        Đơn vị: {product.Unit || 'N/A'}
+                        Đơn vị: {Array.isArray(product.Unit) && product.Unit.length > 0 ? product.Unit[0].name : (product.Unit || 'N/A')}
                       </div>
+                    </td>
+
+                    {/* Giá bán */}
+                    <td className="sell-col-price">
                       {(() => {
                         const priceInfo = getCurrentPrice(product.ProductID);
                         const displayPrice = priceInfo ? priceInfo.price : (product.Price || 0);
-                        const displayUnit = priceInfo ? priceInfo.unitId : (product.Unit || 'đơn vị');
+                        
+                        // Get unit name from product.Unit array or priceInfo.unitId
+                        let displayUnit = 'đơn vị';
+                        if (Array.isArray(product.Unit) && product.Unit.length > 0) {
+                          displayUnit = product.Unit[0].name;
+                        } else if (priceInfo && priceInfo.unitId) {
+                          // Check if unitId matches any Unit in product.Unit array
+                          if (Array.isArray(product.Unit)) {
+                            const matchedUnit = product.Unit.find(unit => unit.id === priceInfo.unitId);
+                            displayUnit = matchedUnit ? matchedUnit.name : priceInfo.unitId;
+                          } else {
+                            displayUnit = priceInfo.unitId;
+                          }
+                        } else if (product.Unit) {
+                          displayUnit = product.Unit;
+                        }
+                        
                         return (
                           <>
                             <div style={{
-                              fontSize: '14px',
+                              fontSize: '16px',
                               fontWeight: 'bold',
                               color: '#059669',
                               fontFamily: 'monospace',
-                              marginTop: '4px'
+                              textAlign: 'center',
+                              marginBottom: '4px'
                             }}>
-                              {displayPrice ? `${Number(displayPrice).toLocaleString('vi-VN')}₫/${displayUnit}` : 'Liên hệ'}
+                              {displayPrice ? `${Number(displayPrice).toLocaleString('vi-VN')}₫` : 'Liên hệ'}
                             </div>
-                            {priceInfo && priceInfo.otherTax && (
-                              <div style={{
-                                fontSize: '10px',
-                                color: '#c2410c',
-                                fontWeight: '600',
-                                marginTop: '2px'
-                              }}>
-                                {priceInfo.otherTax}
-                              </div>
-                            )}
+                            
+                            
                           </>
                         );
                       })()}
@@ -326,29 +428,36 @@ const Sell = () => {
                       }}>
                         {product.Category || 'N/A'}
                       </span>
+                    </td>
+
+                    {/* Thuế */}
+                    <td className="sell-col-tax">
                       {Array.isArray(product.TaxID) && product.TaxID.length > 0 ? (
                         product.TaxID.map((taxCode, index) => {
                           const taxInfo = getTaxInfo(taxCode);
                           return (
                             <div key={index} style={{
+                              padding: '2px 6px',
+                              borderRadius: '4px',
                               fontSize: '10px',
-                              color: taxInfo ? (taxInfo.percent <= 5 ? '#059669' : '#dc2626') : '#6b7280',
                               fontWeight: '600',
-                              marginTop: '4px'
+                              marginBottom: '2px',
+                              backgroundColor: taxInfo ? (taxInfo.percent <= 5 ? '#dcfce7' : '#fef2f2') : '#f3f4f6',
+                              color: taxInfo ? (taxInfo.percent <= 5 ? '#059669' : '#dc2626') : '#6b7280',
+                              display: 'inline-block'
                             }}>
-                              {taxInfo ? `${taxInfo.name}: ${taxInfo.percent}%` : `Thuế: ${taxCode}`}
+                              {taxInfo ? `${taxInfo.name}` : taxCode}
                             </div>
                           );
                         })
                       ) : (
-                        <div style={{
+                        <span style={{
                           fontSize: '11px',
                           color: '#6b7280',
-                          fontWeight: '600',
-                          marginTop: '4px'
+                          fontStyle: 'italic'
                         }}>
-                          Thuế: Không áp dụng
-                        </div>
+                          Không áp dụng
+                        </span>
                       )}
                     </td>
 
@@ -395,7 +504,7 @@ const Sell = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="no-results">
+                  <td colSpan="6" className="no-results">
                     <div className="no-results-content">
                       <div className="no-results-text">
                         {searchTerm ? 
@@ -416,7 +525,11 @@ const Sell = () => {
 
         {/* Checkout Button */}
         <div className="checkout-section">
-          <button className="checkout-btn" disabled={selectedProducts.length === 0}>
+          <button 
+            className="checkout-btn" 
+            disabled={selectedProducts.length === 0}
+            onClick={handleCheckout}
+          >
             <div className="checkout-info">
               <div className="checkout-items">
                 {getTotalItems()} sản phẩm
@@ -431,6 +544,104 @@ const Sell = () => {
           </button>
         </div>
       </div>
+
+      {/* Checkout Modal */}
+      {showCheckout && (() => {
+        const calculation = getTotalTaxBreakdown();
+        return (
+          <div className="checkout-modal-overlay" onClick={() => setShowCheckout(false)}>
+            <div className="checkout-modal" onClick={e => e.stopPropagation()}>
+              <div className="checkout-modal-header">
+                <h2>Chi tiết thanh toán</h2>
+                <button 
+                  className="close-btn"
+                  onClick={() => setShowCheckout(false)}
+                >
+                  ×
+                </button>
+              </div>
+              
+              <div className="checkout-modal-body">
+                {/* Selected Products */}
+                <div className="selected-products">
+                  <h3>Sản phẩm đã chọn</h3>
+                  {selectedProducts.map(item => {
+                    const price = item.currentPrice || item.Price || 0;
+                    const subtotal = Number(price) * Number(item.quantity || 0);
+                    const { taxAmount } = calculateProductTax(item, item.quantity, price);
+                    
+                    return (
+                      <div key={item.ProductID} className="checkout-product-item">
+                        <div className="product-name">{item.Name}</div>
+                        <div className="product-details">
+                          <span>{item.quantity} × {Number(price).toLocaleString('vi-VN')}₫</span>
+                          <span className="product-subtotal">
+                            {subtotal.toLocaleString('vi-VN')}₫
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Tax Breakdown */}
+                <div className="tax-breakdown">
+                  <h3>Chi tiết thuế</h3>
+                  {calculation.taxBreakdown.length > 0 ? (
+                    calculation.taxBreakdown.map((tax, index) => (
+                      <div key={index} className="tax-item">
+                        <span>{tax.taxName} ({tax.percent}%)</span>
+                        <span>{tax.amount.toLocaleString('vi-VN')}₫</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="tax-item">
+                      <span>Không có thuế</span>
+                      <span>0₫</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Total Summary */}
+                <div className="checkout-summary">
+                  <div className="summary-row">
+                    <span>Tổng tiền hàng:</span>
+                    <span>{calculation.subtotal.toLocaleString('vi-VN')}₫</span>
+                  </div>
+                  <div className="summary-row">
+                    <span>Tổng thuế:</span>
+                    <span>{calculation.totalTax.toLocaleString('vi-VN')}₫</span>
+                  </div>
+                  <div className="summary-row total">
+                    <span>Tổng cộng:</span>
+                    <span>{calculation.total.toLocaleString('vi-VN')}₫</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="checkout-modal-footer">
+                <button 
+                  className="cancel-btn"
+                  onClick={() => setShowCheckout(false)}
+                >
+                  Hủy
+                </button>
+                        <button
+                            className="confirm-checkout-btn"
+                            onClick={() => {
+                                alert('Thanh toán thành công!');
+                                setShowCheckout(false);
+                                setSelectedProducts([]);
+                            }}
+                            style={{backgroundColor:"#3498db"}}
+                >
+                  Xác nhận thanh toán
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 };

@@ -119,6 +119,7 @@ const Products = () => {
               <th className="product-col-id">Mã sản phẩm</th>
               <th className="product-col-info">Thông tin sản phẩm</th>
               <th className="product-col-category">Danh mục</th>
+              <th className="product-col-tax">Thuế</th>
               <th className="product-col-details">Thông số kỹ thuật</th>
               <th className="product-col-dates">Ngày sản xuất/HSD</th>
               <th className="product-col-supplier">Nhà cung cấp</th>
@@ -169,9 +170,38 @@ const Products = () => {
                     }}>
                       {product.Category}
                     </div>
-                    <div style={{fontSize: '10px', color: '#666', marginTop: '4px', textAlign: 'center'}}>
-                      Thuế: {product.TaxID?.[0] || 'N/A'}
-                    </div>
+                  </td>
+
+                  {/* Thuế */}
+                  <td className="product-col-tax">
+                    {Array.isArray(product.TaxID) && product.TaxID.length > 0 ? (
+                      product.TaxID.map((taxCode, index) => (
+                        <div key={index} style={{
+                          padding: '4px 8px',
+                          backgroundColor: '#fef3c7',
+                          color: '#92400e',
+                          borderRadius: '6px',
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          textAlign: 'center',
+                          marginBottom: index < product.TaxID.length - 1 ? '4px' : '0'
+                        }}>
+                          {taxCode}
+                        </div>
+                      ))
+                    ) : (
+                      <div style={{
+                        padding: '4px 8px',
+                        backgroundColor: '#f3f4f6',
+                        color: '#6b7280',
+                        borderRadius: '6px',
+                        fontSize: '11px',
+                        fontWeight: '600',
+                        textAlign: 'center'
+                      }}>
+                        Không có
+                      </div>
+                    )}
                   </td>
 
                   {/* Thông số kỹ thuật */}
@@ -231,7 +261,7 @@ const Products = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="no-results">
+                <td colSpan="7" className="no-results">
                   <div className="no-results-content">
                     <div className="no-results-text">
                       {searchTerm ? 
