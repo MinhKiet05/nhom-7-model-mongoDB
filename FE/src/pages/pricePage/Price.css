@@ -54,12 +54,33 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border: 1px solid #e5e7eb;
+  height: 60vh;
+  overflow-y: auto;
 }
 
 .price-table table {
   width: 100%;
   border-collapse: collapse;
   font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Custom scrollbar styling */
+.price-table::-webkit-scrollbar {
+  width: 8px;
+}
+
+.price-table::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.price-table::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.price-table::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* Table Header */
