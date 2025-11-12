@@ -89,6 +89,24 @@ const Sidebar = () => {
               <span>Purchase Orders (Phiếu nhập hàng)</span>
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/sell">
+              <LuClipboardList />
+              <span>Sell (Bán hàng)</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/VAT">
+              <LuClipboardList />
+              <span>VAT (Thuế GTGT)</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/price">
+              <LuClipboardList />
+              <span>Price (Giá cả)</span>
+            </NavLink>
+          </li>
         </ul>
       </nav>
 

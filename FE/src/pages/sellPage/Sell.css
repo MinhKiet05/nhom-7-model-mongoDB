@@ -1,0 +1,321 @@
+/* Sell CSS - Professional point of sale interface */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+/* Search container */
+.search-container {
+  margin-bottom: 8px;
+}
+
+.search-input-main {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.search-input-main:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.search-input-main::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Sell content layout */
+.sell-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 200px);
+}
+
+/* Products table container */
+.products-table {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Scrollbar styling */
+.products-table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.products-table::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.products-table::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.products-table::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Table structure */
+.products-table table {
+  min-width: 900px;
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.products-table th,
+.products-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+  font-size: 13px;
+}
+
+/* Column widths - 4 columns optimized */
+.sell-col-id { width: 140px; min-width: 140px; }
+.sell-col-info { width: 400px; min-width: 400px; }
+.sell-col-category { width: 140px; min-width: 140px; }
+.sell-col-quantity { width: 200px; min-width: 200px; text-align: center; }
+
+/* Table header */
+.products-table th {
+  background: #f9fafb;
+  color: black;
+  font-weight: 600;
+  font-size: 13px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.products-table td {
+  color: #374151;
+}
+
+/* Table row effects */
+.products-table tbody tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.products-table tbody tr:hover {
+  background: linear-gradient(90deg, #f0fdf4 0%, #ecfdf5 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
+}
+
+.products-table tbody tr:nth-child(even) {
+  background: #fafbfc;
+}
+
+.products-table tbody tr:nth-child(even):hover {
+  background: linear-gradient(90deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+/* Quantity controls */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.quantity-btn {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-btn:hover:not(:disabled) {
+  border-color: #3b82f6;
+  background: #f8fafc;
+}
+
+.quantity-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.quantity-btn:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+}
+
+.quantity-btn.decrease {
+  color: #dc2626;
+}
+
+.quantity-btn.decrease:hover:not(:disabled) {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
+.quantity-btn.increase {
+  color: #059669;
+}
+
+.quantity-btn.increase:hover:not(:disabled) {
+  border-color: #059669;
+  background: #f0fdf4;
+}
+
+.quantity-display {
+  min-width: 40px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 4px 8px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+}
+
+/* Checkout section */
+.checkout-section {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.checkout-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.checkout-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.checkout-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.checkout-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-btn:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.checkout-text {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.checkout-total {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+/* No results message */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+}
+
+.no-results-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.no-results-text {
+  font-weight: 600;
+  color: #475569;
+  font-size: 16px;
+}
+
+.no-results-suggestion {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .products-table table {
+    min-width: 800px;
+  }
+  
+  .sell-col-info { width: 350px; }
+  .sell-col-quantity { width: 180px; }
+}
+
+@media (max-width: 768px) {
+  .checkout-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .checkout-btn {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .sell-content {
+    height: calc(100vh - 280px);
+    padding-bottom: 80px;
+  }
+}

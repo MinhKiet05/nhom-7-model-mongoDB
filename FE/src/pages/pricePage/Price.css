@@ -1,0 +1,387 @@
+/* Price.css - Professional Price Management Styling */
+
+.page-content {
+  padding: 24px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  margin-left: 280px;
+}
+
+.page-content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 24px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Search Container */
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input-main {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #374151;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input-main:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-input-main::placeholder {
+  color: #9ca3af;
+}
+
+/* Table Info */
+.table-info {
+  margin-bottom: 16px;
+}
+
+/* Price Table Styling */
+.price-table {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.price-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Table Header */
+.price-table thead {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.price-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Column Widths */
+.price-col-id {
+  width: 12%;
+}
+
+.price-col-product {
+  width: 15%;
+}
+
+.price-col-current {
+  width: 15%;
+}
+
+.price-col-period {
+  width: 18%;
+}
+
+.price-col-tax {
+  width: 15%;
+}
+
+.price-col-info {
+  width: 25%;
+}
+
+/* Table Body */
+.price-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.price-table tbody tr:hover {
+  background-color: #f0fdf4;
+}
+
+.price-table tbody tr.inactive-row {
+  background-color: #fef2f2;
+  opacity: 0.8;
+}
+
+.price-table tbody tr.inactive-row:hover {
+  background-color: #fde8e8;
+}
+
+.price-table td {
+  padding: 16px 12px;
+  vertical-align: top;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* Price ID Column */
+.price-id-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Product Info Column */
+.product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Current Price Column */
+.current-price {
+  text-align: center;
+}
+
+/* Period Info Column */
+.period-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.period-info > div {
+  margin-bottom: 4px;
+}
+
+/* Tax Info Column */
+.tax-info {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 8px;
+}
+
+/* Info Details Column */
+.info-details {
+  display: flex;
+  flex-direction: column;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f9fafb;
+}
+
+.no-results-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.no-results-text {
+  font-size: 16px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.no-results-suggestion {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* Status and Tag Styling */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.status-active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-inactive {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.tax-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tax-present {
+  background-color: #fff7ed;
+  color: #c2410c;
+}
+
+.tax-absent {
+  background-color: #f0f9ff;
+  color: #0369a1;
+}
+
+/* Price Status Indicators */
+.price-expired {
+  color: #dc2626 !important;
+}
+
+.price-active {
+  color: #059669 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .page-content {
+    margin-left: 0;
+    padding: 16px;
+  }
+  
+  .price-table {
+    overflow-x: auto;
+  }
+  
+  .price-table table {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 12px;
+  }
+  
+  .page-content h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .search-input-main {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .price-table th,
+  .price-table td {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+  
+  .price-table th {
+    font-size: 11px;
+  }
+  
+  /* Adjust column widths on mobile */
+  .price-col-id,
+  .price-col-product,
+  .price-col-current,
+  .price-col-period,
+  .price-col-tax,
+  .price-col-info {
+    width: auto;
+    min-width: 120px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .page-content {
+    margin-left: 0;
+    padding: 0;
+    background-color: white;
+  }
+  
+  .search-container {
+    display: none;
+  }
+  
+  .price-table {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .price-table th {
+    background: #f3f4f6 !important;
+    color: #000 !important;
+  }
+}
+
+/* Animation for loading states */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.price-table tbody tr {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Accessibility improvements */
+.price-table th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.price-table tr:focus-within {
+  outline: 2px solid #10b981;
+  outline-offset: -2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .price-table th {
+    background: #000000;
+    color: #ffffff;
+  }
+  
+  .price-table tbody tr {
+    border-bottom-color: #000000;
+  }
+  
+  .status-badge,
+  .tax-badge {
+    border: 1px solid #000000;
+  }
+}
+
+/* Hover effects for interactive elements */
+.price-table tbody tr:hover .current-price {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.tax-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+/* Loading skeleton animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

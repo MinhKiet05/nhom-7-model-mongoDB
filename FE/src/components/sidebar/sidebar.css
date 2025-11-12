@@ -25,6 +25,7 @@
   padding: 20px 16px;
   box-sizing: border-box; /* Quan trọng để padding không làm tăng width */
   z-index: 1000;
+  overflow: hidden; /* Ngăn tràn tổng thể */
 }
 
 .sidebar-header {
@@ -48,6 +49,9 @@
 
 .sidebar-nav {
   flex-grow: 1; /* Đẩy phần footer xuống dưới cùng */
+  overflow: hidden; /* Ẩn phần tràn của nav */
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-section-title {
@@ -58,12 +62,45 @@
   letter-spacing: 0.5px;
   padding: 0 12px;
   margin-bottom: 8px;
+  flex-shrink: 0; /* Giữ tiêu đề cố định */
 }
 
 .sidebar-nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  overflow-y: auto; /* Thêm thanh cuộn dọc */
+  overflow-x: hidden; /* Ẩn thanh cuộn ngang */
+  flex-grow: 1;
+  padding-right: 4px; /* Tạo khoảng cách với thanh cuộn */
+  scroll-behavior: smooth; /* Cuộn mượt mà */
+  max-height: calc(100vh - 160px); /* Giới hạn chiều cao tối đa */
+}
+
+/* Tùy chỉnh thanh cuộn */
+.sidebar-nav ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-nav ul::-webkit-scrollbar-track {
+  background: rgba(241, 241, 241, 0.5);
+  border-radius: 6px;
+}
+
+.sidebar-nav ul::-webkit-scrollbar-thumb {
+  background: rgba(193, 193, 193, 0.8);
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-nav ul::-webkit-scrollbar-thumb:hover {
+  background: rgba(161, 161, 161, 0.9);
+}
+
+/* Firefox scrollbar */
+.sidebar-nav ul {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(193, 193, 193, 0.8) rgba(241, 241, 241, 0.5);
 }
 
 /* Kiểu chung cho các link và menu toggle */
@@ -78,6 +115,7 @@
   font-size: 15px;
   margin-bottom: 4px;
   transition: background-color 0.2s ease, color 0.2s ease;
+  flex-shrink: 0; /* Ngăn các mục menu bị co lại */
 }
 
 .sidebar-nav a:hover, .menu-toggle:hover {
@@ -164,4 +202,29 @@
   color: #FFFFFF;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* Responsive design cho thanh cuộn */
+@media (max-height: 600px) {
+  .sidebar-nav ul {
+    max-height: calc(100vh - 200px);
+  }
+}
+
+@media (max-height: 500px) {
+  .sidebar-nav ul {
+    max-height: calc(100vh - 250px);
+  }
+}
+
+/* Ẩn thanh cuộn trên mobile để tiết kiệm không gian */
+@media (max-width: 768px) {
+  .sidebar-nav ul::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .sidebar-nav ul {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 }

@@ -1,0 +1,302 @@
+/* VAT.css - Professional VAT/Tax Management Styling */
+
+.page-content {
+  padding: 24px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  margin-left: 280px;
+}
+
+.page-content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 24px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Search Container */
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input-main {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #374151;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input-main:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-input-main::placeholder {
+  color: #9ca3af;
+}
+
+/* Table Info */
+.table-info {
+  margin-bottom: 16px;
+}
+
+/* VAT Table Styling */
+.vat-table {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.vat-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Table Header */
+.vat-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.vat-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Column Widths */
+.vat-col-code {
+  width: 15%;
+}
+
+.vat-col-info {
+  width: 35%;
+}
+
+.vat-col-percent {
+  width: 15%;
+}
+
+.vat-col-dates {
+  width: 20%;
+}
+
+.vat-col-status {
+  width: 15%;
+}
+
+/* Table Body */
+.vat-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.vat-table tbody tr:hover {
+  background-color: #f8faff;
+}
+
+.vat-table tbody tr.inactive-row {
+  background-color: #fef2f2;
+  opacity: 0.8;
+}
+
+.vat-table tbody tr.inactive-row:hover {
+  background-color: #fde8e8;
+}
+
+.vat-table td {
+  padding: 16px 12px;
+  vertical-align: top;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* Tax Code Column */
+.tax-code-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tax Info Column */
+.tax-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.tax-name {
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+/* Tax Percent Column */
+.tax-percent {
+  text-align: center;
+}
+
+/* Date Info Column */
+.date-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-info > div {
+  margin-bottom: 4px;
+}
+
+/* Tax Status Column */
+.tax-status {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 8px;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f9fafb;
+}
+
+.no-results-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.no-results-text {
+  font-size: 16px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.no-results-suggestion {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .page-content {
+    margin-left: 0;
+    padding: 16px;
+  }
+  
+  .vat-table {
+    overflow-x: auto;
+  }
+  
+  .vat-table table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 12px;
+  }
+  
+  .page-content h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .search-input-main {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .vat-table th,
+  .vat-table td {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+  
+  .vat-table th {
+    font-size: 11px;
+  }
+  
+  /* Stack columns on mobile */
+  .vat-col-code,
+  .vat-col-info,
+  .vat-col-percent,
+  .vat-col-dates,
+  .vat-col-status {
+    width: auto;
+    min-width: 120px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .page-content {
+    margin-left: 0;
+    padding: 0;
+    background-color: white;
+  }
+  
+  .search-container {
+    display: none;
+  }
+  
+  .vat-table {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .vat-table th {
+    background: #f3f4f6 !important;
+    color: #000 !important;
+  }
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Accessibility improvements */
+.vat-table th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.vat-table tr:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .vat-table th {
+    background: #000000;
+    color: #ffffff;
+  }
+  
+  .vat-table tbody tr {
+    border-bottom-color: #000000;
+  }
+}
