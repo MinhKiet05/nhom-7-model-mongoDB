@@ -65,7 +65,7 @@ const Products = () => {
       <div className="page-content">
         <h1>Quản lý Sản phẩm</h1>
         <div style={{ textAlign: 'center', padding: '50px' }}>
-          <div>⏳ Đang tải dữ liệu sản phẩm...</div>
+          <div> Đang tải dữ liệu sản phẩm...</div>
         </div>
       </div>
     );
@@ -77,9 +77,9 @@ const Products = () => {
       <div className="page-content">
         <h1>Quản lý Sản phẩm</h1>
         <div style={{ textAlign: 'center', padding: '50px', color: 'red' }}>
-          <div>❌ Lỗi: {error}</div>
+          <div>Lỗi: {error}</div>
           <button onClick={loadProducts} style={{ marginTop: '10px', padding: '8px 16px' }}>
-            🔄 Thử lại
+            Thử lại
           </button>
         </div>
       </div>
@@ -116,117 +116,131 @@ const Products = () => {
         <table>
           <thead>
             <tr>
-              <th className="product-col-id">Mã SP</th>
-              <th className="product-col-barcode">Barcode</th>
-              <th className="product-col-name">Tên sản phẩm</th>
-              <th className="product-col-brand">Thương hiệu</th>
+              <th className="product-col-id">Mã sản phẩm</th>
+              <th className="product-col-info">Thông tin sản phẩm</th>
               <th className="product-col-category">Danh mục</th>
-              <th className="product-col-detail">Chi tiết</th>
-              <th className="product-col-price">Giá bán</th>
-              <th className="product-col-cost">Giá vốn</th>
-              <th className="product-col-stock">Tồn kho</th>
-              <th className="product-col-location">Vị trí</th>
-              <th className="product-col-unit">Đơn vị</th>
+              <th className="product-col-details">Thông số kỹ thuật</th>
+              <th className="product-col-dates">Ngày sản xuất/HSD</th>
               <th className="product-col-supplier">Nhà cung cấp</th>
-              <th className="product-col-manufacture">NSX</th>
-              <th className="product-col-expiry">HSD</th>
-              <th className="product-col-status">Trạng thái</th>
             </tr>
           </thead>
           <tbody>
             {filteredProducts.length > 0 ? (
               filteredProducts.map(product => (
-                <tr key={product.ProductID || product._id}>
-                  <td className="product-col-id"><strong>{product.ProductID}</strong></td>
-                  <td className="product-col-barcode"><code>{product.Barcode || 'N/A'}</code></td>
-                  <td className="product-col-name">
-                    <div>
-                      <div className="product-name">{product.Name || product.ProductName || 'N/A'}</div>
-                      <div className="product-desc">{product.Description || ''}</div>
+                <tr key={product.ProductID || product._id} className={product.Info?.Status !== 'Active' ? 'inactive-row' : ''}>
+                  {/* Mã sản phẩm */}
+                  <td className="product-col-id">
+                    <div className="product-id-info">
+                      <strong style={{fontSize: '14px'}}>{product.ProductID}</strong>
+                      <div style={{fontSize: '11px', color: '#666', marginTop: '2px'}}>
+                        {product.Barcode}
+                      </div>
                     </div>
                   </td>
-                  <td className="product-col-brand">{product.Brand || 'N/A'}</td>
-                  <td className="product-col-category">
-                    {product.Category && Array.isArray(product.Category) ? 
-                      product.Category.join(', ') : 
-                      (product.Category || 'N/A')
-                    }
+
+                  {/* Thông tin sản phẩm */}
+                  <td className="product-col-info">
+                    <div className="product-info">
+                      <div className="product-name" style={{fontWeight: 'bold', fontSize: '14px', marginBottom: '4px'}}>
+                        {product.Name}
+                      </div>
+                      <div style={{fontSize: '12px', color: '#666', marginBottom: '4px'}}>
+                        Thương hiệu: {product.Brand}
+                      </div>
+                      <div style={{fontSize: '11px', color: '#888', lineHeight: '1.4'}}>
+                        {product.Description}
+                      </div>
+                      <div style={{fontSize: '10px', color: '#999', marginTop: '4px'}}>
+                        Đơn vị: {product.Unit?.[0]?.name || 'N/A'}
+                      </div>
+                    </div>
                   </td>
-                  <td className="product-col-detail">
-                    {product.Detail && Array.isArray(product.Detail) && product.Detail.length > 0 ? (
+
+                  {/* Danh mục */}
+                  <td className="product-col-category">
+                    <div style={{
+                      padding: '6px 12px',
+                      backgroundColor: '#f3f4f6',
+                      color: '#374151',
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      textAlign: 'center'
+                    }}>
+                      {product.Category}
+                    </div>
+                    <div style={{fontSize: '10px', color: '#666', marginTop: '4px', textAlign: 'center'}}>
+                      Thuế: {product.TaxID?.[0] || 'N/A'}
+                    </div>
+                  </td>
+
+                  {/* Thông số kỹ thuật */}
+                  <td className="product-col-details">
+                    {product.Detail && product.Detail.length > 0 ? (
                       <div className="product-details">
                         {product.Detail.map((detail, index) => (
-                          <div key={index} className="detail-item">
-                            <strong>{detail.k}:</strong> {detail.v}
+                          <div key={index} style={{
+                            fontSize: '11px',
+                            marginBottom: '3px',
+                            padding: '2px 0',
+                            borderBottom: index < product.Detail.length - 1 ? '1px solid #f0f0f0' : 'none'
+                          }}>
+                            <span style={{color: '#666'}}>{detail.k}:</span>
+                            <span style={{fontWeight: '500', marginLeft: '4px'}}>{detail.v}</span>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      'N/A'
-                    )}
-                  </td>
-                  <td className="product-col-price price">{product.Price ? product.Price.toLocaleString('vi-VN') + '₫' : 'N/A'}</td>
-                  <td className="product-col-cost cost">{product.Cost ? product.Cost.toLocaleString('vi-VN') + '₫' : 'N/A'}</td>
-                  <td className="product-col-stock">
-                    <span className="stock">
-                      {product.Stock || 0} {(() => {
-                        if (product.Unit && Array.isArray(product.Unit) && product.Unit.length > 0) {
-                          const unit = product.Unit[0];
-                          return typeof unit === 'object' ? (unit.name || unit.id || '') : (unit || '');
-                        }
-                        return typeof product.Unit === 'string' ? product.Unit : '';
-                      })()}
-                    </span>
-                    {product.ReorderLevel && (
-                      <div className="reorder-info">
-                        (Tái đặt: {product.ReorderLevel})
+                      <div style={{fontSize: '11px', color: '#999', fontStyle: 'italic'}}>
+                        Chưa có thông tin chi tiết
                       </div>
                     )}
                   </td>
-                  <td className="product-col-location location">{product.Location || 'N/A'}</td>
-                  <td className="product-col-unit">
-                    {(() => {
-                      if (product.Unit && Array.isArray(product.Unit) && product.Unit.length > 0) {
-                        const unit = product.Unit[0];
-                        if (typeof unit === 'object') {
-                          return unit.name || unit.id || unit._id || 'N/A';
-                        }
-                        return unit || 'N/A';
-                      }
-                      return typeof product.Unit === 'string' ? product.Unit : 'N/A';
-                    })()}
+
+                  {/* Ngày sản xuất/HSD */}
+                  <td className="product-col-dates">
+                    <div className="date-info">
+                      <div style={{fontSize: '12px', marginBottom: '6px'}}>
+                        <div style={{color: '#666', fontSize: '10px'}}>Ngày SX:</div>
+                        <div style={{fontWeight: '500'}}>
+                          {product.ManufactureDate ? new Date(product.ManufactureDate).toLocaleDateString('vi-VN') : 'N/A'}
+                        </div>
+                      </div>
+                      <div style={{fontSize: '12px'}}>
+                        <div style={{color: '#666', fontSize: '10px'}}>Hạn sử dụng:</div>
+                        <div style={{
+                          fontWeight: '500',
+                          color: product.ExpiryDate && new Date(product.ExpiryDate) < new Date() ? '#dc2626' : '#059669'
+                        }}>
+                          {product.ExpiryDate ? new Date(product.ExpiryDate).toLocaleDateString('vi-VN') : 'N/A'}
+                        </div>
+                      </div>
+                    </div>
                   </td>
+
+                  {/* Nhà cung cấp */}
                   <td className="product-col-supplier">
-                    {(() => {
-                      if (product.Supplier && typeof product.Supplier === 'object') {
-                        return product.Supplier.name || product.Supplier.id || product.Supplier._id || 'N/A';
-                      }
-                      return product.SupplierID || product.Supplier || 'N/A';
-                    })()}
-                  </td>
-                  <td className="product-col-manufacture manufacture-date">
-                    {product.manufactureDate ? new Date(product.manufactureDate).toLocaleDateString('vi-VN') : 'N/A'}
-                  </td>
-                  <td className="product-col-expiry expiry-date">
-                    {product.expiryDate ? new Date(product.expiryDate).toLocaleDateString('vi-VN') : 'N/A'}
-                  </td>
-                  <td className="product-col-status">
-                    <span className="status-badge active">
-                      Hoạt động
-                    </span>
+                    <div className="supplier-info">
+                      <div style={{fontSize: '13px', fontWeight: '600', marginBottom: '4px'}}>
+                        {product.Supplier}
+                      </div>
+                      
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="15" className="no-results">
+                <td colSpan="6" className="no-results">
                   <div className="no-results-content">
-                    <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">
-                      Không tìm thấy sản phẩm nào với từ khóa "<strong>{searchTerm}</strong>"
+                      {searchTerm ? 
+                        `Không tìm thấy sản phẩm nào với từ khóa "${searchTerm}"` : 
+                        'Không có dữ liệu sản phẩm'
+                      }
                     </div>
                     <div className="no-results-suggestion">
-                      Thử tìm kiếm với từ khóa khác hoặc kiểm tra lại chính tả
+                      {searchTerm ? 'Thử tìm kiếm với từ khóa khác' : 'Dữ liệu sẽ được hiển thị khi có sản phẩm'}
                     </div>
                   </div>
                 </td>

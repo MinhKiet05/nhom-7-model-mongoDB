@@ -70,17 +70,11 @@ function Inventory() {
             <thead>
               <tr>
                 <th className="inv-col-id">Mã tồn kho</th>
-                <th className="inv-col-branch">Chi nhánh</th>
-                <th className="inv-col-warehouse">Kho</th>
-                <th className="inv-col-product">Sản phẩm</th>
-                <th className="inv-col-unit">Đơn vị</th>
-                <th className="inv-col-onhand">Tồn kho</th>
-                <th className="inv-col-reserved">Đã đặt</th>
-                <th className="inv-col-available">Khả dụng</th>
-                <th className="inv-col-unitcost">Giá vốn</th>
-                <th className="inv-col-totalvalue">Tổng giá trị</th>
-                <th className="inv-col-reorder">Điểm đặt lại</th>
-                <th className="inv-col-history">Lịch sử xuất nhập</th>
+                <th className="inv-col-location">Vị trí</th>
+                <th className="inv-col-product">Thông tin sản phẩm</th>
+                <th className="inv-col-quantity">Số lượng tồn kho</th>
+                <th className="inv-col-cost">Giá trị</th>
+                <th className="inv-col-status">Trạng thái kho</th>
               </tr>
             </thead>
             <tbody>
@@ -91,74 +85,122 @@ function Inventory() {
                   ? 'high-stock' 
                   : 'normal-stock';
 
+                const stockPercentage = inv.ReorderPoint 
+                  ? Math.round((inv.Quantity?.Available / inv.ReorderPoint) * 100)
+                  : 100;
+
                 return (
                   <tr key={inv.InventoryID} className={inv.Status !== 'Active' ? 'inactive-row' : ''}>
+                    {/* Mã tồn kho */}
                     <td className="inv-col-id">
-                      <span className="inventory-id">{inv.InventoryID}</span>
-                    </td>
-                    <td className="inv-col-branch">
-                      <span className="branch-badge">{inv.BranchID}</span>
-                    </td>
-                    <td className="inv-col-warehouse">
-                      <span className="warehouse-badge">{inv.WarehouseID}</span>
-                    </td>
-                    <td className="inv-col-product">
-                      <div className="product-info">
-                        <div className="product-name">{inv.Product?.ProductName}</div>
-                        <div className="product-id">{inv.Product?.ProductID}</div>
+                      <strong style={{fontSize: '13px'}}>{inv.InventoryID}</strong>
+                      <div style={{fontSize: '11px', color: '#666', marginTop: '2px'}}>
+                        Cập nhật: {inv.UpdatedAt ? new Date(inv.UpdatedAt).toLocaleDateString('vi-VN') : 'N/A'}
                       </div>
                     </td>
-                    <td className="inv-col-unit">
-                      <span className="unit-badge">{inv.Product?.Unit}</span>
+
+                    {/* Vị trí (Chi nhánh + Kho) */}
+                    <td className="inv-col-location">
+                      <div className="location-info">
+                        <div className="location-name">
+                          Chi nhánh: {inv.BranchID}
+                        </div>
+                        <div className="location-details">
+                          Kho: {inv.WarehouseID}
+                        </div>
+                      </div>
                     </td>
-                    <td className="inv-col-onhand">
-                      <span className={`quantity-badge ${stockStatus}`}>
-                        {inv.Quantity?.OnHand?.toLocaleString('vi-VN')}
-                      </span>
+
+                    {/* Thông tin sản phẩm */}
+                    <td className="inv-col-product">
+                      <div className="product-info">
+                        <div style={{fontSize: '13px', fontWeight: 'bold', marginBottom: '4px'}}>
+                          {inv.Product?.ProductName || 'N/A'}
+                        </div>
+                        <div style={{fontSize: '11px', color: '#666', marginBottom: '2px'}}>
+                          ID: <code style={{backgroundColor: '#f5f5f5', padding: '1px 4px', borderRadius: '3px'}}>
+                            {inv.Product?.ProductID}
+                          </code>
+                        </div>
+                        <div style={{
+                          fontSize: '10px', 
+                          padding: '2px 6px', 
+                          backgroundColor: '#fff3e0', 
+                          color: '#f57c00',
+                          borderRadius: '10px',
+                          display: 'inline-block'
+                        }}>
+                          Đơn vị: {inv.Product?.Unit}
+                        </div>
+                      </div>
                     </td>
-                    <td className="inv-col-reserved">
-                      <span className="reserved-badge">
-                        {inv.Quantity?.Reserved?.toLocaleString('vi-VN')}
-                      </span>
-                    </td>
-                    <td className="inv-col-available">
-                      <span className={`available-badge ${stockStatus}`}>
-                        {inv.Quantity?.Available?.toLocaleString('vi-VN')}
-                      </span>
-                    </td>
-                    <td className="inv-col-unitcost">
-                      <span className="unit-cost">
-                        {inv.Cost?.UnitCost?.toLocaleString('vi-VN')} ₫
-                      </span>
-                    </td>
-                    <td className="inv-col-totalvalue">
-                      <span className="total-value">
-                        {inv.Cost?.TotalValue?.toLocaleString('vi-VN')} ₫
-                      </span>
-                    </td>
-                    <td className="inv-col-reorder">
-                      <span className="reorder-badge">
-                        {inv.ReorderPoint?.toLocaleString('vi-VN')}
-                      </span>
-                    </td>
-                    <td className="inv-col-history">
-                      <div className="movement-history">
-                        {inv.MovementHistory && inv.MovementHistory.length > 0 ? (
-                          inv.MovementHistory.map((move, idx) => (
-                            <div key={idx} className="movement-item">
-                              <span className={`movement-type ${move.Type === 'Nhập' ? 'inbound' : 'outbound'}`}>
-                                {move.Type === 'Nhập' ? '↓' : '↑'} {move.Type}
-                              </span>
-                              <span className="movement-qty">
-                                {move.QuantityChange > 0 ? '+' : ''}{move.QuantityChange}
-                              </span>
-                              <span className="movement-date">{move.Date}</span>
-                              <span className="movement-ref">{move.Reference}</span>
-                            </div>
-                          ))
-                        ) : (
-                          <span className="no-movement">Chưa có</span>
+
+                    {/* Số lượng tồn kho */}
+                    <td className="inv-col-quantity">
+                      <div className="quantity-info">
+                        <div style={{fontSize: '14px', fontWeight: 'bold', marginBottom: '6px'}}>
+                          <span style={{
+                            color: stockStatus === 'low-stock' ? '#d32f2f' : 
+                                   stockStatus === 'high-stock' ? '#2e7d32' : '#f57c00'
+                          }}>
+                            Tồn kho: {inv.Quantity?.OnHand?.toLocaleString('vi-VN') || 0}
+                          </span>
+                        </div>
+                        
+                        <div style={{fontSize: '11px', marginBottom: '4px'}}>
+                          <span style={{color: '#666'}}>Khả dụng: </span>
+                          <strong style={{
+                            color: stockStatus === 'low-stock' ? '#d32f2f' : '#2e7d32'
+                          }}>
+                            {inv.Quantity?.Available?.toLocaleString('vi-VN') || 0}
+                          </strong>
+                        </div>
+
+                        {inv.Quantity?.Reserved > 0 && (
+                          <div style={{fontSize: '10px', color: '#f57c00'}}>
+                            Đã đặt: {inv.Quantity?.Reserved?.toLocaleString('vi-VN')}
+                          </div>
                         )}
+
+                        <div style={{
+                          fontSize: '9px', 
+                          color: stockStatus === 'low-stock' ? '#d32f2f' : '#666',
+                          marginTop: '4px'
+                        }}>
+                          Điểm đặt lại: {inv.ReorderPoint?.toLocaleString('vi-VN')} ({stockPercentage}%)
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Giá trị */}
+                    <td className="inv-col-cost">
+                      <div className="cost-info">
+                        <div style={{fontSize: '13px', fontWeight: 'bold', color: '#2e7d32', marginBottom: '4px'}}>
+                          Tổng giá trị: {inv.Cost?.TotalValue?.toLocaleString('vi-VN') || 0}₫
+                        </div>
+                        <div style={{fontSize: '11px', color: '#666'}}>
+                          Đơn giá: {inv.Cost?.UnitCost?.toLocaleString('vi-VN') || 0}₫/{inv.Product?.Unit}
+                        </div>
+                        <div style={{fontSize: '10px', color: '#999', marginTop: '2px'}}>
+                          Cập nhật giá: {inv.Cost?.LastUpdated ? new Date(inv.Cost.LastUpdated).toLocaleDateString('vi-VN') : 'N/A'}
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Trạng thái kho */}
+                    <td className="inv-col-status">
+                      <div className="status-info">
+                        <div style={{
+                          padding: '4px 8px',
+                          borderRadius: '8px',
+                          fontSize: '10px',
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          backgroundColor: inv.Status === 'Active' ? '#e8f5e8' : '#ffebee',
+                          color: inv.Status === 'Active' ? '#2e7d32' : '#d32f2f'
+                        }}>
+                          {inv.Status === 'Active' ? 'Hoạt động' : 'Ngừng'}
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -169,9 +211,15 @@ function Inventory() {
         ) : (
           <div className="no-results">
             <div className="no-results-content">
-              <div className="no-results-icon">📦</div>
-              <p className="no-results-text">Không tìm thấy tồn kho nào</p>
-              <p className="no-results-suggestion">Thử tìm kiếm với từ khóa khác</p>
+              <p className="no-results-text">
+                {searchValue ? 
+                  `Không tìm thấy tồn kho nào với từ khóa "${searchValue}"` : 
+                  'Không có dữ liệu tồn kho'
+                }
+              </p>
+              <p className="no-results-suggestion">
+                {searchValue ? 'Thử tìm kiếm với từ khóa khác' : 'Dữ liệu sẽ được hiển thị khi có sản phẩm trong kho'}
+              </p>
             </div>
           </div>
         )}

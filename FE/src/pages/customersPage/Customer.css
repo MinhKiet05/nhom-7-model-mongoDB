@@ -42,11 +42,40 @@
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
   position: relative;
   flex-shrink: 0;
+  background: white;
 }
+
+.customers-table table {
+  min-width: 1200px;
+}
+
+.customers-table td {
+  padding: 12px 8px;
+  vertical-align: top;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.customers-table tr:hover {
+  background-color: #f8fafc;
+}
+
+.inactive-row {
+  opacity: 0.6;
+  background-color: #f9fafb;
+}
+
+/* Column widths for better layout */
+.customer-col-id { width: 80px; min-width: 80px; }
+.customer-col-name { width: 200px; min-width: 200px; }
+.customer-col-contact { width: 160px; min-width: 160px; }
+.customer-col-address { width: 180px; min-width: 180px; }
+.customer-col-membership { width: 120px; min-width: 120px; }
+.customer-col-stats { width: 120px; min-width: 120px; }
+.customer-col-status { width: 100px; min-width: 100px; }
 
 /* Custom scrollbar styling */
 .customers-table::-webkit-scrollbar {
@@ -383,10 +412,7 @@ tbody tr.inactive-row:nth-child(even):hover {
   gap: 1rem;
 }
 
-.no-results-icon {
-  font-size: 3rem;
-  opacity: 0.5;
-}
+
 
 .no-results-text {
   font-size: 1.1rem;

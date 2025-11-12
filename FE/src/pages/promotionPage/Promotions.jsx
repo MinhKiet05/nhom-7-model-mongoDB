@@ -91,11 +91,13 @@ const Promotions = () => {
               <th className="promo-col-type">Loại giảm</th>
               <th className="promo-col-value">Giá trị</th>
               <th className="promo-col-min">Tối thiểu</th>
-              <th className="promo-col-period">Thời gian</th>
-              <th className="promo-col-products">Sản phẩm</th>
-              <th className="promo-col-categories">Danh mục</th>
-              <th className="promo-col-customer">Khách hàng</th>
-              <th className="promo-col-usage">Giới hạn SD</th>
+              <th className="promo-col-start">Ngày bắt đầu</th>
+              <th className="promo-col-end">Ngày kết thúc</th>
+              <th className="promo-col-products">Sản phẩm áp dụng</th>
+              <th className="promo-col-categories">Danh mục áp dụng</th>
+              <th className="promo-col-customer">Loại khách</th>
+              <th className="promo-col-usage-max">Giới hạn/KH</th>
+              <th className="promo-col-usage-total">Tổng giới hạn</th>
               <th className="promo-col-status">Trạng thái</th>
               <th className="promo-col-creator">Người tạo</th>
             </tr>
@@ -104,106 +106,203 @@ const Promotions = () => {
             {filteredPromotions.length > 0 ? (
               filteredPromotions.map(promo => (
                 <tr key={promo.PromotionID} className={!promo.IsActive ? 'inactive-row' : ''}>
+                  {/* Mã khuyến mãi */}
                   <td className="promo-col-id">
                     <strong>{promo.PromotionID}</strong>
                   </td>
+
+                  {/* Tên khuyến mãi */}
                   <td className="promo-col-name">
-                    <div className="promo-name">{promo.PromotionName}</div>
+                    <div style={{fontWeight: 'bold', fontSize: '13px'}}>
+                      {promo.PromotionName}
+                    </div>
                   </td>
+
+                  {/* Mô tả */}
                   <td className="promo-col-desc">
-                    <span className="promo-desc">{promo.Description}</span>
+                    <span style={{fontSize: '12px', color: '#666'}}>
+                      {promo.Description}
+                    </span>
                   </td>
+
+                  {/* Loại giảm giá */}
                   <td className="promo-col-type">
-                    <span className={`discount-type ${promo.DiscountType.toLowerCase()}`}>
-                      {promo.DiscountType}
+                    <span style={{
+                      padding: '4px 8px',
+                      borderRadius: '8px',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      backgroundColor: 
+                        promo.DiscountType === 'percentage' ? '#dcfce7' :
+                        promo.DiscountType === 'fixed_amount' ? '#dbeafe' :
+                        promo.DiscountType === 'FreeItem' ? '#fef3c7' :
+                        promo.DiscountType === 'free_shipping' ? '#f3e8ff' : '#f3f4f6',
+                      color:
+                        promo.DiscountType === 'percentage' ? '#166534' :
+                        promo.DiscountType === 'fixed_amount' ? '#1e40af' :
+                        promo.DiscountType === 'FreeItem' ? '#92400e' :
+                        promo.DiscountType === 'free_shipping' ? '#7c3aed' : '#374151'
+                    }}>
+                      {promo.DiscountType === 'percentage' ? 'Giảm %' :
+                       promo.DiscountType === 'fixed_amount' ? 'Giảm tiền' :
+                       promo.DiscountType === 'FreeItem' ? 'Tặng SP' :
+                       promo.DiscountType === 'free_shipping' ? 'Miễn ship' :
+                       promo.DiscountType}
                     </span>
                   </td>
+
+                  {/* Giá trị giảm */}
                   <td className="promo-col-value">
-                    <span className="discount-value">
-                      {promo.DiscountType === 'Percentage' ? `${promo.DiscountValue}%` :
-                       promo.DiscountType === 'FixedAmount' ? `${promo.DiscountValue.toLocaleString('vi-VN')}₫` :
-                       `x${promo.DiscountValue}`}
+                    <span style={{fontWeight: 'bold', color: '#dc2626'}}>
+                      {promo.DiscountType === 'percentage' ? `${promo.DiscountValue}%` :
+                       promo.DiscountType === 'fixed_amount' ? `${promo.DiscountValue.toLocaleString('vi-VN')}₫` :
+                       promo.DiscountType === 'FreeItem' ? 'Tặng kèm' :
+                       promo.DiscountType === 'free_shipping' ? 'Miễn phí' :
+                       promo.DiscountValue || '-'}
                     </span>
                   </td>
+
+                  {/* Giá trị tối thiểu */}
                   <td className="promo-col-min">
                     {promo.MinPurchaseAmount > 0 ? (
-                      <span className="min-purchase">
+                      <span style={{fontWeight: '500'}}>
                         {promo.MinPurchaseAmount.toLocaleString('vi-VN')}₫
                       </span>
                     ) : (
                       <span style={{color: '#9ca3af'}}>-</span>
                     )}
                   </td>
-                  <td className="promo-col-period">
-                    <div className="period-info">
-                      <div className="period-start">
-                        {new Date(promo.StartDate).toLocaleDateString('vi-VN')}
-                      </div>
-                      <div className="period-arrow">→</div>
-                      <div className="period-end">
-                        {new Date(promo.EndDate).toLocaleDateString('vi-VN')}
-                      </div>
-                    </div>
+
+                  {/* Ngày bắt đầu */}
+                  <td className="promo-col-start">
+                    <span style={{fontSize: '12px'}}>
+                      {new Date(promo.StartDate).toLocaleDateString('vi-VN')}
+                    </span>
                   </td>
+
+                  {/* Ngày kết thúc */}
+                  <td className="promo-col-end">
+                    <span style={{fontSize: '12px'}}>
+                      {new Date(promo.EndDate).toLocaleDateString('vi-VN')}
+                    </span>
+                  </td>
+
+                  {/* Sản phẩm áp dụng */}
                   <td className="promo-col-products">
-                    {promo.ApplicableProducts.length > 0 ? (
-                      <div className="products-tags">
+                    {promo.ApplicableProducts && promo.ApplicableProducts.length > 0 ? (
+                      <div>
                         {promo.ApplicableProducts.map((prod, index) => (
-                          <span key={index} className="product-tag">{prod}</span>
+                          <span key={index} style={{
+                            display: 'inline-block',
+                            margin: '1px',
+                            padding: '2px 6px',
+                            backgroundColor: '#dbeafe',
+                            color: '#1e40af',
+                            borderRadius: '4px',
+                            fontSize: '10px',
+                            fontWeight: '600'
+                          }}>
+                            {prod}
+                          </span>
                         ))}
                       </div>
                     ) : (
-                      <span style={{color: '#9ca3af', fontStyle: 'italic'}}>Tất cả</span>
+                      <span style={{color: '#9ca3af', fontSize: '11px', fontStyle: 'italic'}}>Tất cả</span>
                     )}
                   </td>
+
+                  {/* Danh mục áp dụng */}
                   <td className="promo-col-categories">
-                    {promo.ApplicableCategories.length > 0 ? (
-                      <div className="categories-tags">
+                    {promo.ApplicableCategories && promo.ApplicableCategories.length > 0 ? (
+                      <div>
                         {promo.ApplicableCategories.map((cat, index) => (
-                          <span key={index} className="category-tag">{cat}</span>
+                          <span key={index} style={{
+                            display: 'inline-block',
+                            margin: '1px',
+                            padding: '2px 6px',
+                            backgroundColor: '#fef3c7',
+                            color: '#92400e',
+                            borderRadius: '4px',
+                            fontSize: '10px',
+                            fontWeight: '500'
+                          }}>
+                            {cat}
+                          </span>
                         ))}
                       </div>
                     ) : (
-                      <span style={{color: '#9ca3af', fontStyle: 'italic'}}>Tất cả</span>
+                      <span style={{color: '#9ca3af', fontSize: '11px', fontStyle: 'italic'}}>Tất cả</span>
                     )}
                   </td>
+
+                  {/* Loại khách hàng */}
                   <td className="promo-col-customer">
-                    <span className={`customer-type ${promo.CustomerType.toLowerCase()}`}>
-                      {promo.CustomerType}
+                    <span style={{
+                      padding: '4px 8px',
+                      borderRadius: '8px',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      backgroundColor: 
+                        promo.CustomerType === 'all' ? '#e0e7ff' :
+                        promo.CustomerType === 'vip' ? '#fef3c7' : '#f3f4f6',
+                      color:
+                        promo.CustomerType === 'all' ? '#3730a3' :
+                        promo.CustomerType === 'vip' ? '#92400e' : '#374151'
+                    }}>
+                      {promo.CustomerType === 'all' ? 'Tất cả' :
+                       promo.CustomerType === 'vip' ? 'VIP' :
+                       promo.CustomerType}
                     </span>
                   </td>
-                  <td className="promo-col-usage">
-                    <div className="usage-info">
-                      <div className="usage-per">
-                        <span className="usage-label">/KH:</span>
-                        <span className="usage-num">{promo.MaxUsagePerCustomer}</span>
-                      </div>
-                      <div className="usage-total">
-                        <span className="usage-label">Tổng:</span>
-                        <span className="usage-num">{promo.TotalUsageLimit.toLocaleString('vi-VN')}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="promo-col-status status">
-                    <span className={`status-badge ${promo.IsActive ? 'active' : 'inactive'}`}>
-                      {promo.IsActive ? 'Hoạt động' : 'Không hoạt động'}
+
+                  {/* Giới hạn sử dụng mỗi khách */}
+                  <td className="promo-col-usage-max">
+                    <span style={{fontWeight: '600'}}>
+                      {promo.MaxUsagePerCustomer}
                     </span>
                   </td>
+
+                  {/* Tổng giới hạn sử dụng */}
+                  <td className="promo-col-usage-total">
+                    <span style={{fontWeight: '600'}}>
+                      {promo.TotalUsageLimit.toLocaleString('vi-VN')}
+                    </span>
+                  </td>
+
+                  {/* Trạng thái */}
+                  <td className="promo-col-status">
+                    <span style={{
+                      padding: '4px 8px',
+                      borderRadius: '8px',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      backgroundColor: promo.IsActive ? '#dcfce7' : '#fee2e2',
+                      color: promo.IsActive ? '#166534' : '#991b1b'
+                    }}>
+                      {promo.IsActive ? 'Hoạt động' : 'Ngưng'}
+                    </span>
+                  </td>
+
+                  {/* Người tạo */}
                   <td className="promo-col-creator">
-                    <span className="creator">{promo.CreatedBy}</span>
+                    <span style={{fontSize: '12px', color: '#666'}}>
+                      {promo.CreatedBy}
+                    </span>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="13" className="no-results">
+                <td colSpan="15" className="no-results">
                   <div className="no-results-content">
-                    <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">
-                      Không tìm thấy khuyến mãi nào với từ khóa "<strong>{searchTerm}</strong>"
+                      {searchTerm ? 
+                        `Không tìm thấy khuyến mãi nào với từ khóa "${searchTerm}"` : 
+                        'Không có dữ liệu khuyến mãi'
+                      }
                     </div>
                     <div className="no-results-suggestion">
-                      Thử tìm kiếm với từ khóa khác hoặc kiểm tra lại chính tả
+                      {searchTerm ? 'Thử tìm kiếm với từ khóa khác' : 'Dữ liệu sẽ được hiển thị khi có khuyến mãi'}
                     </div>
                   </div>
                 </td>

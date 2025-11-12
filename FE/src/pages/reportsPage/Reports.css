@@ -1,9 +1,7 @@
-/* Reports.css - Styling cho trang Reports */
-
-/* Import Be Vietnam Pro font */
+/* Reports CSS - Professional responsive layout */
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
 
-/* Search container styles */
+/* Search container */
 .search-container {
   margin-bottom: 8px;
   display: flex;
@@ -64,10 +62,10 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* Reports table styles */
+/* Reports table container */
 .reports-table {
   width: 100%;
-  height: 74vh;
+  height: 70vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid #e5e7eb;
@@ -77,7 +75,7 @@
   flex-shrink: 0;
 }
 
-/* Custom scrollbar styling */
+/* Scrollbar styling */
 .reports-table::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -97,8 +95,9 @@
   background: #94a3b8;
 }
 
-table {
-  min-width: 2400px;
+/* Table structure */
+.reports-table table {
+  min-width: 1600px;
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -106,342 +105,84 @@ table {
   font-family: 'Be Vietnam Pro', sans-serif;
 }
 
-th, td {
-  padding: 0.75rem;
+.reports-table th,
+.reports-table td {
+  padding: 12px;
   text-align: left;
   border-bottom: 1px solid #e5e7eb;
   vertical-align: top;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 1rem;
+  font-size: 13px;
 }
 
-/* Thiết lập chiều rộng cụ thể cho từng cột - Reports */
-.rpt-col-id { /* Mã báo cáo */
-  width: 120px;
-  min-width: 120px;
-}
+/* Column widths - 12 columns optimized */
+.rpt-col-id { width: 120px; min-width: 120px; }
+.rpt-col-type { width: 100px; min-width: 100px; }
+.rpt-col-period { width: 110px; min-width: 110px; }
+.rpt-col-branch { width: 100px; min-width: 100px; }
+.rpt-col-sales { width: 110px; min-width: 110px; text-align: center; }
+.rpt-col-profit { width: 110px; min-width: 110px; text-align: center; }
+.rpt-col-orders { width: 90px; min-width: 90px; text-align: center; }
+.rpt-col-customers { width: 100px; min-width: 100px; text-align: center; }
+.rpt-col-stockvalue { width: 110px; min-width: 110px; text-align: center; }
+.rpt-col-topproducts { width: 280px; min-width: 280px; }
+.rpt-col-generator { width: 130px; min-width: 130px; }
+.rpt-col-notes { width: 150px; min-width: 150px;  text-wrap: wrap;}
 
-.rpt-col-type { /* Loại BC */
-  width: 120px;
-  min-width: 120px;
-  text-align: center;
-}
-
-.rpt-col-branch { /* Chi nhánh */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.rpt-col-period { /* Thời gian */
-  width: 100px;
-  min-width: 100px;
-}
-
-.rpt-col-sales { /* Doanh thu */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.rpt-col-profit { /* Lợi nhuận */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.rpt-col-orders { /* Đơn hàng */
-  width: 90px;
-  min-width: 90px;
-  text-align: center;
-}
-
-.rpt-col-customers { /* Khách hàng */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.rpt-col-stockvalue { /* Giá trị kho */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.rpt-col-topproducts { /* Sản phẩm bán chạy */
-  width: 280px;
-  min-width: 280px;
-}
-
-.rpt-col-generator { /* Người tạo */
-  width: 150px;
-  min-width: 150px;
-}
-
-.rpt-col-notes { /* Ghi chú */
-  width: 120px;
-  min-width: 120px;
-}
-
-th {
-  background-color: #f9fafb;
+/* Table header */
+.reports-table th {
+  background: #f9fafb;
+  color: black;
   font-weight: 600;
-  color: #374151;
-  font-size: 0.875rem;
+  font-size: 13px;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
-td {
-  color: black;
-}
-
-/* Hover effect cho rows */
-tbody tr:hover {
-  background-color: #f9fafb;
-}
-
-/* Đánh dấu các dòng chẵn */
-tbody tr:nth-child(even) {
-  background-color: #f8fafc;
-}
-
-tbody tr:nth-child(even):hover {
-  background-color: #f1f5f9;
-}
-
-/* Reports-specific styles */
-.report-id {
-  font-family: monospace;
-  font-weight: 600;
+.reports-table td {
   color: #374151;
-  font-size: 0.85rem;
 }
 
-.report-type {
-  padding: 0.3rem 0.6rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  display: inline-block;
-  min-width: 100px;
-  text-align: center;
+/* Table row effects */
+.reports-table tbody tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.report-type.sales {
-  background-color: #dcfce7;
-  color: #166534;
+.reports-table tbody tr:hover {
+  background: linear-gradient(90deg, #f8faff 0%, #f1f5f9 100%);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
 }
 
-.report-type.inventory {
-  background-color: #dbeafe;
-  color: #1e40af;
+.reports-table tbody tr:nth-child(even) {
+  background: #fafbfc;
 }
 
-.report-type.customer {
-  background-color: #fce7f3;
-  color: #9f1239;
+.reports-table tbody tr:nth-child(even):hover {
+  background: linear-gradient(90deg, #f1f5f9 0%, #eef2ff 100%);
 }
 
-.branch-badge {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  background-color: #dbeafe;
-  color: #1e40af;
-  font-family: monospace;
-  display: inline-block;
-}
-
-.period-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  font-family: monospace;
-  font-size: 0.75rem;
-}
-
-.period-start {
-  font-weight: 600;
-  color: #059669;
-}
-
-.period-arrow {
-  text-align: center;
-  color: #9ca3af;
-  font-size: 0.9rem;
-}
-
-.period-end {
-  font-weight: 600;
-  color: #dc2626;
-}
-
-.metric-sales {
-  font-family: monospace;
-  font-weight: 700;
-  color: #059669;
-  font-size: 0.9rem;
-}
-
-.metric-profit {
-  font-family: monospace;
-  font-weight: 700;
-  color: #2563eb;
-  font-size: 0.9rem;
-}
-
-.metric-orders {
-  font-family: monospace;
-  font-weight: 600;
-  color: #374151;
-  font-size: 0.9rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #f3f4f6;
-  display: inline-block;
-}
-
-.metric-customers {
-  font-family: monospace;
-  font-weight: 600;
-  color: #374151;
-  font-size: 0.9rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #fef3c7;
-  display: inline-block;
-}
-
-.metric-stockvalue {
-  font-family: monospace;
-  font-weight: 700;
-  color: #6b7280;
-  font-size: 0.9rem;
-}
-
-.na-value {
-  color: #9ca3af;
-  font-style: italic;
-  font-size: 0.85rem;
-  text-align: center;
-  display: inline-block;
-  width: 100%;
-}
-
-.top-products {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.product-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.4rem 0.5rem;
-  background-color: #f9fafb;
-  border-radius: 0.4rem;
-  border-left: 3px solid #3b82f6;
-}
-
-.product-header {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-}
-
-.product-rank {
-  padding: 0.15rem 0.35rem;
-  border-radius: 0.3rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  background-color: #fbbf24;
-  color: #78350f;
-  font-family: monospace;
-}
-
-.product-name {
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 0.85rem;
-  line-height: 1.3;
-}
-
-.product-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  font-size: 0.75rem;
-  color: #6b7280;
-}
-
-.product-stats strong {
-  color: #374151;
-  font-weight: 600;
-}
-
-.product-id {
-  font-family: monospace;
-  font-size: 0.7rem;
-  color: #3b82f6;
-  font-weight: 500;
-}
-
-.generator-badge {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  background-color: #e0e7ff;
-  color: #3730a3;
-  font-family: monospace;
-  display: inline-block;
-}
-
-.generated-time {
-  font-size: 0.7rem;
-  color: #6b7280;
-  margin-top: 0.2rem;
-  font-family: monospace;
-}
-
-.notes-text {
-  font-size: 0.85rem;
-  color: #374151;
-  font-style: italic;
-}
-
-/* No results styling */
+/* No results message */
 .no-results {
   text-align: center;
-  padding: 3rem 2rem;
-  background: #f9fafb;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f8faff 0%, #f1f5f9 100%);
 }
 
 .no-results-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-}
-
-.no-results-icon {
-  font-size: 3rem;
-  opacity: 0.5;
+  gap: 12px;
 }
 
 .no-results-text {
-  font-size: 1.1rem;
-  color: #374151;
-  font-weight: 500;
+  font-weight: 600;
+  color: #475569;
+  font-size: 16px;
 }
 
 .no-results-suggestion {
-  font-size: 0.9rem;
-  color: #6b7280;
-  font-style: italic;
+  color: #64748b;
+  font-size: 14px;
 }

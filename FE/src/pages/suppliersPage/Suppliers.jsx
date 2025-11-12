@@ -80,59 +80,109 @@ function Suppliers() {
                 <th className="sup-col-address">Địa chỉ</th>
                 <th className="sup-col-phone">Điện thoại</th>
                 <th className="sup-col-email">Email</th>
-                <th className="sup-col-payment">Điều khoản thanh toán</th>
-                <th className="sup-col-credit">Hạn mức</th>
                 <th className="sup-col-status">Trạng thái</th>
+                <th className="sup-col-created">Ngày tạo</th>
+                <th className="sup-col-updated">Cập nhật cuối</th>
               </tr>
             </thead>
             <tbody>
               {filteredSuppliers.map((supplier) => {
                 return (
                   <tr key={supplier.SupplierID} className={supplier.Status !== 'Active' ? 'inactive-row' : ''}>
+                    {/* Mã nhà cung cấp */}
                     <td className="sup-col-id">
-                      <span className="supplier-id">{supplier.SupplierID}</span>
+                      <strong style={{fontSize: '14px'}}>{supplier.SupplierID}</strong>
                     </td>
+
+                    {/* Tên nhà cung cấp */}
                     <td className="sup-col-name">
-                      <span className="supplier-name">{supplier.Name}</span>
-                    </td>
-                    <td className="sup-col-taxcode">
-                      <span className="tax-code">{supplier.TaxCode}</span>
-                    </td>
-                    <td className="sup-col-address">
-                      <div className="address-info">
-                        <div className="address-street">{supplier.Address?.Street}</div>
-                        <div className="address-details">
-                          {supplier.Address?.District}, {supplier.Address?.City}
-                        </div>
+                      <div style={{fontWeight: 'bold', fontSize: '14px', marginBottom: '2px'}}>
+                        {supplier.Name}
                       </div>
                     </td>
+
+                    {/* Mã số thuế */}
+                    <td className="sup-col-taxcode">
+                      <span style={{fontFamily: 'monospace', fontWeight: '600', fontSize: '13px'}}>
+                        {supplier.TaxCode}
+                      </span>
+                    </td>
+
+                    {/* Địa chỉ */}
+                    <td className="sup-col-address">
+                      <div>
+                        <div style={{fontSize: '12px', fontWeight: '500', marginBottom: '2px'}}>
+                          {supplier.Address?.Street}
+                        </div>
+                        <div style={{fontSize: '11px', color: '#666'}}>
+                          {supplier.Address?.District}, {supplier.Address?.City}
+                        </div>
+                        {supplier.Address?.Country && (
+                          <div style={{fontSize: '10px', color: '#888'}}>
+                            {supplier.Address.Country}
+                          </div>
+                        )}
+                      </div>
+                    </td>
+
+                    {/* Điện thoại */}
                     <td className="sup-col-phone">
-                      <span className="phone-number">{supplier.Phone}</span>
+                      <span style={{
+                        fontFamily: 'monospace',
+                        fontWeight: '600',
+                        fontSize: '13px',
+                        color: '#3b82f6'
+                      }}>
+                        {supplier.Phone}
+                      </span>
                     </td>
+
+                    {/* Email */}
                     <td className="sup-col-email">
-                      <span className="email-address">{supplier.Email}</span>
-                    </td>
-                    <td className="sup-col-payment">
-                      <span className={`payment-type ${supplier.PaymentTerms?.Type?.toLowerCase()}`}>
-                        {supplier.PaymentTerms?.Type === 'COD' ? 'COD' :
-                         supplier.PaymentTerms?.Type === 'NET7' ? 'NET 7' :
-                         supplier.PaymentTerms?.Type === 'NET15' ? 'NET 15' :
-                         supplier.PaymentTerms?.Type === 'NET30' ? ' NET 30' :
-                         supplier.PaymentTerms?.Type}
+                      <span style={{
+                        fontFamily: 'monospace',
+                        fontSize: '12px',
+                        color: '#666',
+                        wordBreak: 'break-all'
+                      }}>
+                        {supplier.Email}
                       </span>
                     </td>
-                    <td className="sup-col-credit">
-                      <span className="credit-limit">
-                        {supplier.PaymentTerms?.CreditLimit > 0 
-                          ? `${supplier.PaymentTerms.CreditLimit.toLocaleString('vi-VN')} ₫`
-                          : '-'}
-                      </span>
-                    </td>
+
+                    {/* Trạng thái */}
                     <td className="sup-col-status">
-                      <span className={`status-badge ${supplier.Status?.toLowerCase()}`}>
-                        {supplier.Status === 'Active' ? 'Hoạt động' : 
-                         supplier.Status === 'Inactive' ? 'Đã xóa' :
-                         supplier.Status}
+                      <span style={{
+                        padding: '4px 8px',
+                        borderRadius: '8px',
+                        fontSize: '11px',
+                        fontWeight: '600',
+                        backgroundColor: 
+                          supplier.Status === 'Active' ? '#dcfce7' :
+                          supplier.Status === 'TemporarilyHold' ? '#fef3c7' :
+                          supplier.Status === 'Inactive' ? '#fee2e2' : '#f3f4f6',
+                        color:
+                          supplier.Status === 'Active' ? '#166534' :
+                          supplier.Status === 'TemporarilyHold' ? '#92400e' :
+                          supplier.Status === 'Inactive' ? '#991b1b' : '#374151'
+                      }}>
+                        {supplier.Status === 'Active' ? 'Hoạt động' :
+                         supplier.Status === 'TemporarilyHold' ? 'Tạm dừng' :
+                         supplier.Status === 'Inactive' ? 'Ngưng' :
+                         supplier.Status || 'Chưa xác định'}
+                      </span>
+                    </td>
+
+                    {/* Ngày tạo */}
+                    <td className="sup-col-created">
+                      <span style={{fontSize: '12px', color: '#666'}}>
+                        {supplier.CreatedAt ? new Date(supplier.CreatedAt).toLocaleDateString('vi-VN') : '-'}
+                      </span>
+                    </td>
+
+                    {/* Cập nhật cuối */}
+                    <td className="sup-col-updated">
+                      <span style={{fontSize: '12px', color: '#666'}}>
+                        {supplier.LastUpdatedAt ? new Date(supplier.LastUpdatedAt).toLocaleDateString('vi-VN') : '-'}
                       </span>
                     </td>
                   </tr>
@@ -143,8 +193,15 @@ function Suppliers() {
         ) : (
           <div className="no-results">
             <div className="no-results-content">
-              <p className="no-results-text">Không tìm thấy nhà cung cấp nào</p>
-              <p className="no-results-suggestion">Thử tìm kiếm với từ khóa khác</p>
+              <p className="no-results-text">
+                {searchValue ? 
+                  `Không tìm thấy nhà cung cấp nào với từ khóa "${searchValue}"` : 
+                  'Không có dữ liệu nhà cung cấp'
+                }
+              </p>
+              <p className="no-results-suggestion">
+                {searchValue ? 'Thử tìm kiếm với từ khóa khác' : 'Dữ liệu sẽ được hiển thị khi có nhà cung cấp'}
+              </p>
             </div>
           </div>
         )}

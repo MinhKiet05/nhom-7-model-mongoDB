@@ -43,14 +43,11 @@ const Users = () => {
     } else {
       const filtered = users.filter(user => 
         (user.UserID && user.UserID.toLowerCase().includes(value)) ||
-        (user.Username && user.Username.toLowerCase().includes(value)) ||
+        (user.Account?.Username && user.Account.Username.toLowerCase().includes(value)) ||
         (user.FullName && user.FullName.toLowerCase().includes(value)) ||
-        (user.Gender && user.Gender.toLowerCase().includes(value)) ||
         (user.Phone && user.Phone.toLowerCase().includes(value)) ||
-        (user.Email && user.Email.toLowerCase().includes(value)) ||
-        (user.Role && Array.isArray(user.Role) && user.Role.some(role => role.toLowerCase().includes(value))) ||
-        (user.Position && user.Position.toLowerCase().includes(value)) ||
-        (user.BranchID && user.BranchID.toLowerCase().includes(value))
+        (user.Roles && Array.isArray(user.Roles) && user.Roles.some(role => role.toLowerCase().includes(value))) ||
+        (user.Status && user.Status.toLowerCase().includes(value))
       );
       setFilteredUsers(filtered);
     }
@@ -62,7 +59,7 @@ const Users = () => {
       <div className="page-content">
         <h1>Quản lý Nhân viên</h1>
         <div style={{ textAlign: 'center', padding: '50px' }}>
-          <div>⏳ Đang tải dữ liệu nhân viên...</div>
+          <div> Đang tải dữ liệu nhân viên...</div>
         </div>
       </div>
     );
@@ -74,9 +71,9 @@ const Users = () => {
       <div className="page-content">
         <h1>Quản lý Nhân viên</h1>
         <div style={{ textAlign: 'center', padding: '50px', color: 'red' }}>
-          <div>❌ Lỗi: {error}</div>
+          <div>Lỗi: {error}</div>
           <button onClick={loadUsers} style={{ marginTop: '10px', padding: '8px 16px' }}>
-            🔄 Thử lại
+             Thử lại
           </button>
         </div>
       </div>
@@ -113,19 +110,11 @@ const Users = () => {
         <table>
           <thead>
             <tr>
-              <th className="user-col-id">Mã NV</th>
-              <th className="user-col-username">Username</th>
-              <th className="user-col-name">Họ và tên</th>
-              <th className="user-col-gender">Giới tính</th>
-              <th className="user-col-birth">Ngày sinh</th>
-              <th className="user-col-phone">Số điện thoại</th>
-              <th className="user-col-email">Email</th>
-              <th className="user-col-address">Địa chỉ</th>
-              <th className="user-col-position">Chức vụ</th>
+              <th className="user-col-id">Mã nhân viên</th>
+              <th className="user-col-info">Thông tin cá nhân</th>
+              <th className="user-col-account">Tài khoản</th>
               <th className="user-col-roles">Vai trò</th>
-              <th className="user-col-salary">Lương</th>
-              <th className="user-col-branch">Chi nhánh</th>
-              <th className="user-col-hire">Ngày vào</th>
+              <th className="user-col-contact">Liên hệ</th>
               <th className="user-col-status">Trạng thái</th>
             </tr>
           </thead>
@@ -133,82 +122,113 @@ const Users = () => {
             {filteredUsers.length > 0 ? (
               filteredUsers.map((user, index) => (
                 <tr key={user.UserID || user._id || index} className={user.Status !== 'Active' ? 'inactive-row' : ''}>
+                  {/* Mã nhân viên */}
                   <td className="user-col-id">
-                    <strong>{user.UserID || user._id}</strong>
+                    <strong style={{fontSize: '14px'}}>{user.UserID}</strong>
                   </td>
-                  <td className="user-col-username">
-                    <span className="username">{user.Username || 'N/A'}</span>
-                  </td>
-                  <td className="user-col-name">
-                    <div className="user-name">{user.FullName || 'N/A'}</div>
-                  </td>
-                  <td className="user-col-gender">
-                    <span className={`gender ${user.Gender ? user.Gender.toLowerCase() : 'unknown'}`}>
-                      {user.Gender || 'N/A'}
-                    </span>
-                  </td>
-                  <td className="user-col-birth birth-date">
-                    {user.BirthDate ? new Date(user.BirthDate).toLocaleDateString('vi-VN') : 'N/A'}
-                  </td>
-                  <td className="user-col-phone phone">{user.Phone || 'N/A'}</td>
-                  <td className="user-col-email email">{user.Email || 'N/A'}</td>
-                  <td className="user-col-address">
-                    {user.Address ? (
-                      <div className="address-info">
-                        <div className="address-street">{user.Address.Street}</div>
-                        <div className="address-detail">
-                          {user.Address.District}, {user.Address.City}
-                        </div>
+
+                  {/* Thông tin cá nhân */}
+                  <td className="user-col-info">
+                    <div className="user-info">
+                      <div className="user-name" style={{fontWeight: 'bold', fontSize: '14px', marginBottom: '2px'}}>
+                        {user.FullName}
                       </div>
-                    ) : (
-                      <span style={{color: '#9ca3af', fontStyle: 'italic'}}>N/A</span>
-                    )}
+                    </div>
                   </td>
-                  <td className="user-col-position">
-                    <span className="position">{user.Position || 'N/A'}</span>
+
+                  {/* Tài khoản */}
+                  <td className="user-col-account">
+                    <div className="account-info">
+                      <div style={{fontSize: '13px', fontWeight: '600', marginBottom: '4px'}}>
+                        {user.Account?.Username || 'N/A'}
+                      </div>
+                      <div style={{fontSize: '10px', color: '#999'}}>
+                        {user.Account?.Password ? '••••••••' : 'Chưa có mật khẩu'}
+                      </div>
+                    </div>
                   </td>
+
+                  {/* Vai trò */}
                   <td className="user-col-roles">
-                    <div className="roles-tags">
-                      {user.Role && Array.isArray(user.Role) ? (
-                        user.Role.map((role, index) => (
-                          <span key={index} className="role-tag">{role}</span>
+                    <div className="roles-container">
+                      {user.Roles && Array.isArray(user.Roles) ? (
+                        user.Roles.map((role, index) => (
+                          <span key={index} style={{
+                            padding: '4px 8px',
+                            backgroundColor: 
+                              role === 'Manager' ? '#e0e7ff' :
+                              role === 'Cashier' ? '#fef3c7' :
+                              role === 'Stocker' ? '#dcfce7' :
+                              role === 'Guard' ? '#f3e8ff' : '#f3f4f6',
+                            color:
+                              role === 'Manager' ? '#3730a3' :
+                              role === 'Cashier' ? '#92400e' :
+                              role === 'Stocker' ? '#166534' :
+                              role === 'Guard' ? '#7c3aed' : '#374151',
+                            borderRadius: '12px',
+                            fontSize: '11px',
+                            fontWeight: '600',
+                            display: 'inline-block',
+                            marginBottom: '2px'
+                          }}>
+                            {role}
+                          </span>
                         ))
                       ) : (
-                        <span className="role-tag">{user.Role || 'N/A'}</span>
+                        <span style={{
+                          padding: '4px 8px',
+                          backgroundColor: '#f3f4f6',
+                          color: '#374151',
+                          borderRadius: '12px',
+                          fontSize: '11px',
+                          fontWeight: '600'
+                        }}>
+                          {user.Roles || 'N/A'}
+                        </span>
                       )}
                     </div>
                   </td>
-                  <td className="user-col-salary">
-                    <span className="salary">
-                      {user.Salary ? user.Salary.toLocaleString('vi-VN') + '₫' : 'N/A'}
-                    </span>
+
+                  {/* Liên hệ */}
+                  <td className="user-col-contact">
+                    <div className="contact-info">
+                      <div style={{fontSize: '13px', fontWeight: '600', marginBottom: '4px'}}>
+                        {user.Phone || 'Chưa có SĐT'}
+                      </div>
+                      <div style={{fontSize: '11px', color: '#666'}}>
+                        {user.Email || 'Chưa có email'}
+                      </div>
+                    </div>
                   </td>
-                  <td className="user-col-branch">
-                    <span className="branch-badge">{user.BranchID || 'N/A'}</span>
-                  </td>
-                  <td className="user-col-hire hire-date">
-                    {user.HireDate ? new Date(user.HireDate).toLocaleDateString('vi-VN') : 'N/A'}
-                  </td>
-                  <td className="user-col-status status">
-                    <span className={`status-badge ${user.Status?.toLowerCase() || 'active'}`}>
-                      {user.Status === 'Active' ? 'Hoạt động' : 
-                       user.Status === 'Inactive' ? 'Không hoạt động' : 
-                       user.Status === 'Resigned' ? 'Đã nghỉ việc' :
-                       user.Status || 'Hoạt động'}
-                    </span>
+
+                  {/* Trạng thái */}
+                  <td className="user-col-status">
+                    <div style={{
+                      padding: '6px 12px',
+                      borderRadius: '12px',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      backgroundColor: user.Status === 'Active' ? '#dcfce7' : '#fee2e2',
+                      color: user.Status === 'Active' ? '#166534' : '#991b1b'
+                    }}>
+                      {user.Status === 'Active' ? 'Hoạt động' : 'Ngưng hoạt động'}
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="14" className="no-results">
+                <td colSpan="6" className="no-results">
                   <div className="no-results-content">
-                    <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">
-                      Không tìm thấy nhân viên nào với từ khóa "<strong>{searchTerm}</strong>"
+                      {searchTerm ? 
+                        `Không tìm thấy nhân viên nào với từ khóa "${searchTerm}"` : 
+                        'Không có dữ liệu nhân viên'
+                      }
                     </div>
                     <div className="no-results-suggestion">
-                      Thử tìm kiếm với từ khóa khác hoặc kiểm tra lại chính tả
+                      {searchTerm ? 'Thử tìm kiếm với từ khóa khác' : 'Dữ liệu sẽ được hiển thị khi có nhân viên'}
                     </div>
                   </div>
                 </td>

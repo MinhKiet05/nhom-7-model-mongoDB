@@ -114,81 +114,147 @@ const Customers = () => {
           <thead>
             <tr>
               <th className="customer-col-id">Mã KH</th>
-              <th className="customer-col-name">Họ và tên</th>
-              <th className="customer-col-gender">Giới tính</th>
-              <th className="customer-col-birth">Ngày sinh</th>
-              <th className="customer-col-phone">Số điện thoại</th>
-              <th className="customer-col-email">Email</th>
+              <th className="customer-col-name">Thông tin KH</th>
+              <th className="customer-col-contact">Liên hệ</th>
               <th className="customer-col-address">Địa chỉ</th>
-              <th className="customer-col-membership">Loại TV</th>
-              <th className="customer-col-points">Điểm</th>
-              <th className="customer-col-join-date">Ngày tham gia</th>
-              <th className="customer-col-total-spent">Tổng chi tiêu</th>
+              <th className="customer-col-membership">Hạng TV</th>
+              <th className="customer-col-stats">Thống kê</th>
               <th className="customer-col-status">Trạng thái</th>
-              <th className="customer-col-created-by">Người tạo</th>
             </tr>
           </thead>
           <tbody>
             {filteredCustomers.length > 0 ? (
               filteredCustomers.map(customer => (
-                <tr key={customer.CustomerID} className={customer.Status === 'Deleted' ? 'inactive-row' : ''}>
-                  <td className="customer-col-id"><strong>{customer.CustomerID || 'N/A'}</strong></td>
+                <tr key={customer.CustomerID} className={customer.Status === 'Deleted' || customer.Status === 'Inactive' ? 'inactive-row' : ''}>
+                  {/* Mã khách hàng */}
+                  <td className="customer-col-id">
+                    <strong>{customer.CustomerID || 'N/A'}</strong>
+                  </td>
+                  
+                  {/* Thông tin khách hàng */}
                   <td className="customer-col-name">
-                    <div className="customer-name">{customer.FullName || 'N/A'}</div>
+                    <div className="customer-info">
+                      <div className="customer-name" style={{fontWeight: 'bold', fontSize: '14px'}}>
+                        {customer.FullName || 'N/A'}
+                      </div>
+                      <div className="customer-details" style={{fontSize: '12px', color: '#666', marginTop: '4px'}}>
+                        <span className={`gender ${(customer.Gender || 'nam').toLowerCase()}`} style={{
+                          padding: '2px 6px', 
+                          borderRadius: '4px', 
+                          backgroundColor: customer.Gender === 'Nam' ? '#e3f2fd' : '#fce4ec',
+                          color: customer.Gender === 'Nam' ? '#1976d2' : '#c2185b',
+                          marginRight: '8px'
+                        }}>
+                          {customer.Gender || 'N/A'}
+                        </span>
+                        <span style={{color: '#888'}}>
+                          {customer.BirthDate ? 
+                            `${new Date().getFullYear() - new Date(customer.BirthDate).getFullYear()} tuổi` : 
+                            'Chưa có ngày sinh'
+                          }
+                        </span>
+                      </div>
+                      <div style={{fontSize: '11px', color: '#999', marginTop: '2px'}}>
+                        Tham gia: {customer.JoinDate ? new Date(customer.JoinDate).toLocaleDateString('vi-VN') : 'N/A'}
+                      </div>
+                    </div>
                   </td>
-                  <td className="customer-col-gender">
-                    <span className={`gender ${(customer.Gender || 'nam').toLowerCase()}`}>
-                      {customer.Gender || 'N/A'}
-                    </span>
+                  
+                  {/* Liên hệ */}
+                  <td className="customer-col-contact">
+                    <div className="contact-info">
+                      <div style={{fontSize: '13px', fontWeight: 'bold', marginBottom: '4px'}}>
+                        {customer.Phone || 'Chưa có SĐT'}
+                      </div>
+                      <div style={{fontSize: '12px', color: '#666'}}>
+                        {customer.Email || 'Chưa có email'}
+                      </div>
+                    </div>
                   </td>
-                  <td className="customer-col-birth birth-date">
-                    {customer.BirthDate ? new Date(customer.BirthDate).toLocaleDateString('vi-VN') : 'N/A'}
-                  </td>
-                  <td className="customer-col-phone phone">{customer.Phone || 'N/A'}</td>
-                  <td className="customer-col-email email">{customer.Email || 'N/A'}</td>
+                  
+                  {/* Địa chỉ */}
                   <td className="customer-col-address">
                     {customer.Address ? (
-                      <div className="address-info">
-                        <div className="address-street">{customer.Address.Street || 'N/A'}</div>
-                        <div className="address-detail">
+                      <div className="address-info" style={{fontSize: '12px'}}>
+                        <div style={{fontWeight: 'bold', marginBottom: '2px'}}>
+                          {customer.Address.Street || 'N/A'}
+                        </div>
+                        <div style={{color: '#666'}}>
                           {customer.Address.District || 'N/A'}, {customer.Address.City || 'N/A'}
                         </div>
                       </div>
                     ) : (
-                      <span style={{color: '#9ca3af', fontStyle: 'italic'}}>Chưa có địa chỉ</span>
+                      <span style={{color: '#9ca3af', fontStyle: 'italic', fontSize: '12px'}}>
+                        Chưa có địa chỉ
+                      </span>
                     )}
                   </td>
+                  
+                  {/* Hạng thành viên */}
                   <td className="customer-col-membership">
-                    <span className={`membership ${(customer.MembershipType || 'regular').toLowerCase()}`}>
-                      {customer.MembershipType || 'Regular'}
+                    <span className={`membership ${(customer.MembershipType || 'bronze').toLowerCase()}`} style={{
+                      padding: '6px 12px',
+                      borderRadius: '16px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                      backgroundColor: 
+                        customer.MembershipType === 'Platinum' ? '#f3e5f5' :
+                        customer.MembershipType === 'Gold' ? '#fff8e1' :
+                        customer.MembershipType === 'Silver' ? '#f5f5f5' : '#efebe9',
+                      color:
+                        customer.MembershipType === 'Platinum' ? '#7b1fa2' :
+                        customer.MembershipType === 'Gold' ? '#f57f17' :
+                        customer.MembershipType === 'Silver' ? '#616161' : '#5d4037'
+                    }}>
+                      {customer.MembershipType === 'Platinum' ? 'Platinum' :
+                       customer.MembershipType === 'Gold' ? 'Gold' :
+                       customer.MembershipType === 'Silver' ? 'Silver' :
+                       customer.MembershipType === 'Bronze' ? 'Bronze' :
+                       'Regular'}
                     </span>
                   </td>
-                  <td className="customer-col-points points">
-                    <span className="points-value">{(customer.Points || 0).toLocaleString('vi-VN')}</span>
+                  
+                  {/* Thống kê */}
+                  <td className="customer-col-stats">
+                    <div className="stats-info">
+                      <div style={{fontSize: '13px', fontWeight: 'bold', color: '#2e7d32', marginBottom: '4px'}}>
+                        {(customer.TotalSpent || 0).toLocaleString('vi-VN')}₫
+                      </div>
+                      <div style={{fontSize: '11px', color: '#666'}}>
+                        {(customer.Points || 0).toLocaleString('vi-VN')} điểm
+                      </div>
+                    </div>
                   </td>
-                  <td className="customer-col-join-date join-date">
-                    {customer.JoinDate ? new Date(customer.JoinDate).toLocaleDateString('vi-VN') : 'N/A'}
-                  </td>
-                  <td className="customer-col-total-spent total-spent">
-                    {(customer.TotalSpent || 0).toLocaleString('vi-VN')}₫
-                  </td>
-                  <td className="customer-col-status status">
-                    <span className={`status-badge ${customer.Status?.toLowerCase() || 'active'}`}>
-                      {customer.Status === 'Deleted' ? 'Đã xóa' : 
-                       customer.Status === 'Active' ? 'Hoạt động' : 
-                       customer.Status === 'Inactive' ? 'Không hoạt động' :
+                  
+                  {/* Trạng thái */}
+                  <td className="customer-col-status">
+                    <span className={`status-badge ${customer.Status?.toLowerCase() || 'active'}`} style={{
+                      padding: '4px 8px',
+                      borderRadius: '12px',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      backgroundColor: 
+                        customer.Status === 'Active' ? '#e8f5e8' :
+                        customer.Status === 'Inactive' ? '#fff3e0' :
+                        customer.Status === 'Suspended' ? '#ffebee' : '#f5f5f5',
+                      color:
+                        customer.Status === 'Active' ? '#2e7d32' :
+                        customer.Status === 'Inactive' ? '#f57c00' :
+                        customer.Status === 'Suspended' ? '#d32f2f' : '#666'
+                    }}>
+                      {customer.Status === 'Active' ? 'Hoạt động' : 
+                       customer.Status === 'Inactive' ? 'Tạm ngưng' :
                        customer.Status === 'Suspended' ? 'Tạm khóa' : 
-                       customer.Status || 'Hoạt động'}
+                       customer.Status === 'Deleted' ? 'Đã xóa' :
+                       'Hoạt động'}
                     </span>
                   </td>
-                  <td className="customer-col-created-by created-by">{customer.CreatedBy || 'N/A'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="13" className="no-results">
+                <td colSpan="7" className="no-results">
                   <div className="no-results-content">
-                    <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">
                       Không tìm thấy khách hàng nào với từ khóa "<strong>{searchTerm}</strong>"
                     </div>

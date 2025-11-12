@@ -5,7 +5,7 @@
 
 /* Search container styles */
 .search-container {
-  margin-bottom: 8px;
+  margin-bottom: 20px;
 }
 
 .search-input-main {
@@ -35,17 +35,17 @@
   font-weight: 400;
 }
 
-/* Users table styles */
+/* Users table */
 .users-table {
   width: 100%;
-  height: 70vh;
-  overflow: auto;
+  height: 65vh;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  background: white;
   position: relative;
-  flex-shrink: 0;
 }
 
 /* Custom scrollbar styling */
@@ -68,101 +68,34 @@
   background: #94a3b8;
 }
 
-table {
-  min-width: 2120px;
-  width: 100%;
+.users-table table {
+  width: auto;
+  max-width: 1000px;
   border-collapse: collapse;
   background: white;
-  table-layout: fixed;
   font-family: 'Be Vietnam Pro', sans-serif;
+  table-layout: auto;
 }
 
 th, td {
-  padding: 0.75rem;
+  padding: 8px 6px;
   text-align: left;
   border-bottom: 1px solid #e5e7eb;
   vertical-align: top;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 1rem;
 }
 
-/* Thiết lập chiều rộng cụ thể cho từng cột - Users */
-.user-col-id { /* Mã NV */
-  width: 90px;
-  min-width: 90px;
-}
-
-.user-col-username { /* Username */
-  width: 120px;
-  min-width: 120px;
-}
-
-.user-col-name { /* Họ và tên */
-  width: 160px;
-  min-width: 160px;
-}
-
-.user-col-gender { /* Giới tính */
-  width: 65px;
-  min-width: 65px;
-  text-align: center;
-}
-
-.user-col-birth { /* Ngày sinh */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.user-col-phone { /* Số điện thoại */
-  width: 120px;
-  min-width: 120px;
-}
-
-.user-col-email { /* Email */
-  width: 180px;
-  min-width: 180px;
-}
-
-.user-col-address { /* Địa chỉ */
-  width: 180px;
-  min-width: 180px;
-}
-
-.user-col-position { /* Chức vụ */
-  width: 140px;
-  min-width: 140px;
-}
-
-.user-col-roles { /* Vai trò */
-  width: 120px;
-  min-width: 120px;
-}
-
-.user-col-salary { /* Lương */
-  width: 110px;
-  min-width: 110px;
-  text-align: right;
-}
-
-.user-col-branch { /* Chi nhánh */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.user-col-hire { /* Ngày vào */
-  width: 100px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.user-col-status { /* Trạng thái */
-  width: 120px;
-  min-width: 120px;
-  text-align: center;
-}
+/* Column widths - compact fixed layout */
+.user-col-id { width: 80px; }
+.user-col-info { width: 180px; }
+.user-col-account { width: 140px; }
+.user-col-roles { width: 120px; }
+.user-col-contact { width: 160px; }
+.user-col-status { width: 100px; }
 
 th {
   background-color: #f9fafb;
@@ -178,12 +111,10 @@ td {
   color: black;
 }
 
-/* Hover effect cho rows */
 tbody tr:hover {
-  background-color: #f9fafb;
+  background-color: #f8fafc;
 }
 
-/* Đánh dấu các dòng chẵn */
 tbody tr:nth-child(even) {
   background-color: #f8fafc;
 }
@@ -192,140 +123,22 @@ tbody tr:nth-child(even):hover {
   background-color: #f1f5f9;
 }
 
-/* Inactive rows - mờ hơn và không hover được */
-tbody tr.inactive-row {
-  opacity: 0.5;
-  background-color: #f3f4f6 !important;
-  pointer-events: none;
-  cursor: not-allowed;
+.inactive-row {
+  opacity: 0.6;
+  background-color: #f9fafb;
 }
 
-tbody tr.inactive-row:hover {
-  background-color: #f3f4f6 !important;
-}
-
-tbody tr.inactive-row:nth-child(even) {
-  background-color: #e5e7eb !important;
-}
-
-tbody tr.inactive-row:nth-child(even):hover {
-  background-color: #e5e7eb !important;
-}
-
-/* User-specific styles */
-.username {
-  font-family: monospace;
-  font-weight: 600;
-  background-color: #f3f4f6;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  color: #374151;
-  font-size: 0.85rem;
+/* User info components */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .user-name {
   font-weight: 600;
   color: #1f2937;
-  font-size: 1rem;
-}
-
-.gender {
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-block;
-  min-width: 40px;
-  text-align: center;
-}
-
-.gender.nam {
-  background-color: #dbeafe;
-  color: #1e40af;
-}
-
-.gender.nữ {
-  background-color: #fce7f3;
-  color: #9f1239;
-}
-
-.birth-date, .hire-date {
-  font-family: monospace;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #6b7280;
-}
-
-.phone {
-  font-family: monospace;
-  font-weight: 500;
-  color: #3b82f6;
-  font-size: 0.9rem;
-}
-
-.email {
-  color: #6b7280;
-  font-size: 0.85rem;
-  word-break: break-all;
-}
-
-.address-info {
-  font-size: 0.85rem;
-  line-height: 1.4;
-}
-
-.address-street {
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 0.15rem;
-}
-
-.address-detail {
-  color: #6b7280;
-  font-size: 0.8rem;
-}
-
-.position {
-  font-weight: 600;
-  background-color: #e0e7ff;
-  color: #3730a3;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.85rem;
-  display: inline-block;
-}
-
-.roles-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-}
-
-.role-tag {
-  background-color: #dbeafe;
-  color: #1e40af;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.salary {
-  font-family: monospace;
-  font-weight: 700;
-  color: #059669;
-  font-size: 0.95rem;
-}
-
-.branch-badge {
-  background-color: #fef3c7;
-  color: #92400e;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  font-family: monospace;
+  font-size: 14px;
 }
 
 /* No results styling */
@@ -342,10 +155,7 @@ tbody tr.inactive-row:nth-child(even):hover {
   gap: 1rem;
 }
 
-.no-results-icon {
-  font-size: 3rem;
-  opacity: 0.5;
-}
+
 
 .no-results-text {
   font-size: 1.1rem;
@@ -353,35 +163,25 @@ tbody tr.inactive-row:nth-child(even):hover {
   font-weight: 500;
 }
 
-/* Status badge styles */
-.status-badge {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-block;
-  min-width: 80px;
-  text-align: center;
-  text-transform: uppercase;
-}
 
-.status-badge.active {
-  background-color: #dcfce7;
-  color: #166534;
-}
-
-.status-badge.inactive {
-  background-color: #fef3c7;
-  color: #92400e;
-}
-
-.status-badge.resigned {
-  background-color: #f3f4f6;
-  color: #6b7280;
-}
 
 .no-results-suggestion {
   font-size: 0.9rem;
   color: #6b7280;
   font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  th, td {
+    padding: 6px 4px;
+    font-size: 0.85rem;
+  }
+  
+  .user-col-id { width: 10%; }
+  .user-col-info { width: 26%; }
+  .user-col-account { width: 18%; }
+  .user-col-roles { width: 16%; }
+  .user-col-contact { width: 20%; }
+  .user-col-status { width: 10%; }
 }

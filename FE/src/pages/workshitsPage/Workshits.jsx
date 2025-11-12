@@ -58,7 +58,7 @@ const Workshifts = () => {
       <div className="page-content">
         <h1>Quản lý ca làm việc</h1>
         <div style={{ textAlign: 'center', padding: '50px' }}>
-          <div>⏳ Đang tải dữ liệu ca làm việc...</div>
+          <div>Đang tải dữ liệu ca làm việc...</div>
         </div>
       </div>
     );
@@ -70,9 +70,9 @@ const Workshifts = () => {
       <div className="page-content">
         <h1>Quản lý ca làm việc</h1>
         <div style={{ textAlign: 'center', padding: '50px', color: 'red' }}>
-          <div>❌ Lỗi: {error}</div>
+          <div>Lỗi: {error}</div>
           <button onClick={loadWorkshifts} style={{ marginTop: '10px', padding: '8px 16px' }}>
-            🔄 Thử lại
+            Thử lại
           </button>
         </div>
       </div>
@@ -109,65 +109,125 @@ const Workshifts = () => {
         <table>
           <thead>
             <tr>
-              <th className="shift-col-id">Mã ca</th>
-              <th className="shift-col-name">Tên ca</th>
-              <th className="shift-col-branch">Chi nhánh</th>
-              <th className="shift-col-time">Thời gian</th>
-              <th className="shift-col-break">Nghỉ giải lao</th>
-              <th className="shift-col-max">Số NV tối đa</th>
-              <th className="shift-col-roles">Vai trò yêu cầu</th>
-              <th className="shift-col-creator">Người tạo</th>
+              <th className="shift-col-id">Mã ca làm việc</th>
+              <th className="shift-col-time">Thời gian làm việc</th>
+              <th className="shift-col-max">Số lượng NV</th>
+              <th className="shift-col-employees">Danh sách nhân viên</th>
+              <th className="shift-col-status">Trạng thái</th>
             </tr>
           </thead>
           <tbody>
             {filteredShifts.length > 0 ? (
               filteredShifts.map(shift => (
                 <tr key={shift.ShiftID || shift._id}>
-                  <td className="shift-col-id"><strong>{shift.ShiftID}</strong></td>
-                  <td className="shift-col-name">
-                    <div className="shift-name">Ca làm việc</div>
+                  {/* Mã ca làm việc */}
+                  <td className="shift-col-id">
+                    <strong style={{fontSize: '14px'}}>{shift.ShiftID}</strong>
                   </td>
-                  <td className="shift-col-branch">
-                    <span className="branch-badge">Chi nhánh chính</span>
-                  </td>
+
+                  {/* Thời gian làm việc */}
                   <td className="shift-col-time">
                     <div className="time-info">
-                      <div className="time-start">{shift.StartAt ? new Date(shift.StartAt).toLocaleTimeString('vi-VN') : 'N/A'}</div>
-                      <div className="time-end">{shift.EndAt ? new Date(shift.EndAt).toLocaleTimeString('vi-VN') : 'N/A'}</div>
+                      <div style={{fontSize: '12px', marginBottom: '4px'}}>
+                        <strong>Bắt đầu:</strong> {shift.StartAt ? new Date(shift.StartAt).toLocaleString('vi-VN') : 'Chưa xác định'}
+                      </div>
+                      <div style={{fontSize: '12px'}}>
+                        <strong>Kết thúc:</strong> {shift.EndAt ? new Date(shift.EndAt).toLocaleString('vi-VN') : 'Chưa xác định'}
+                      </div>
                     </div>
                   </td>
-                  <td className="shift-col-break">
-                    <span className="break-time">30 phút</span>
-                  </td>
+
+                  {/* Số lượng nhân viên */}
                   <td className="shift-col-max">
-                    <span className="max-employees">{shift.MaxEmployees || 1} người</span>
-                  </td>
-                  <td className="shift-col-roles">
-                    <div className="roles-tags">
-                      {shift.Employees && shift.Employees.length > 0 ? (
-                        shift.Employees.map((emp, index) => (
-                          <span key={index} className="role-tag">{emp.Role || 'Nhân viên'}</span>
-                        ))
-                      ) : (
-                        <span className="role-tag">Nhân viên</span>
-                      )}
+                    <div style={{textAlign: 'center'}}>
+                      <div style={{fontSize: '14px', fontWeight: 'bold', marginBottom: '2px'}}>
+                        {shift.Employees ? shift.Employees.length : 0}/{shift.MaxEmployees || 1}
+                      </div>
+                      <div style={{fontSize: '10px', color: '#666'}}>
+                        Hiện tại/Tối đa
+                      </div>
                     </div>
                   </td>
-                  <td className="shift-col-creator creator">
-                    {shift.Employees && shift.Employees.length > 0 ? shift.Employees[0].FullName : 'Admin'}
+
+                  {/* Danh sách nhân viên */}
+                  <td className="shift-col-employees">
+                    {shift.Employees && shift.Employees.length > 0 ? (
+                      <div>
+                        {shift.Employees.map((emp, index) => (
+                          <div key={index} style={{marginBottom: '6px', padding: '4px 0', borderBottom: index < shift.Employees.length - 1 ? '1px solid #f0f0f0' : 'none'}}>
+                            <div style={{fontSize: '13px', fontWeight: 'bold', marginBottom: '2px'}}>
+                              {emp.FullName}
+                            </div>
+                            <div style={{fontSize: '11px', color: '#666'}}>
+                              ID: {emp.UserID} • 
+                              <span style={{
+                                padding: '2px 6px',
+                                backgroundColor: 
+                                  emp.Role === 'Cashier' ? '#fef3c7' :
+                                  emp.Role === 'Stocker' ? '#dcfce7' :
+                                  emp.Role === 'Manager' ? '#e0e7ff' : '#f3f4f6',
+                                color:
+                                  emp.Role === 'Cashier' ? '#92400e' :
+                                  emp.Role === 'Stocker' ? '#166534' :
+                                  emp.Role === 'Manager' ? '#3730a3' : '#374151',
+                                borderRadius: '4px',
+                                fontSize: '10px',
+                                fontWeight: '600',
+                                marginLeft: '4px'
+                              }}>
+                                {emp.Role}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div style={{fontSize: '12px', color: '#9ca3af', fontStyle: 'italic', textAlign: 'center'}}>
+                        Chưa có nhân viên
+                      </div>
+                    )}
+                  </td>
+
+                  {/* Trạng thái */}
+                  <td className="shift-col-status">
+                    <div style={{
+                      padding: '6px 12px',
+                      borderRadius: '12px',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      backgroundColor: 
+                        shift.Status === 'Scheduled' ? '#dbeafe' :
+                        shift.Status === 'InProgress' ? '#fef3c7' :
+                        shift.Status === 'Completed' ? '#dcfce7' :
+                        shift.Status === 'Cancelled' ? '#fee2e2' : '#f3f4f6',
+                      color:
+                        shift.Status === 'Scheduled' ? '#1e40af' :
+                        shift.Status === 'InProgress' ? '#92400e' :
+                        shift.Status === 'Completed' ? '#166534' :
+                        shift.Status === 'Cancelled' ? '#991b1b' : '#374151'
+                    }}>
+                      {shift.Status === 'Scheduled' ? 'Đã lên lịch' :
+                       shift.Status === 'InProgress' ? 'Đang diễn ra' :
+                       shift.Status === 'Completed' ? 'Hoàn thành' :
+                       shift.Status === 'Cancelled' ? 'Đã hủy' :
+                       shift.Status || 'Chưa xác định'}
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="8" className="no-results">
+                <td colSpan="5" className="no-results">
                   <div className="no-results-content">
-                    <div className="no-results-icon">🔍</div>
                     <div className="no-results-text">
-                      Không tìm thấy ca làm việc nào với từ khóa "<strong>{searchTerm}</strong>"
+                      {searchTerm ? 
+                        `Không tìm thấy ca làm việc nào với từ khóa "${searchTerm}"` : 
+                        'Không có dữ liệu ca làm việc'
+                      }
                     </div>
                     <div className="no-results-suggestion">
-                      Thử tìm kiếm với từ khóa khác hoặc kiểm tra lại chính tả
+                      {searchTerm ? 'Thử tìm kiếm với từ khóa khác' : 'Dữ liệu sẽ được hiển thị khi có ca làm việc'}
                     </div>
                   </div>
                 </td>
